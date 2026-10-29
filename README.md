@@ -10,6 +10,27 @@
 
 纯静态站点（HTML + CSS + 原生 JS，无构建、无依赖），数据由 `scripts/` 下的 Python 脚本生成。
 
+## 在线版
+
+已经部署到 GitHub Pages：**https://tom221032.github.io/circuit-study/**
+
+仓库：https://github.com/tom221032/circuit-study
+
+本地版与在线版是同一份代码。在线版不需要启动任何服务，任何浏览器打开即用；
+「我的本章笔记 / 已看 / 收藏 / 进度」都存在各人自己的浏览器 localStorage 里，不会上传。
+
+重新部署（改了数据或页面之后）：
+
+```bat
+cd circuit-study
+python scripts\deploy_github.py
+```
+
+脚本走 GitHub 的设备码登录（device flow，申请范围只有 `public_repo`），
+打印 8 位验证码后在 https://github.com/login/device 输入即可；已授权过的话
+可以直接 `set GITHUB_TOKEN=xxx && python scripts\deploy_github.py` 跳过这一步。
+之后它会自动建仓库、推送、开启 Pages 并轮询构建状态。
+
 ## 怎么开始
 
 双击 **`start.cmd`**（或在命令行里 `python scripts\serve.py`），
