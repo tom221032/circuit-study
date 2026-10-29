@@ -217,6 +217,18 @@ def exam_group_html(blocks):
                 out.append(("p", t[:m.start(1)].strip()))
                 out.append(("details", f'<b class="ans-k">答案：</b>{esc(m.group(1))}'))
                 continue
+            if re.match(r"^(解|答|分析)\s*[：:]", t):
+                # 「解：…」整段是解答，藏进答案里
+                body = f'<b class="ans-k">解析：</b>{esc(re.sub(r"^(解|答|分析)\\s*[：:]\\s*", "", t))}'
+                if out and out[-1][0] == "details":
+                    out[-1] = ("details", out[-1][1] + "<br>" + body)
+                else:
+                    out.append(("details", body))
+                continue
+            if out and out[-1][0] == "details" and "＝" in t and not re.match(r"^\d", t):
+                # 紧跟在答案后面的推导行（「回路中的电流为 I＝…」），继续收进同一个答案框
+                out[-1] = ("details", out[-1][1] + "<br>" + esc(t))
+                continue
             out.append(("raw", block_html(b, b.get("img"))))
             continue
         head, tail = t[:i].strip(), t[i:]

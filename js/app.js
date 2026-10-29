@@ -88,7 +88,7 @@ function parseHash() {
 async function route() {
   const { parts, q } = parseHash();
   const view = $('#view');
-  $('#sidebar').classList.remove('open');
+  setSidebar(false);
   renderNav();
   window.scrollTo({ top: 0 });
   try {
@@ -153,6 +153,187 @@ async function viewHome(view) {
     </div>`;
 }
 
+// ---------------- 外观：主题 / 字号 ----------------
+const THEME_META = { light: '#f6f5f1', dark: '#14181d' };
+function applyTheme(t) {
+  if (t === 'dark') document.documentElement.dataset.theme = 'dark';
+  else { delete document.documentElement.dataset.theme; t = 'light'; }
+  S.store.theme = t; save();
+  const btn = $('#btnTheme');
+  if (btn) { btn.textContent = t === 'dark' ? '☀' : '◐'; btn.title = t === 'dark' ? '切到浅色模式' : '切到暗色模式'; }
+  const meta = document.querySelector('meta[name="theme-color"]');
+  if (meta) meta.content = THEME_META[t];
+}
+const FS_STEPS = [0.9, 1, 1.08, 1.16, 1.24];
+function applyFs(v) {
+  v = Math.max(FS_STEPS[0], Math.min(FS_STEPS[FS_STEPS.length - 1], Number(v) || 1));
+  document.documentElement.style.setProperty('--fs', String(v));
+  S.store.fs = v; save();
+}
+function stepFs(dir) {
+  const cur = Number(S.store.fs || 1);
+  let i = FS_STEPS.findIndex(x => Math.abs(x - cur) < 0.001);
+  if (i < 0) i = 1;
+  const next = i + dir;
+  if (next < 0) return toast('已经是最小字号');
+  if (next >= FS_STEPS.length) return toast('已经是最大字号');
+  applyFs(FS_STEPS[next]);
+}
+
+// ---------------- 侧栏 / 灯箱 ----------------
+function setSidebar(open) {
+  $('#sidebar').classList.toggle('open', open);
+  const scrim = $('#scrim');
+  if (scrim) scrim.hidden = !open;
+  document.body.style.overflow = open ? 'hidden' : '';
+}
+function openLightbox(url) {
+  const lb = $('#lightbox');
+  if (!lb) return;
+  $('img', lb).src = url;
+  lb.hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  const lb = $('#lightbox');
+  if (!lb || lb.hidden) return;
+  lb.hidden = true;
+  $('img', lb).removeAttribute('src');
+  if (!$('#sidebar').classList.contains('open')) document.body.style.overflow = '';
+}
+
+// ---------------- 笔记图片（IndexedDB） ----------------
+let imgDBPromise = null;
+function imgDB() {
+  if (!imgDBPromise) {
+    imgDBPromise = new Promise((res, rej) => {
+      if (!('indexedDB' in window)) { rej(new Error('no indexedDB')); return; }
+      const req = indexedDB.open('circuit-notes', 1);
+      req.onupgradeneeded = () => {
+        const db = req.result;
+        if (!db.objectStoreNames.contains('imgs')) {
+          const st = db.createObjectStore('imgs', { keyPath: 'id', autoIncrement: true });
+          st.createIndex('note', 'note', { unique: false });
+        }
+      };
+      req.onsuccess = () => res(req.result);
+      req.onerror = () => rej(req.error);
+    });
+  }
+  return imgDBPromise;
+}
+function idb(mode, fn) {
+  return imgDB().then(db => new Promise((res, rej) => {
+    const tx = db.transaction('imgs', mode);
+    let out;
+    const r = fn(tx.objectStore('imgs'));
+    if (r) r.onsuccess = () => { out = r.result; };
+    tx.oncomplete = () => res(out);
+    tx.onerror = () => rej(tx.error);
+    tx.onabort = () => rej(tx.error || new Error('aborted'));
+  }));
+}
+const noteImgs = note => idb('readonly', st => st.index('note').getAll(note));
+const noteImgAdd = rec => idb('readwrite', st => st.add(rec));
+const noteImgDel = id => idb('readwrite', st => st.delete(id));
+
+// 压缩后用 JPEG 存库，避免 localStorage 5MB 上限
+async function shrinkImage(file, maxSide = 1500, quality = 0.85) {
+  const bmp = await createImageBitmap(file);
+  const scale = Math.min(1, maxSide / Math.max(bmp.width, bmp.height));
+  const w = Math.max(1, Math.round(bmp.width * scale));
+  const h = Math.max(1, Math.round(bmp.height * scale));
+  const cv = document.createElement('canvas');
+  cv.width = w; cv.height = h;
+  const g = cv.getContext('2d');
+  g.fillStyle = '#fff'; g.fillRect(0, 0, w, h);
+  g.drawImage(bmp, 0, 0, w, h);
+  if (bmp.close) bmp.close();
+  const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', quality));
+  if (!blob) throw new Error('toBlob failed');
+  return { blob, w, h, type: 'image/jpeg' };
+}
+
+async function initNoteEditor(n) {
+  const key = 'ch' + n;
+  const ta = $('#myNote');
+  if (!ta) return;
+  ta.value = (S.store.notes && S.store.notes[key]) || '';
+  ta.addEventListener('input', () => { S.store.notes[key] = ta.value; save(); });
+
+  const box = $('#noteEditor');
+  const strip = $('#noteImgs');
+  const fileInput = $('#noteFile');
+  let urls = [];
+
+  async function paint() {
+    let rows = [];
+    try { rows = (await noteImgs(key)) || []; } catch (e) {
+      if (strip) strip.innerHTML = '<span class="hint">这台浏览器不支持本地图片存储</span>';
+      return;
+    }
+    urls.forEach(u => URL.revokeObjectURL(u));
+    urls = [];
+    if (!strip) return;
+    strip.innerHTML = rows.map((r, i) => {
+      const u = URL.createObjectURL(r.blob);
+      urls.push(u);
+      return `<div class="note-thumb" data-id="${r.id}" data-url="${u}">
+        <img src="${u}" alt="笔记图片 ${i + 1}" loading="lazy">
+        <button class="del" type="button" data-del="${r.id}" title="删除这张图">✕</button></div>`;
+    }).join('');
+    $$('.note-thumb', strip).forEach(el => {
+      $('img', el).addEventListener('click', () => openLightbox(el.dataset.url));
+      $('.del', el).addEventListener('click', async ev => {
+        ev.stopPropagation();
+        try { await noteImgDel(Number(el.dataset.del)); toast('已删除图片'); paint(); }
+        catch (e) { toast('删除失败'); }
+      });
+    });
+  }
+
+  async function addFiles(files) {
+    const list = Array.from(files || []).filter(f => f && String(f.type).startsWith('image/'));
+    if (!list.length) return;
+    let ok = 0;
+    for (const f of list) {
+      try {
+        const { blob, w, h, type } = await shrinkImage(f);
+        await noteImgAdd({ note: key, blob, w, h, type, name: f.name || '截图', ts: Date.now() });
+        ok++;
+      } catch (e) { console.error(e); }
+    }
+    toast(ok ? `已插入 ${ok} 张图片` : '图片处理失败');
+    paint();
+  }
+
+  const btn = $('#noteImgBtn');
+  if (btn) btn.addEventListener('click', () => fileInput && fileInput.click());
+  if (fileInput) fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
+
+  // 粘贴截图
+  ta.addEventListener('paste', e => {
+    const files = Array.from((e.clipboardData && e.clipboardData.files) || []);
+    if (files.length) { e.preventDefault(); addFiles(files); }
+  });
+  // 拖拽
+  if (box) {
+    ['dragenter', 'dragover'].forEach(t => box.addEventListener(t, e => {
+      if (e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files')) {
+        e.preventDefault(); box.classList.add('note-drop');
+      }
+    }));
+    ['dragleave', 'dragend'].forEach(t => box.addEventListener(t, () => box.classList.remove('note-drop')));
+    box.addEventListener('drop', e => {
+      box.classList.remove('note-drop');
+      if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
+        e.preventDefault(); addFiles(e.dataTransfer.files);
+      }
+    });
+  }
+  paint();
+}
+
 // ---------------- chapter ----------------
 async function viewChapter(view, n, q) {
   const ch = S.course.chapters[n - 1];
@@ -194,10 +375,18 @@ async function viewChapter(view, n, q) {
       <div>
         <div class="tabs">${tabs}</div>
         <div class="reader" id="reader"></div>
-        <div style="margin-top:16px">
-          <details class="card" style="cursor:default">
-            <summary style="cursor:pointer;font-size:13px;color:var(--muted)">✎ 我的本章笔记（自动保存在本机）</summary>
-            <textarea id="myNote" style="width:100%;height:130px;margin-top:12px;border:1px solid var(--line);border-radius:8px;padding:10px;font-family:var(--serif);font-size:15px;outline:none"></textarea>
+        <div class="card note-card" id="noteCard" style="margin-top:16px">
+          <details>
+            <summary>✎ 我的本章笔记（自动保存在本机，可粘贴图片）</summary>
+            <div class="note-editor" id="noteEditor">
+              <textarea id="myNote" placeholder="在这里写自己的推导、易错点…… 截图可以直接 Ctrl+V 粘贴，也可以拖进来。"></textarea>
+              <div class="note-tools">
+                <button class="btn ghost" id="noteImgBtn" type="button">🖼 插入图片</button>
+                <span class="hint">支持粘贴截图 / 拖入图片 / 从相册选择，图片只存在这台设备上</span>
+              </div>
+              <input type="file" id="noteFile" accept="image/*" multiple hidden>
+              <div class="note-imgs" id="noteImgs"></div>
+            </div>
           </details>
         </div>
       </div>
@@ -214,9 +403,7 @@ async function viewChapter(view, n, q) {
     </div>`;
 
   const reader = $('#reader');
-  const ta = $('#myNote');
-  ta.value = S.store.notes['ch' + n] || '';
-  ta.addEventListener('input', () => { S.store.notes['ch' + n] = ta.value; save(); });
+  initNoteEditor(n);
 
   function paint(kind) {
     const sec = data.sections.find(s => s.kind === kind);
@@ -321,6 +508,8 @@ async function viewVideo(view, page, q) {
           <button class="btn ${markDone ? 'primary' : ''}" id="btnDone">${markDone ? '✓ 已看' : '标记为已看'}</button>
           <button class="btn ${marked ? 'primary' : ''}" id="btnMark">${marked ? '★ 已收藏' : '☆ 收藏'}</button>
           <a class="btn" href="#/chapter/${v.chapter}">📖 本章笔记</a>
+        </div>
+        <div class="v-links">
           ${ch ? bookLink(ch.page, `原书 p.${ch.page}`, 'btn ghost') : ''}
           <a class="btn ghost" href="${v.url}" target="_blank" rel="noopener">在 B 站打开 ↗</a>
           <a class="btn ghost" id="btnPrev" href="${v.page > 1 ? `#/video/${v.page - 1}` : '#/'}">← 上一集</a>
@@ -541,13 +730,47 @@ async function viewSearch(view, q) {
 
 // ---------------- boot ----------------
 function wireChrome() {
-  $('#menuBtn').addEventListener('click', () => $('#sidebar').classList.toggle('open'));
+  $('#menuBtn').addEventListener('click', () => {
+    setSidebar(!$('#sidebar').classList.contains('open'));
+  });
+  $('#scrim').addEventListener('click', () => setSidebar(false));
+
+  const themeBtn = $('#btnTheme');
+  if (themeBtn) themeBtn.addEventListener('click', () => {
+    applyTheme(document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark');
+  });
+  const fsUp = $('#btnFsUp'), fsDown = $('#btnFsDown');
+  if (fsUp) fsUp.addEventListener('click', () => stepFs(1));
+  if (fsDown) fsDown.addEventListener('click', () => stepFs(-1));
+
+  const lb = $('#lightbox');
+  if (lb) {
+    lb.addEventListener('click', e => { if (e.target === lb || e.target.classList.contains('lb-close')) closeLightbox(); });
+  }
+  document.addEventListener('keydown', e => {
+    if (e.key !== 'Escape') return;
+    if (!$('#lightbox').hidden) { closeLightbox(); return; }
+    if ($('#sidebar').classList.contains('open')) setSidebar(false);
+  });
+
+  // 滑动手势关侧栏
+  let sx = 0, sy = 0;
+  $('#sidebar').addEventListener('touchstart', e => {
+    sx = e.touches[0].clientX; sy = e.touches[0].clientY;
+  }, { passive: true });
+  $('#sidebar').addEventListener('touchend', e => {
+    const t = e.changedTouches[0];
+    if (sx - t.clientX > 60 && Math.abs(sy - t.clientY) < 60) setSidebar(false);
+  }, { passive: true });
+
   const go = v => { if (v.trim()) location.hash = `#/search?q=${encodeURIComponent(v.trim())}`; };
   $('#sideSearch').addEventListener('keydown', e => { if (e.key === 'Enter') go(e.target.value); });
   $('#topSearch').addEventListener('keydown', e => { if (e.key === 'Enter') go(e.target.value); });
 }
 
 (async function boot() {
+  applyTheme(S.store.theme === 'dark' ? 'dark' : 'light');
+  applyFs(S.store.fs || 1);
   wireChrome();
   try {
     [S.course, S.videos] = await Promise.all([getJSON('data/course.json'), getJSON('data/videos.json')]);
