@@ -1,0 +1,1559 @@
+{
+ "pdf": "C:\\HONOR Share\\Honor Share\\邱关源《电路》（第6版）笔记和课后习题（含考研真题）详解.pdf",
+ "pages": 789,
+ "chapters": [
+  {
+   "n": 1,
+   "title": "电路模型和电路定律",
+   "page": 5,
+   "sections": [
+    {
+     "key": "1.1",
+     "kind": "notes",
+     "page": 5,
+     "endPage": 11,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、电压和电流的参考方向",
+       "anchor": "c1s0b1"
+      },
+      {
+       "level": 2,
+       "text": "1 电流的参考方向",
+       "anchor": "c1s0b3"
+      },
+      {
+       "level": 2,
+       "text": "2 电压的参考方向",
+       "anchor": "c1s0b7"
+      },
+      {
+       "level": 2,
+       "text": "3 关联参考方向",
+       "anchor": "c1s0b11"
+      },
+      {
+       "level": 1,
+       "text": "二、电功率和能量",
+       "anchor": "c1s0b14"
+      },
+      {
+       "level": 1,
+       "text": "三、电路元件、电阻元件、电压源和电流源、受控电源",
+       "anchor": "c1s0b22"
+      },
+      {
+       "level": 2,
+       "text": "1 无源元件及其伏安特性",
+       "anchor": "c1s0b24"
+      },
+      {
+       "level": 2,
+       "text": "2 有源元件",
+       "anchor": "c1s0b35"
+      },
+      {
+       "level": 1,
+       "text": "四、基尔霍夫定律",
+       "anchor": "c1s0b59"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "1.2",
+     "kind": "ex",
+     "page": 12,
+     "endPage": 28,
+     "items": 21
+    },
+    {
+     "key": "1.3",
+     "kind": "exam",
+     "page": 29,
+     "endPage": 32,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 19,
+    "byKind": {
+     "结论": 10,
+     "注意": 5,
+     "公式": 2,
+     "技巧": 1,
+     "推论": 1
+    }
+   }
+  },
+  {
+   "n": 2,
+   "title": "电阻电路的等效变换",
+   "page": 33,
+   "sections": [
+    {
+     "key": "2.1",
+     "kind": "notes",
+     "page": 33,
+     "endPage": 41,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、电路等效变换基本概念",
+       "anchor": "c2s0b0"
+      },
+      {
+       "level": 1,
+       "text": "二、电阻的等效变换",
+       "anchor": "c2s0b5"
+      },
+      {
+       "level": 2,
+       "text": "1 电阻的串联和并联",
+       "anchor": "c2s0b6"
+      },
+      {
+       "level": 2,
+       "text": "2 △联结与 Y 联结的等效变换",
+       "anchor": "c2s0b14"
+      },
+      {
+       "level": 2,
+       "text": "3 平衡电桥电路",
+       "anchor": "c2s0b24"
+      },
+      {
+       "level": 1,
+       "text": "三、含源支路的等效变换",
+       "anchor": "c2s0b28"
+      },
+      {
+       "level": 2,
+       "text": "1 理想电源的串、并联",
+       "anchor": "c2s0b29"
+      },
+      {
+       "level": 2,
+       "text": "2 实际电源模型的等效变换",
+       "anchor": "c2s0b33"
+      },
+      {
+       "level": 1,
+       "text": "四、无源二端网络的输入电阻",
+       "anchor": "c2s0b39"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "2.2",
+     "kind": "ex",
+     "page": 42,
+     "endPage": 69,
+     "items": 19
+    },
+    {
+     "key": "2.3",
+     "kind": "exam",
+     "page": 70,
+     "endPage": 74,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "公式": 8,
+     "注意": 3,
+     "结论": 3,
+     "推论": 2,
+     "技巧": 4
+    }
+   }
+  },
+  {
+   "n": 3,
+   "title": "电阻电路的一般分析",
+   "page": 75,
+   "sections": [
+    {
+     "key": "3.1",
+     "kind": "notes",
+     "page": 75,
+     "endPage": 78,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、电路图论的基本概念",
+       "anchor": "c3s0b0"
+      },
+      {
+       "level": 2,
+       "text": "1 图（ G ）",
+       "anchor": "c3s0b1"
+      },
+      {
+       "level": 2,
+       "text": "2 树（ T ）",
+       "anchor": "c3s0b6"
+      },
+      {
+       "level": 1,
+       "text": "二、 KCL 和 KVL 的独立方程数",
+       "anchor": "c3s0b12"
+      },
+      {
+       "level": 1,
+       "text": "三、电路的分析方法",
+       "anchor": "c3s0b15"
+      },
+      {
+       "level": 2,
+       "text": "1 支路电流法",
+       "anchor": "c3s0b16"
+      },
+      {
+       "level": 2,
+       "text": "2 网孔电流法",
+       "anchor": "c3s0b22"
+      },
+      {
+       "level": 2,
+       "text": "3 回路电流法",
+       "anchor": "c3s0b30"
+      },
+      {
+       "level": 2,
+       "text": "4 节点电压法",
+       "anchor": "c3s0b40"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "3.2",
+     "kind": "ex",
+     "page": 79,
+     "endPage": 110,
+     "items": 23
+    },
+    {
+     "key": "3.3",
+     "kind": "exam",
+     "page": 111,
+     "endPage": 132,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 19,
+    "byKind": {
+     "注意": 5,
+     "结论": 7,
+     "推论": 2,
+     "公式": 2,
+     "技巧": 3
+    }
+   }
+  },
+  {
+   "n": 4,
+   "title": "电路定理",
+   "page": 133,
+   "sections": [
+    {
+     "key": "4.1",
+     "kind": "notes",
+     "page": 133,
+     "endPage": 136,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、叠加定理",
+       "anchor": "c4s0b0"
+      },
+      {
+       "level": 1,
+       "text": "二、替代定理",
+       "anchor": "c4s0b4"
+      },
+      {
+       "level": 1,
+       "text": "三、戴维南定理和诺顿定理",
+       "anchor": "c4s0b7"
+      },
+      {
+       "level": 1,
+       "text": "四、最大功率传输定理",
+       "anchor": "c4s0b17"
+      },
+      {
+       "level": 1,
+       "text": "五、特勒根定理",
+       "anchor": "c4s0b21"
+      },
+      {
+       "level": 1,
+       "text": "六、互易定理",
+       "anchor": "c4s0b25"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "4.2",
+     "kind": "ex",
+     "page": 137,
+     "endPage": 173,
+     "items": 24
+    },
+    {
+     "key": "4.3",
+     "kind": "exam",
+     "page": 174,
+     "endPage": 199,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "结论": 8,
+     "注意": 7,
+     "技巧": 3,
+     "公式": 2
+    }
+   }
+  },
+  {
+   "n": 5,
+   "title": "含有运算放大器的电阻电路",
+   "page": 200,
+   "sections": [
+    {
+     "key": "5.1",
+     "kind": "notes",
+     "page": 200,
+     "endPage": 204,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、运算放大器的电路模型",
+       "anchor": "c5s0b0"
+      },
+      {
+       "level": 2,
+       "text": "1 运算放大器",
+       "anchor": "c5s0b1"
+      },
+      {
+       "level": 2,
+       "text": "2 运放的特性 —— 输入输出关系",
+       "anchor": "c5s0b7"
+      },
+      {
+       "level": 1,
+       "text": "二、含有理想运算放大器的电路的分析",
+       "anchor": "c5s0b13"
+      },
+      {
+       "level": 2,
+       "text": "1 理想运算放大器的基本特征",
+       "anchor": "c5s0b14"
+      },
+      {
+       "level": 2,
+       "text": "2 常用理想运放电路",
+       "anchor": "c5s0b20"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "5.2",
+     "kind": "ex",
+     "page": 205,
+     "endPage": 213,
+     "items": 6
+    },
+    {
+     "key": "5.3",
+     "kind": "exam",
+     "page": 214,
+     "endPage": 221,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 18,
+    "byKind": {
+     "注意": 4,
+     "结论": 7,
+     "公式": 3,
+     "推论": 2,
+     "技巧": 2
+    }
+   }
+  },
+  {
+   "n": 6,
+   "title": "储能元件",
+   "page": 222,
+   "sections": [
+    {
+     "key": "6.1",
+     "kind": "notes",
+     "page": 222,
+     "endPage": 227,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、电容元件",
+       "anchor": "c6s0b0"
+      },
+      {
+       "level": 2,
+       "text": "1 库 - 伏特性",
+       "anchor": "c6s0b1"
+      },
+      {
+       "level": 2,
+       "text": "2 微分与积分关系",
+       "anchor": "c6s0b4"
+      },
+      {
+       "level": 2,
+       "text": "3 功率和能量",
+       "anchor": "c6s0b6"
+      },
+      {
+       "level": 1,
+       "text": "二、电感元件",
+       "anchor": "c6s0b11"
+      },
+      {
+       "level": 2,
+       "text": "1 元件特性（ Ψ-i 特性）",
+       "anchor": "c6s0b12"
+      },
+      {
+       "level": 2,
+       "text": "2 微分积分关系",
+       "anchor": "c6s0b15"
+      },
+      {
+       "level": 2,
+       "text": "3 功率和能量",
+       "anchor": "c6s0b17"
+      },
+      {
+       "level": 1,
+       "text": "三、电容、电感元件的串并联",
+       "anchor": "c6s0b22"
+      },
+      {
+       "level": 2,
+       "text": "1 电容的串联",
+       "anchor": "c6s0b23"
+      },
+      {
+       "level": 2,
+       "text": "2 电容的并联",
+       "anchor": "c6s0b30"
+      },
+      {
+       "level": 2,
+       "text": "3 电感的串联",
+       "anchor": "c6s0b36"
+      },
+      {
+       "level": 2,
+       "text": "4 电感的并联",
+       "anchor": "c6s0b41"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "6.2",
+     "kind": "ex",
+     "page": 228,
+     "endPage": 237,
+     "items": 8
+    },
+    {
+     "key": "6.3",
+     "kind": "exam",
+     "page": 238,
+     "endPage": 240,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "结论": 5,
+     "技巧": 1,
+     "公式": 9,
+     "注意": 2,
+     "推论": 3
+    }
+   }
+  },
+  {
+   "n": 7,
+   "title": "一阶电路和二阶电路的时域分析",
+   "page": 241,
+   "sections": [
+    {
+     "key": "7.1",
+     "kind": "notes",
+     "page": 241,
+     "endPage": 251,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、动态电路的方程及其初始条件",
+       "anchor": "c7s0b0"
+      },
+      {
+       "level": 1,
+       "text": "二、一阶电路的时域分析",
+       "anchor": "c7s0b5"
+      },
+      {
+       "level": 2,
+       "text": "1 一阶电路的零输入响应",
+       "anchor": "c7s0b6"
+      },
+      {
+       "level": 2,
+       "text": "2 一阶电路的零状态响应",
+       "anchor": "c7s0b21"
+      },
+      {
+       "level": 2,
+       "text": "3 三要素法求一阶电路的全响应",
+       "anchor": "c7s0b32"
+      },
+      {
+       "level": 1,
+       "text": "三、二阶电路的时域分析",
+       "anchor": "c7s0b42"
+      },
+      {
+       "level": 2,
+       "text": "1 RLC 串联电路的零输入响应",
+       "anchor": "c7s0b43"
+      },
+      {
+       "level": 2,
+       "text": "2 二阶电路的零状态响应和全响应",
+       "anchor": "c7s0b69"
+      },
+      {
+       "level": 1,
+       "text": "四、一阶电路的冲激响应",
+       "anchor": "c7s0b79"
+      },
+      {
+       "level": 2,
+       "text": "1 RC 并联一阶电路",
+       "anchor": "c7s0b81"
+      },
+      {
+       "level": 2,
+       "text": "2 求解方法",
+       "anchor": "c7s0b84"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "7.2",
+     "kind": "ex",
+     "page": 252,
+     "endPage": 302,
+     "items": 26
+    },
+    {
+     "key": "7.3",
+     "kind": "exam",
+     "page": 303,
+     "endPage": 334,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "结论": 8,
+     "注意": 3,
+     "技巧": 4,
+     "公式": 4,
+     "推论": 1
+    }
+   }
+  },
+  {
+   "n": 8,
+   "title": "相量法",
+   "page": 335,
+   "sections": [
+    {
+     "key": "8.1",
+     "kind": "notes",
+     "page": 335,
+     "endPage": 338,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、复数相关知识点",
+       "anchor": "c8s0b0"
+      },
+      {
+       "level": 2,
+       "text": "1 复数的表示形式",
+       "anchor": "c8s0b1"
+      },
+      {
+       "level": 2,
+       "text": "2 复数运算",
+       "anchor": "c8s0b11"
+      },
+      {
+       "level": 1,
+       "text": "二、相量法基础",
+       "anchor": "c8s0b22"
+      },
+      {
+       "level": 1,
+       "text": "三、电路定律的相量形式",
+       "anchor": "c8s0b32"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "8.2",
+     "kind": "ex",
+     "page": 339,
+     "endPage": 354,
+     "items": 14
+    },
+    {
+     "key": "8.3",
+     "kind": "exam",
+     "page": 355,
+     "endPage": 357,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 19,
+    "byKind": {
+     "公式": 10,
+     "技巧": 2,
+     "注意": 6,
+     "结论": 1
+    }
+   }
+  },
+  {
+   "n": 9,
+   "title": "正弦稳态电路的分析",
+   "page": 358,
+   "sections": [
+    {
+     "key": "9.1",
+     "kind": "notes",
+     "page": 358,
+     "endPage": 360,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、阻抗和导纳及其相互等效变换",
+       "anchor": "c9s0b0"
+      },
+      {
+       "level": 2,
+       "text": "1 基本知识",
+       "anchor": "c9s0b1"
+      },
+      {
+       "level": 2,
+       "text": "2 串并联分析",
+       "anchor": "c9s0b8"
+      },
+      {
+       "level": 1,
+       "text": "二、正弦稳态电路的相量分析",
+       "anchor": "c9s0b12"
+      },
+      {
+       "level": 2,
+       "text": "1 电路的相量图",
+       "anchor": "c9s0b13"
+      },
+      {
+       "level": 2,
+       "text": "2 相量法分析正弦稳态电路",
+       "anchor": "c9s0b17"
+      },
+      {
+       "level": 1,
+       "text": "三、正弦稳态电路的功率分析",
+       "anchor": "c9s0b22"
+      },
+      {
+       "level": 1,
+       "text": "四、最大功率传输",
+       "anchor": "c9s0b44"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "9.2",
+     "kind": "ex",
+     "page": 361,
+     "endPage": 392,
+     "items": 16
+    },
+    {
+     "key": "9.3",
+     "kind": "exam",
+     "page": 393,
+     "endPage": 422,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "结论": 8,
+     "公式": 7,
+     "技巧": 2,
+     "注意": 2,
+     "推论": 1
+    }
+   }
+  },
+  {
+   "n": 10,
+   "title": "含有耦合电感的电路",
+   "page": 423,
+   "sections": [
+    {
+     "key": "10.1",
+     "kind": "notes",
+     "page": 423,
+     "endPage": 429,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、互感",
+       "anchor": "c10s0b0"
+      },
+      {
+       "level": 2,
+       "text": "1 互感现象及互感磁链",
+       "anchor": "c10s0b1"
+      },
+      {
+       "level": 2,
+       "text": "2 互感系数",
+       "anchor": "c10s0b5"
+      },
+      {
+       "level": 2,
+       "text": "3 耦合因数",
+       "anchor": "c10s0b10"
+      },
+      {
+       "level": 2,
+       "text": "4 互感元件的伏安关系",
+       "anchor": "c10s0b12"
+      },
+      {
+       "level": 1,
+       "text": "二、含有耦合电感电路的计算",
+       "anchor": "c10s0b17"
+      },
+      {
+       "level": 2,
+       "text": "1 耦合电感的串联等效",
+       "anchor": "c10s0b19"
+      },
+      {
+       "level": 2,
+       "text": "2 耦合电感的并联等效",
+       "anchor": "c10s0b23"
+      },
+      {
+       "level": 2,
+       "text": "3 其他连接",
+       "anchor": "c10s0b27"
+      },
+      {
+       "level": 2,
+       "text": "4 耦合电感的功率",
+       "anchor": "c10s0b34"
+      },
+      {
+       "level": 1,
+       "text": "三、空心变压器与理想变压器",
+       "anchor": "c10s0b43"
+      },
+      {
+       "level": 2,
+       "text": "1 空心变压器",
+       "anchor": "c10s0b45"
+      },
+      {
+       "level": 2,
+       "text": "2 理想变压器",
+       "anchor": "c10s0b49"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "10.2",
+     "kind": "ex",
+     "page": 430,
+     "endPage": 454,
+     "items": 20
+    },
+    {
+     "key": "10.3",
+     "kind": "exam",
+     "page": 455,
+     "endPage": 479,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "注意": 7,
+     "结论": 6,
+     "公式": 5,
+     "技巧": 2
+    }
+   }
+  },
+  {
+   "n": 11,
+   "title": "电路的频率响应",
+   "page": 480,
+   "sections": [
+    {
+     "key": "11.1",
+     "kind": "notes",
+     "page": 480,
+     "endPage": 484,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、网络函数",
+       "anchor": "c11s0b0"
+      },
+      {
+       "level": 2,
+       "text": "1 驱动点函数",
+       "anchor": "c11s0b2"
+      },
+      {
+       "level": 2,
+       "text": "2 转移函数（传递函数）",
+       "anchor": "c11s0b9"
+      },
+      {
+       "level": 1,
+       "text": "二、 RLC 串联谐振",
+       "anchor": "c11s0b23"
+      },
+      {
+       "level": 2,
+       "text": "1 谐振条件",
+       "anchor": "c11s0b26"
+      },
+      {
+       "level": 2,
+       "text": "2 串联谐振电路的特点",
+       "anchor": "c11s0b30"
+      },
+      {
+       "level": 2,
+       "text": "3 品质因数",
+       "anchor": "c11s0b34"
+      },
+      {
+       "level": 2,
+       "text": "4 谐振时的功率计算",
+       "anchor": "c11s0b36"
+      },
+      {
+       "level": 1,
+       "text": "三、 RLC 并联谐振",
+       "anchor": "c11s0b43"
+      },
+      {
+       "level": 2,
+       "text": "1 RLC 并联谐振的条件",
+       "anchor": "c11s0b46"
+      },
+      {
+       "level": 2,
+       "text": "2 RLC 并联谐振电路的特点",
+       "anchor": "c11s0b49"
+      },
+      {
+       "level": 2,
+       "text": "3 品质因数",
+       "anchor": "c11s0b55"
+      },
+      {
+       "level": 2,
+       "text": "4 谐振时的功率计算",
+       "anchor": "c11s0b57"
+      },
+      {
+       "level": 1,
+       "text": "四、滤波器",
+       "anchor": "c11s0b59"
+      },
+      {
+       "level": 2,
+       "text": "1 滤波器主要分为四类",
+       "anchor": "c11s0b60"
+      },
+      {
+       "level": 2,
+       "text": "2 滤波器的用途",
+       "anchor": "c11s0b62"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "11.2",
+     "kind": "ex",
+     "page": 485,
+     "endPage": 506,
+     "items": 14
+    },
+    {
+     "key": "11.3",
+     "kind": "exam",
+     "page": 507,
+     "endPage": 518,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "结论": 11,
+     "公式": 5,
+     "注意": 3,
+     "技巧": 1
+    }
+   }
+  },
+  {
+   "n": 12,
+   "title": "三相电路",
+   "page": 519,
+   "sections": [
+    {
+     "key": "12.1",
+     "kind": "notes",
+     "page": 519,
+     "endPage": 523,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、对称三相电源",
+       "anchor": "c12s0b0"
+      },
+      {
+       "level": 1,
+       "text": "二、三相电路的线电压（电流）与相电压（电流）的关系",
+       "anchor": "c12s0b4"
+      },
+      {
+       "level": 1,
+       "text": "三、对称三相电路的分析计算",
+       "anchor": "c12s0b8"
+      },
+      {
+       "level": 1,
+       "text": "四、三相电路的功率",
+       "anchor": "c12s0b12"
+      },
+      {
+       "level": 2,
+       "text": "1 三相电路的功率计算",
+       "anchor": "c12s0b13"
+      },
+      {
+       "level": 2,
+       "text": "2 三相电路有功功率的测量",
+       "anchor": "c12s0b18"
+      },
+      {
+       "level": 1,
+       "text": "五、不对称三相电路的概念",
+       "anchor": "c12s0b23"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "12.2",
+     "kind": "ex",
+     "page": 524,
+     "endPage": 546,
+     "items": 14
+    },
+    {
+     "key": "12.3",
+     "kind": "exam",
+     "page": 547,
+     "endPage": 568,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 19,
+    "byKind": {
+     "结论": 8,
+     "注意": 6,
+     "公式": 4,
+     "技巧": 1
+    }
+   }
+  },
+  {
+   "n": 13,
+   "title": "非正弦周期电流电路和信号的频谱",
+   "page": 569,
+   "sections": [
+    {
+     "key": "13.1",
+     "kind": "notes",
+     "page": 569,
+     "endPage": 572,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、非正弦周期函数的傅里叶分解",
+       "anchor": "c13s0b0"
+      },
+      {
+       "level": 2,
+       "text": "1 周期函数分解为傅里叶级数",
+       "anchor": "c13s0b1"
+      },
+      {
+       "level": 2,
+       "text": "2 周期函数的谐波定性分析",
+       "anchor": "c13s0b5"
+      },
+      {
+       "level": 1,
+       "text": "二、有效值、平均值和平均功率",
+       "anchor": "c13s0b8"
+      },
+      {
+       "level": 2,
+       "text": "1 非正弦周期电流电路的有效值和平均值",
+       "anchor": "c13s0b9"
+      },
+      {
+       "level": 2,
+       "text": "2 非正弦周期电流电路的功率计算",
+       "anchor": "c13s0b13"
+      },
+      {
+       "level": 1,
+       "text": "三、非正弦周期电流电路的计算",
+       "anchor": "c13s0b16"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "13.2",
+     "kind": "ex",
+     "page": 573,
+     "endPage": 589,
+     "items": 12
+    },
+    {
+     "key": "13.3",
+     "kind": "exam",
+     "page": 590,
+     "endPage": 604,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "结论": 9,
+     "技巧": 4,
+     "注意": 5,
+     "公式": 1,
+     "推论": 1
+    }
+   }
+  },
+  {
+   "n": 14,
+   "title": "线性动态电路的复频域分析",
+   "page": 605,
+   "sections": [
+    {
+     "key": "14.1",
+     "kind": "notes",
+     "page": 605,
+     "endPage": 610,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、拉氏变换及其基本性质",
+       "anchor": "c14s0b0"
+      },
+      {
+       "level": 1,
+       "text": "二、拉氏反变换的部分分式展开法",
+       "anchor": "c14s0b12"
+      },
+      {
+       "level": 2,
+       "text": "1 部分分式展开法概述",
+       "anchor": "c14s0b13"
+      },
+      {
+       "level": 2,
+       "text": "2 部分分式展开法求拉氏反变换的步骤",
+       "anchor": "c14s0b18"
+      },
+      {
+       "level": 1,
+       "text": "三、应用拉氏变换法分析线性电路（运算法）",
+       "anchor": "c14s0b23"
+      },
+      {
+       "level": 2,
+       "text": "1 KCL 、 KVL 复频域形式",
+       "anchor": "c14s0b24"
+      },
+      {
+       "level": 2,
+       "text": "2 电路元件的运算模型",
+       "anchor": "c14s0b26"
+      },
+      {
+       "level": 2,
+       "text": "3 运算法求解步骤",
+       "anchor": "c14s0b35"
+      },
+      {
+       "level": 1,
+       "text": "四、网络函数",
+       "anchor": "c14s0b40"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "14.2",
+     "kind": "ex",
+     "page": 611,
+     "endPage": 655,
+     "items": 34
+    },
+    {
+     "key": "14.3",
+     "kind": "exam",
+     "page": 656,
+     "endPage": 670,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "结论": 3,
+     "公式": 12,
+     "注意": 1,
+     "技巧": 4
+    }
+   }
+  },
+  {
+   "n": 15,
+   "title": "电路方程的矩阵形式",
+   "page": 671,
+   "sections": [
+    {
+     "key": "15.1",
+     "kind": "notes",
+     "page": 671,
+     "endPage": 675,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、割集",
+       "anchor": "c15s0b0"
+      },
+      {
+       "level": 2,
+       "text": "1 定义及条件",
+       "anchor": "c15s0b1"
+      },
+      {
+       "level": 2,
+       "text": "2 割集的特点",
+       "anchor": "c15s0b6"
+      },
+      {
+       "level": 1,
+       "text": "二、关联矩阵、回路矩阵、割集矩阵",
+       "anchor": "c15s0b13"
+      },
+      {
+       "level": 2,
+       "text": "4 A 、 Bf、 Qf之间的关系",
+       "anchor": "c15s0b21"
+      },
+      {
+       "level": 1,
+       "text": "三、回路电流方程的矩阵形式",
+       "anchor": "c15s0b28"
+      },
+      {
+       "level": 2,
+       "text": "1 KCL 、 KVL 的矩阵表示形式",
+       "anchor": "c15s0b29"
+      },
+      {
+       "level": 2,
+       "text": "2 电路分析的四种常用方法",
+       "anchor": "c15s0b32"
+      },
+      {
+       "level": 2,
+       "text": "3 列写矩阵形式的回路电流方程注意事项",
+       "anchor": "c15s0b35"
+      },
+      {
+       "level": 1,
+       "text": "四、节点和割集电压方程的矩阵形式",
+       "anchor": "c15s0b38"
+      },
+      {
+       "level": 1,
+       "text": "五、状态方程",
+       "anchor": "c15s0b49"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "15.2",
+     "kind": "ex",
+     "page": 676,
+     "endPage": 702,
+     "items": 4
+    },
+    {
+     "key": "15.3",
+     "kind": "exam",
+     "page": 703,
+     "endPage": 709,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "结论": 8,
+     "注意": 6,
+     "推论": 2,
+     "公式": 3,
+     "技巧": 1
+    }
+   }
+  },
+  {
+   "n": 16,
+   "title": "二端口网络",
+   "page": 710,
+   "sections": [
+    {
+     "key": "16.1",
+     "kind": "notes",
+     "page": 710,
+     "endPage": 716,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、二端口特性方程",
+       "anchor": "c16s0b0"
+      },
+      {
+       "level": 1,
+       "text": "二、二端口网络的等效电路",
+       "anchor": "c16s0b13"
+      },
+      {
+       "level": 1,
+       "text": "三、二端口网络的连接",
+       "anchor": "c16s0b25"
+      },
+      {
+       "level": 2,
+       "text": "1 串联",
+       "anchor": "c16s0b26"
+      },
+      {
+       "level": 2,
+       "text": "2 并联",
+       "anchor": "c16s0b29"
+      },
+      {
+       "level": 2,
+       "text": "3 级联",
+       "anchor": "c16s0b32"
+      },
+      {
+       "level": 2,
+       "text": "4 串并联",
+       "anchor": "c16s0b35"
+      },
+      {
+       "level": 2,
+       "text": "5 并串联",
+       "anchor": "c16s0b38"
+      },
+      {
+       "level": 1,
+       "text": "四、二端口的转移函数",
+       "anchor": "c16s0b41"
+      },
+      {
+       "level": 1,
+       "text": "五、回转器和负阻抗变换器",
+       "anchor": "c16s0b46"
+      },
+      {
+       "level": 2,
+       "text": "1 回转器",
+       "anchor": "c16s0b47"
+      },
+      {
+       "level": 2,
+       "text": "2 负阻抗变换器",
+       "anchor": "c16s0b54"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "16.2",
+     "kind": "ex",
+     "page": 717,
+     "endPage": 736,
+     "items": 10
+    },
+    {
+     "key": "16.3",
+     "kind": "exam",
+     "page": 737,
+     "endPage": 754,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "结论": 9,
+     "注意": 7,
+     "公式": 4
+    }
+   }
+  },
+  {
+   "n": 17,
+   "title": "非线性电路",
+   "page": 755,
+   "sections": [
+    {
+     "key": "17.1",
+     "kind": "notes",
+     "page": 755,
+     "endPage": 758,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、非线性电阻",
+       "anchor": "c17s0b0"
+      },
+      {
+       "level": 2,
+       "text": "1 非线性电阻元件分类",
+       "anchor": "c17s0b4"
+      },
+      {
+       "level": 2,
+       "text": "2 静态电阻与动态电阻（如图 17-1-3 所示）",
+       "anchor": "c17s0b9"
+      },
+      {
+       "level": 2,
+       "text": "3 非线性电阻的串联与并联",
+       "anchor": "c17s0b14"
+      },
+      {
+       "level": 1,
+       "text": "二、非线性电容",
+       "anchor": "c17s0b19"
+      },
+      {
+       "level": 2,
+       "text": "1 非线性电容元件分类",
+       "anchor": "c17s0b22"
+      },
+      {
+       "level": 2,
+       "text": "2 参数",
+       "anchor": "c17s0b26"
+      },
+      {
+       "level": 1,
+       "text": "三、非线性电感",
+       "anchor": "c17s0b28"
+      },
+      {
+       "level": 2,
+       "text": "1 非线性电感元件分类",
+       "anchor": "c17s0b31"
+      },
+      {
+       "level": 2,
+       "text": "2 参数",
+       "anchor": "c17s0b35"
+      },
+      {
+       "level": 1,
+       "text": "四、非线性电路",
+       "anchor": "c17s0b37"
+      },
+      {
+       "level": 2,
+       "text": "1 小信号分析法",
+       "anchor": "c17s0b39"
+      },
+      {
+       "level": 2,
+       "text": "2 静态工作点的确定",
+       "anchor": "c17s0b44"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "17.2",
+     "kind": "ex",
+     "page": 759,
+     "endPage": 773,
+     "items": 13
+    },
+    {
+     "key": "17.3",
+     "kind": "exam",
+     "page": 774,
+     "endPage": 778,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "结论": 9,
+     "注意": 3,
+     "公式": 5,
+     "推论": 1,
+     "技巧": 2
+    }
+   }
+  },
+  {
+   "n": 18,
+   "title": "均匀传输线",
+   "page": 779,
+   "sections": [
+    {
+     "key": "18.1",
+     "kind": "notes",
+     "page": 779,
+     "endPage": 781,
+     "toc": [
+      {
+       "level": 1,
+       "text": "一、均匀传输线的微分方程",
+       "anchor": "c18s0b2"
+      },
+      {
+       "level": 1,
+       "text": "二、均匀传输线方程的正弦稳态解",
+       "anchor": "c18s0b6"
+      },
+      {
+       "level": 1,
+       "text": "三、均匀传输线上的行波及负载效应",
+       "anchor": "c18s0b9"
+      },
+      {
+       "level": 1,
+       "text": "四、无损耗均匀传输线的特性",
+       "anchor": "c18s0b14"
+      }
+     ],
+     "items": 0
+    },
+    {
+     "key": "18.2",
+     "kind": "ex",
+     "page": 782,
+     "endPage": 788,
+     "items": 4
+    },
+    {
+     "key": "18.3",
+     "kind": "exam",
+     "page": 789,
+     "endPage": 789,
+     "items": 0
+    }
+   ],
+   "kp": {
+    "count": 20,
+    "byKind": {
+     "注意": 4,
+     "推论": 1,
+     "结论": 8,
+     "公式": 6,
+     "技巧": 1
+    }
+   }
+  }
+ ],
+ "kpTotal": 354
+}

@@ -1,0 +1,198 @@
+{
+ "n": 1,
+ "title": "电路模型和电路定律",
+ "page": 5,
+ "sections": [
+  {
+   "key": "1.1",
+   "kind": "notes",
+   "page": 5,
+   "endPage": 11,
+   "toc": [
+    {
+     "level": 1,
+     "text": "一、电压和电流的参考方向",
+     "anchor": "c1s0b1"
+    },
+    {
+     "level": 2,
+     "text": "1 电流的参考方向",
+     "anchor": "c1s0b3"
+    },
+    {
+     "level": 2,
+     "text": "2 电压的参考方向",
+     "anchor": "c1s0b7"
+    },
+    {
+     "level": 2,
+     "text": "3 关联参考方向",
+     "anchor": "c1s0b11"
+    },
+    {
+     "level": 1,
+     "text": "二、电功率和能量",
+     "anchor": "c1s0b14"
+    },
+    {
+     "level": 1,
+     "text": "三、电路元件、电阻元件、电压源和电流源、受控电源",
+     "anchor": "c1s0b22"
+    },
+    {
+     "level": 2,
+     "text": "1 无源元件及其伏安特性",
+     "anchor": "c1s0b24"
+    },
+    {
+     "level": 2,
+     "text": "2 有源元件",
+     "anchor": "c1s0b35"
+    },
+    {
+     "level": 1,
+     "text": "四、基尔霍夫定律",
+     "anchor": "c1s0b59"
+    }
+   ],
+   "html": "<p class=\"blk-p\" id=\"c1s0b0\">电路是指将电气设备和电器元件根据功能要求按一定方式连接起来而构成的集合体。而把实际的电路经过理想化、抽象化和集总假设后而得到的理想化电路称为电路模型。</p><h2 class=\"blk-h1\" id=\"c1s0b1\">一、电压和电流的参考方向</h2><aside class=\"kp k-warn\" id=\"kp-1-6\"><div class=\"kp-h\"><span class=\"kp-kind\">注意</span><span class=\"kp-title\">先定参考方向</span></div><div class=\"kp-t\">分析电路前必须先选定电压和电流的参考方向并在图上标注，一旦选定，分析过程中不得再随意改变。</div><a class=\"kp-src\" href=\"#/video/1?t=2264\">第 1 集 · 37:44 ↗</a></aside><p class=\"blk-p\" id=\"c1s0b2\">因为，电流和电压都是标量，电流和电压的实际方向可能是未知的，也可能是随时间变动的，所以，有必要指定电流和电压的参考方向。</p><h3 class=\"blk-h2\" id=\"c1s0b3\">1 电流的参考方向</h3><aside class=\"kp k-formula\" id=\"kp-1-3\"><div class=\"kp-h\"><span class=\"kp-kind\">公式</span><span class=\"kp-title\">时变电流用微商</span></div><div class=\"kp-t\">电量随时间变化时电流就不再恒定，大写字母不再适用，电流要写成微商 i=dq/dt。</div><a class=\"kp-src\" href=\"#/video/1?t=1286\">第 1 集 · 21:26 ↗</a></aside><p class=\"blk-p\" id=\"c1s0b4\">电流的参考方向可以任意指定。分析电路时，若参考方向（见实线箭头）与实际方向（见虚线箭头）一致，则 i ＞ 0，如图 1-1-1 （a）所示；反之 i ＜ 0，如图 1-1-1 （b）所示。</p><p class=\"blk-p\" id=\"c1s0b5\">表示方法：一般用箭头表示，也可以用双下标表示，如 iAB表示电流参考方向是由 A 到 B。</p><figure class=\"blk-fig\" id=\"c1s0b6\"><img loading=\"lazy\" src=\"data/img/p5_0.png\" alt=\"图 1-1-1 电流的参考方向\"><figcaption>图 1-1-1 电流的参考方向</figcaption></figure><h3 class=\"blk-h2\" id=\"c1s0b7\">2 电压的参考方向</h3><aside class=\"kp k-formula\" id=\"kp-1-4\"><div class=\"kp-h\"><span class=\"kp-kind\">公式</span><span class=\"kp-title\">电位差是起点减终点</span></div><div class=\"kp-t\">电位差 UAB 等于起点电位减去终点电位，即 φA−φB，要注意下标与起终点的对应关系。</div><a class=\"kp-src\" href=\"#/video/1?t=1659\">第 1 集 · 27:39 ↗</a></aside><aside class=\"kp k-concl\" id=\"kp-1-5\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">电位依赖参考点</span></div><div class=\"kp-t\">参考点可以任意选取，选定后电路中各点的电位就确定了，电位的值依托于参考点的选取。</div><a class=\"kp-src\" href=\"#/video/1?t=1965\">第 1 集 · 32:45 ↗</a></aside><p class=\"blk-p\" id=\"c1s0b8\">电压的参考方向也可以任意指定。分析电路时，若参考方向与实际方向一致，则 u ＞ 0，如图 1-1-2 （a）所示；反之 u ＜0，如图 1-1-2 （b）所示。</p><p class=\"blk-p\" id=\"c1s0b9\">表示方法：用正极性（＋）表示高电位，负极性（－）表示低电位，而正极指向负极的方向就是电压的参考方向，也可以用双下标表示，如 uAB表示电压参考方向是由 A 到 B。</p><figure class=\"blk-fig\" id=\"c1s0b10\"><img loading=\"lazy\" src=\"data/img/p6_0.png\" alt=\"图 1-1-2 电压的参考方向\"><figcaption>图 1-1-2 电压的参考方向</figcaption></figure><h3 class=\"blk-h2\" id=\"c1s0b11\">3 关联参考方向</h3><aside class=\"kp k-warn\" id=\"kp-1-10\"><div class=\"kp-h\"><span class=\"kp-kind\">注意</span><span class=\"kp-title\">非关联要加负号</span></div><div class=\"kp-t\">电压电流为非关联参考方向时，欧姆定律要加负号 U=−RI；用电导表示则为 I=−GU，公式必须与参考方向配套。</div><a class=\"kp-src\" href=\"#/video/2?t=38\">第 2 集 · 00:38 ↗</a></aside><p class=\"blk-p\" id=\"c1s0b12\">对于一个元件或支路来说：如果指定元件的电流的参考方向是从电压参考极性的 “＋” 指向 “－”，即两者的参考方向一致，则把电流和电压的这种参考方向称为关联参考方向；反之称为非关联参考方向。如图 1-1-3 所示，对 A 而言， u 和 i 为非关联方向；对 B 而言， u 和 i 为关联方向。</p><figure class=\"blk-fig\" id=\"c1s0b13\"><img loading=\"lazy\" src=\"data/img/p6_1.png\" alt=\"图 1-1-3 关联参考方向的定义\"><figcaption>图 1-1-3 关联参考方向的定义</figcaption></figure><h2 class=\"blk-h1\" id=\"c1s0b14\">二、电功率和能量</h2><aside class=\"kp k-tip\" id=\"kp-1-7\"><div class=\"kp-h\"><span class=\"kp-kind\">技巧</span><span class=\"kp-title\">功率正负号口诀</span></div><div class=\"kp-t\">求功率先写 P=UI，再定符号：电压电流关联取正号、非关联取负号；求吸收功率取正号，求发出功率取负号。</div><a class=\"kp-src\" href=\"#/video/1?t=2946\">第 1 集 · 49:06 ↗</a></aside><aside class=\"kp k-concl\" id=\"kp-1-8\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">功率守恒</span></div><div class=\"kp-t\">对一个完整电路，发出的功率等于吸收的功率，即电路的功率是守恒的。</div><a class=\"kp-src\" href=\"#/video/1?t=3208\">第 1 集 · 53:28 ↗</a></aside><p class=\"blk-p\" id=\"c1s0b15\">1 功率：</p><p class=\"blk-p\" id=\"c1s0b16\">其中，电路元件功率的计算公式如表 1-1-1 所示。功率的性质：</p><p class=\"blk-p\" id=\"c1s0b17\">① 在关联参考方向下，若 p ＝ ui ＞ 0，则元件实际吸收功率；若 p ＝ ui ＜ 0，则元件实际发出功率。</p><p class=\"blk-p\" id=\"c1s0b18\">② 在非关联参考方向下，若 p ＝ ui ＞ 0，则元件实际发出功率；若 p ＝ ui ＜ 0，则元件实际吸收功率。</p><p class=\"blk-formula\">功率守恒： ∑P ＝ 0 （∑P吸＝ ∑P发）</p><figure class=\"blk-img\" id=\"x6_0\"><img loading=\"lazy\" src=\"data/img/p6_2.png\" alt=\"原书插图\"></figure><p class=\"blk-p\" id=\"c1s0b20\">2 电能：</p><figure class=\"blk-fig\" id=\"c1s0b21\"><img loading=\"lazy\" src=\"data/img/p7_0.png\" alt=\"表 1-1-1 电路元件功率的计算公式\"><figcaption>表 1-1-1 电路元件功率的计算公式</figcaption></figure><h2 class=\"blk-h1\" id=\"c1s0b22\">三、电路元件、电阻元件、电压源和电流源、受控电源</h2><aside class=\"kp k-concl\" id=\"kp-1-1\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">理想元件的三个特征</span></div><div class=\"kp-t\">基本理想元件只有两个接线端子，可用电压或电流的函数关系描述，且不可再分解为其他元件。</div><a class=\"kp-src\" href=\"#/video/1?t=430\">第 1 集 · 07:10 ↗</a></aside><p class=\"blk-p\" id=\"c1s0b23\">电阻元件、电源元件和受控电源元件是常用的电路元件。电路元件可分为无源元件及有源元件两大类。</p><h3 class=\"blk-h2\" id=\"c1s0b24\">1 无源元件及其伏安特性</h3><aside class=\"kp k-warn\" id=\"kp-1-2\"><div class=\"kp-h\"><span class=\"kp-kind\">注意</span><span class=\"kp-title\">极限等效有条件</span></div><div class=\"kp-t\">电容、电感等效成开路或短路，只有在频率为无穷大的交流下才绝对成立；频率有限时二者都呈阻抗。</div><a class=\"kp-src\" href=\"#/video/1?t=1165\">第 1 集 · 19:25 ↗</a></aside><aside class=\"kp k-concl\" id=\"kp-1-9\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">欧姆定律的适用条件</span></div><div class=\"kp-t\">欧姆定律只适用于线性时不变的电阻，这种电阻的阻值 R 为常数。</div><a class=\"kp-src\" href=\"#/video/2?t=3\">第 2 集 · 00:03 ↗</a></aside><aside class=\"kp k-concl\" id=\"kp-1-11\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">电阻总是吸收功率</span></div><div class=\"kp-t\">电阻的实际电压与电流方向一定关联，所以吸收功率恒大于等于零、发出功率恒小于等于零，总是消耗能量。</div><a class=\"kp-src\" href=\"#/video/2?t=475\">第 2 集 · 07:55 ↗</a></aside><aside class=\"kp k-concl\" id=\"kp-1-12\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">开路的约束</span></div><div class=\"kp-t\">开路即把电阻支路去掉：支路电流必须为零，而电压可以任意，并不是电压为零。</div><a class=\"kp-src\" href=\"#/video/2?t=605\">第 2 集 · 10:05 ↗</a></aside><figure class=\"blk-fig\" id=\"c1s0b25\"><img loading=\"lazy\" src=\"data/img/p7_1.png\" alt=\"表 1-1-2 无源元件及其伏安特性\"><figcaption>表 1-1-2 无源元件及其伏安特性</figcaption></figure><p class=\"blk-p\" id=\"c1s0b26\">功率和能量比较：</p><p class=\"blk-p\" id=\"c1s0b27\">（1）电阻元件</p><figure class=\"blk-img\" id=\"x7_0\"><img loading=\"lazy\" src=\"data/img/p7_2.png\" alt=\"原书插图\"></figure><p class=\"blk-formula\">P ＝ ui ＝ Ri2＝ u2/R≥0 （关联参考方向）；</p><p class=\"blk-p\" id=\"c1s0b29\">电阻是耗能元件。</p><p class=\"blk-p\" id=\"c1s0b30\">（2）电容元件P ＝ ui ＝ Cu （du/dt）（u， i 取关联参考方向）；吸收功率，电容是无源元件。</p><p class=\"blk-p\" id=\"c1s0b31\">电容是储能元件。</p><p class=\"blk-p\" id=\"c1s0b32\">（3）电感元件</p><p class=\"blk-formula\">P ＝ ui ＝ Li （di/dt）（关联）；吸收功率，电感是无源元件。</p><p class=\"blk-p\" id=\"c1s0b34\">电感是储能元件。</p><h3 class=\"blk-h2\" id=\"c1s0b35\">2 有源元件</h3><aside class=\"kp k-warn\" id=\"kp-1-13\"><div class=\"kp-h\"><span class=\"kp-kind\">注意</span><span class=\"kp-title\">电压源不能短路</span></div><div class=\"kp-t\">电压源不能短路：导线是等势线，与电压源必须维持正负极电位差相矛盾，只能烧坏电源。</div><a class=\"kp-src\" href=\"#/video/2?t=1690\">第 2 集 · 28:10 ↗</a></aside><aside class=\"kp k-warn\" id=\"kp-1-14\"><div class=\"kp-h\"><span class=\"kp-kind\">注意</span><span class=\"kp-title\">电流源不能开路</span></div><div class=\"kp-t\">电流源不能开路，没有闭合回路时不能让它工作；不同电流值的电流源也不能串联。</div><a class=\"kp-src\" href=\"#/video/3?t=347\">第 3 集 · 05:47 ↗</a></aside><aside class=\"kp k-concl\" id=\"kp-1-15\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">受控源可当理想电源</span></div><div class=\"kp-t\">受控源不能独立作为激励，但对外供电时可当作理想电源分析，化简时不能丢失控制量。</div><a class=\"kp-src\" href=\"#/video/3?t=563\">第 3 集 · 09:23 ↗</a></aside><p class=\"blk-p\" id=\"c1s0b36\">（1）电源的分类（2）独立电源独立电源属于有源元件，是二端元件，在电路中起激励作用。电压源的电压与电流源的电流由电源本身决定，与电源外的其他电路无关。</p><figure class=\"blk-img\" id=\"x8_0\"><img loading=\"lazy\" src=\"data/img/p8_0.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x8_1\"><img loading=\"lazy\" src=\"data/img/p8_1.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x8_2\"><img loading=\"lazy\" src=\"data/img/p8_2.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x8_3\"><img loading=\"lazy\" src=\"data/img/p8_3.jpg\" alt=\"原书插图\"></figure><p class=\"blk-p\" id=\"c1s0b37\">① 理想电压源理想电压源的符号如图 1-1-4 （a）所示。其特点是其两端电压总能保持一定或一定的时间函数，且电压值大小由电压源本身决定，与流过它的电流值无关，如图 1-1-4 （b）所示。</p><figure class=\"blk-fig\" id=\"c1s0b38\"><img loading=\"lazy\" src=\"data/img/p9_0.jpg\" alt=\"图 1-1-4 （a）\"><figcaption>图 1-1-4 （a）</figcaption></figure><figure class=\"blk-fig\" id=\"c1s0b39\"><img loading=\"lazy\" src=\"data/img/p9_1.jpg\" alt=\"图 1-1-4 （b）\"><figcaption>图 1-1-4 （b）</figcaption></figure><p class=\"blk-p\" id=\"c1s0b40\">说明：a ．电压源为一种理想模型； b ．与电压源并联的元件，其端电压为电压源的值； c ．理想电压源的功率从理论上来说可以为无穷大。</p><p class=\"blk-p\" id=\"c1s0b41\">② 理想电流源理想电流源的符号如图 1-1-5 （a）所示。其特点是输出电流总能保持一定或一定的时间函数，且电流值大小由电流源本身决定，与外部电路及它的两端电压值无关，如图 1-1-5 （b）所示。</p><figure class=\"blk-fig\" id=\"c1s0b42\"><img loading=\"lazy\" src=\"data/img/p9_2.jpg\" alt=\"图 1-1-5 （a）\"><figcaption>图 1-1-5 （a）</figcaption></figure><figure class=\"blk-fig\" id=\"c1s0b43\"><img loading=\"lazy\" src=\"data/img/p10_0.jpg\" alt=\"图 1-1-5 （b）\"><figcaption>图 1-1-5 （b）</figcaption></figure><p class=\"blk-p\" id=\"c1s0b44\">说明：a ．电流源为一种理想模型； b ．与电流源串联的元件，流过其的电流为电流源的值； c ．理想电流源的功率从理论上来说可以为无穷大。</p><p class=\"blk-p\" id=\"c1s0b45\">（3）受控源受控源即非独立电源，它的电压（电流）受同一电路中其他支路的电压或电流所控制，分为如下四种类型：</p><p class=\"blk-p\" id=\"c1s0b46\">① 电压控制型电压源（VCVS）</p><p class=\"blk-formula\">VCVS 如图 1-1-6 所示，输出电压 u2＝ µu1。</p><figure class=\"blk-fig\" id=\"c1s0b48\"><img loading=\"lazy\" src=\"data/img/p10_1.jpg\" alt=\"图 1-1-6\"><figcaption>图 1-1-6</figcaption></figure><p class=\"blk-p\" id=\"c1s0b49\">② 电压控制型电流源（VCCS）</p><p class=\"blk-formula\">VCCS 如图 1-1-7 所示，输出电流 i2＝ gu1。</p><figure class=\"blk-fig\" id=\"c1s0b51\"><img loading=\"lazy\" src=\"data/img/p10_2.jpg\" alt=\"图 1-1-7\"><figcaption>图 1-1-7</figcaption></figure><p class=\"blk-p\" id=\"c1s0b52\">③ 电流控制型电压源（CCVS）</p><p class=\"blk-formula\">CCVS 如图 1-1-8 所示，输出电压 u2＝ ri1。</p><figure class=\"blk-fig\" id=\"c1s0b54\"><img loading=\"lazy\" src=\"data/img/p11_0.jpg\" alt=\"图 1-1-8\"><figcaption>图 1-1-8</figcaption></figure><p class=\"blk-p\" id=\"c1s0b55\">④ 电流控制型电流源（CCCS）</p><p class=\"blk-formula\">CCCS 如图 1-1-9 所示，输出电流 i2＝ βi1。</p><p class=\"blk-p\" id=\"c1s0b57\">功率： P （t）＝ u1（t） i1（t）＋ u2（t） i2（t）＝ u2（t） i2（t），这说明受控源的功率是通过受控支路来计算的。</p><figure class=\"blk-fig\" id=\"c1s0b58\"><img loading=\"lazy\" src=\"data/img/p11_1.jpg\" alt=\"图 1-1-9\"><figcaption>图 1-1-9</figcaption></figure><h2 class=\"blk-h1\" id=\"c1s0b59\">四、基尔霍夫定律</h2><aside class=\"kp k-concl\" id=\"kp-1-16\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">网孔一定是回路</span></div><div class=\"kp-t\">网孔一定是回路，而回路不一定是网孔；只有内部不包含其他支路的回路才称为网孔。</div><a class=\"kp-src\" href=\"#/video/3?t=1305\">第 3 集 · 21:45 ↗</a></aside><aside class=\"kp k-infer\" id=\"kp-1-17\"><div class=\"kp-h\"><span class=\"kp-kind\">推论</span><span class=\"kp-title\">KCL可推广到闭合面</span></div><div class=\"kp-t\">KCL 可推广应用于包含多个节点的任意闭合面，即流出该闭合面的电流代数和为零。</div><a class=\"kp-src\" href=\"#/video/3?t=1733\">第 3 集 · 28:53 ↗</a></aside><aside class=\"kp k-concl\" id=\"kp-1-18\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">KVL按参考方向列写</span></div><div class=\"kp-t\">KVL 按照电压的参考方向列写，与电压的实际方向无关，与电路是线性还是非线性也无关。</div><a class=\"kp-src\" href=\"#/video/3?t=2451\">第 3 集 · 40:51 ↗</a></aside><aside class=\"kp k-concl\" id=\"kp-1-19\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">KCL与KVL只依赖拓扑</span></div><div class=\"kp-t\">KCL 约束电流、KVL 约束电压，二者都与支路元件性质和参数无关，只与电路拓扑结构有关。</div><a class=\"kp-src\" href=\"#/video/3?t=2486\">第 3 集 · 41:26 ↗</a></aside><p class=\"blk-p\" id=\"c1s0b60\">基尔霍夫定律描述了支路电流之间或支路电压之间的约束关系，只与元件的相互连接有关，与元件的性质无关。电流定律（KCL）与电压定律（KVL）如表 1-1-3 所示。</p><figure class=\"blk-fig\" id=\"c1s0b61\"><img loading=\"lazy\" src=\"data/img/p11_2.png\" alt=\"表 1-1-3 基尔霍夫定律\"><figcaption>表 1-1-3 基尔霍夫定律</figcaption></figure><p class=\"blk-p\" id=\"c1s0b62\">注：列写方程时方程中各项前的正负号（电压：与绕行方向一致取正号，反之取负号；电流：流出为正，流入为负）；</p><p class=\"blk-p\" id=\"c1s0b63\">电压和电流本身数值的正负号。</p>"
+  },
+  {
+   "key": "1.2",
+   "kind": "ex",
+   "page": 12,
+   "endPage": 28,
+   "items": [
+    {
+     "no": "1-1",
+     "q": "<p class=\"blk-p\" id=\"c1s1b0\">图 1-2-1 中：</p><p class=\"blk-p\" id=\"c1s1b1\">（1） u、 i 的参考方向是否关联？</p><p class=\"blk-p\" id=\"c1s1b2\">（2） ui 乘积表示什么功率？</p><p class=\"blk-p\" id=\"c1s1b3\">（3）如果在图 1-2-1 （a）中 u ＞ 0、 i ＜ 0，图 1-2-1 （b）中 u ＞ 0、 i ＞ 0，元件实际发出功率还是吸收功率？</p><figure class=\"blk-fig\" id=\"c1s1b4\"><img loading=\"lazy\" src=\"data/img/p12_0.png\" alt=\"图 1-2-1\"><figcaption>图 1-2-1</figcaption></figure>",
+     "a": "<p class=\"blk-mark\">解：（1）当电流的参考方向与元件两端电压降落方向一致时，称 u、 i 参考方向关联。因此，图 1-2-1 （a）中 u、 i 的参考</p><p class=\"blk-p\" id=\"c1s1b6\">方向关联；图 1-2-1 （b）中 u、 i 的参考方向非关联。</p><p class=\"blk-p\" id=\"c1s1b7\">（2）一个元件或电路在电压电流是关联参考方向下，功率是吸收功率；否则，为发出功率。因此，图 1-2-1 （a）中 ui 乘积表示元件吸收的功率；图 1-2-1 （b）中 ui 乘积表示元件发出的功率。</p><p class=\"blk-p\" id=\"c1s1b8\">（3）在关联参考方向下， ui ＞ 0 时，元件实际吸收功率， ui ＜ 0 时，元件实际发出功率；在非关联参考方向下， ui ＞ 0，元件实际发出功率， ui ＜ 0，元件实际吸收功率。图 1-2-1 （a）中 ui ＜ 0，元件实际发出功率；图 1-2-1 （b）中 ui ＞ 0，元件实际发出功率。</p>"
+    },
+    {
+     "no": "1-2",
+     "q": "<p class=\"blk-p\" id=\"c1s1b9\">在图 1-2-2 （a）与（b）中，对于 NA与 NB， u、 i 的参考方向是否关联？此时乘积 ui 对 NA与 NB分别意味着什么功率？</p><figure class=\"blk-fig\" id=\"c1s1b10\"><img loading=\"lazy\" src=\"data/img/p13_0.png\" alt=\"图 1-2-2\"><figcaption>图 1-2-2</figcaption></figure>",
+     "a": "<p class=\"blk-mark\">解：根据关联参考方向、功率吸收和发出的相关概念可得：</p><p class=\"blk-p\" id=\"c1s1b12\">图 1-2-2 （a），对于 NA， u、 i 的参考方向非关联，乘积 ui 对 NA意味着发出功率；对于 NB， u、 i 的参考方向关联，乘积 ui 对NB意味着吸收功率。</p><p class=\"blk-p\" id=\"c1s1b13\">图 1-2-2 （b），对于 NA， u、 i 的参考方向关联，乘积 ui 对 NA意味着吸收功率；对于 NB， u、 i 的参考方向非关联，乘积 ui对 NB意味着发出功率。</p>"
+    },
+    {
+     "no": "1-3",
+     "q": "<p class=\"blk-p\" id=\"c1s1b14\">在图 1-2-3 （a）中，已知 I1＝ 500mA， IS＝ 100mA， U ＝ 30V。求 NA与 NB以及电流源所吸收的功率。在图（b）中，已知 U2＝ 10V， I1＝ 2A， US＝ 30V。求 NA与 NB以及电压源所吸收的功率。</p><figure class=\"blk-fig\" id=\"c1s1b15\"><img loading=\"lazy\" src=\"data/img/p13_1.jpg\" alt=\"图 1-2-3\"><figcaption>图 1-2-3</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c1s1b16\">解：图 1-2-3 （a）中， NA吸收的功率为 U× （－ I1）＝ 30V× （－ 500mA）＝－ 15W， NB吸收的功率为 U× （I1－ IS）＝ 30V×（500mA － 100mA）＝ 12W，电流源吸收的功率为 U×IS＝ 30V×100mA ＝ 3W。</p><p class=\"blk-p\" id=\"c1s1b17\">图 1-2-3 （b）中， NA吸收的功率为（U2－ US） × （－ I1）＝（10V － 30V） × （－ 2A）＝ 40W， NB吸收的功率为 U2×I1＝10V×2A ＝ 20W，电压源吸收的功率为－ US×I1＝－ 30V×2A ＝－ 60W。</p>"
+    },
+    {
+     "no": "1-4",
+     "q": "<p class=\"blk-p\" id=\"c1s1b18\">求解电路以后，校核所得结果的方法之一是核对电路中所有元件的功率平衡，即一部分元件发出的总功率应等于其他元件吸收的总功率。试校核图 1-2-4 中电路所得解答是否正确。</p><figure class=\"blk-fig\" id=\"c1s1b19\"><img loading=\"lazy\" src=\"data/img/p14_0.jpg\" alt=\"图 1-2-4\"><figcaption>图 1-2-4</figcaption></figure>",
+     "a": "<p class=\"blk-mark\">解：A 元件、 C 元件、 F 元件的电压与电流参考方向非关联，功率为发出功率，其他元件的电压与电流方向关联，功率为</p><p class=\"blk-p\" id=\"c1s1b21\">吸收功率。</p><p class=\"blk-p\" id=\"c1s1b22\">总发出功率： PA＋ PC＋ PF＝ 80×1.4 ＋ 20×0.8 ＋ 30×0.5 ＝ 143W；</p><p class=\"blk-p\" id=\"c1s1b23\">总吸收功率： PB＋ PD＋ PE＝ 80×0.6 ＋ 130×0.5 ＋ 100×0.3 ＝ 143W；</p><p class=\"blk-p\" id=\"c1s1b24\">显然，总发出功率和总吸收功率是相等的，所以整个电路功率是平衡的。</p>"
+    },
+    {
+     "no": "1-5",
+     "q": "<p class=\"blk-p\" id=\"c1s1b25\">在指定的电压 u 和电流 i 的参考方向下，写出图 1-2-5 所示各元件的 u 和 i 的约束方程（即 VCR）。</p><figure class=\"blk-fig\" id=\"c1s1b26\"><img loading=\"lazy\" src=\"data/img/p14_1.jpg\" alt=\"图 1-2-5\"><figcaption>图 1-2-5</figcaption></figure>",
+     "a": "<p class=\"blk-mark\">解：图 1-2-5 （a）是电阻元件， u、 i 参考方向关联，由欧姆定律可得</p><p class=\"blk-formula\">u （t）＝ Ri （t）， u ＝ Ri ＝ 104i</p><p class=\"blk-p\" id=\"c1s1b29\">图 1-2-5 （b）是电阻元件， u、 i 参考方向非关联，</p><p class=\"blk-formula\">u （t）＝－ Ri （t）， u ＝－ Ri ＝－ 10i</p><p class=\"blk-formula\">图 1-2-5 （c）， u 与电压源的激励电压方向相同， u ＝ 10V；</p><p class=\"blk-formula\">图 1-2-5 （d）， u 与电压源的激励电压方向相反， u ＝－ 5V；</p><p class=\"blk-p\" id=\"c1s1b33\">图 1-2-5 （e）， i 与电流源的激励电流方向相同， i ＝ 10×10－3A；</p><p class=\"blk-p\" id=\"c1s1b34\">图 1-2-5 （f）， i 与电流源的激励电流方向相反， i ＝－ 10×10－3A。</p>"
+    },
+    {
+     "no": "1-6",
+     "q": "<p class=\"blk-p\" id=\"c1s1b35\">试求图 1-2-6 中各电路中电压源、电流源及电阻的功率（须说明是吸收还是发出）。</p><figure class=\"blk-fig\" id=\"c1s1b36\"><img loading=\"lazy\" src=\"data/img/p15_0.jpg\" alt=\"图 1-2-6\"><figcaption>图 1-2-6</figcaption></figure>",
+     "a": "<p class=\"blk-mark\">解：（1）图 1-2-6 （a）所示</p><p class=\"blk-p\" id=\"c1s1b38\">电压源 u、 i 参考方向非关联，发出功率： PU＝ USI ＝ 15×2 ＝ 30W；</p><p class=\"blk-p\" id=\"c1s1b39\">电阻元件吸收功率： PR＝ I2R ＝ 22×5 ＝ 20W， UR＝ IR ＝ 2×5 ＝ 10V；</p><p class=\"blk-p\" id=\"c1s1b40\">电流源 u、 i 参考方向关联，吸收功率： PI＝ UII ＝（US－ UR） I ＝（15 － 10） ×2 ＝ 10W。</p><p class=\"blk-p\" id=\"c1s1b41\">（2）图 1-2-6 （b）所示IR＝ UR/R ＝ US/R ＝ 15/5 ＝ 3A， US＝ UR＝ UI， IU＝ IR－ IS＝ 3 － 2 ＝ 1A</p><p class=\"blk-formula\">电阻元件吸收功率： PR＝ IR2R ＝ 32×5 ＝ 45W；</p><p class=\"blk-p\" id=\"c1s1b43\">电流源 u、 i 参考方向非关联，发出功率： PI＝ ISUI＝ 2×15 ＝ 30W；</p><p class=\"blk-p\" id=\"c1s1b44\">电压源 u、 i 参考方向非关联，发出功率： PU＝ IUUS＝ 1×15 ＝ 15W。</p><p class=\"blk-p\" id=\"c1s1b45\">（3）图 1-2-6 （c）所示US＝ UR＝ UI＝ 15V， IS＝ 2A， IR＝ UR/R ＝ 15/5 ＝ 3A， IU＝ IS＋ IR＝ 2 ＋ 3 ＝ 5A</p><p class=\"blk-formula\">电阻吸收功率： PR＝ IR2R ＝ 32×5 ＝ 45W；</p><p class=\"blk-formula\">电流源 u、 i 参考方向关联，吸收功率： PI＝ ISUI＝ 2×15 ＝ 30W；</p><p class=\"blk-p\" id=\"c1s1b48\">电压源 u、 i 参考方向非关联，发出功率： PU＝ IUUS＝ 5×15 ＝ 75W。</p>"
+    },
+    {
+     "no": "1-7",
+     "q": "<p class=\"blk-p\" id=\"c1s1b49\">以电压 U 为纵轴，电流 I 为横轴，取适当的电压、电流标尺，在同一坐标上：画出以下元件及支路的电压、电流关系（仅画第一象限）。</p><p class=\"blk-formula\">（1） US＝ 10V 的电压源，如图 1-2-7 （a）所示；</p><p class=\"blk-formula\">（2） R ＝ 5Ω 线性电阻，如图 1-2-7 （b）所示；</p><p class=\"blk-p\" id=\"c1s1b52\">（3） US、 R 的串联组合，如图 1-2-7 （c）所示。</p><figure class=\"blk-fig\" id=\"c1s1b53\"><img loading=\"lazy\" src=\"data/img/p16_0.jpg\" alt=\"图 1-2-7\"><figcaption>图 1-2-7</figcaption></figure><figure class=\"blk-fig\" id=\"c1s1b54\"><img loading=\"lazy\" src=\"data/img/p16_1.jpg\" alt=\"图 1-2-8\"><figcaption>图 1-2-8</figcaption></figure>",
+     "a": "<p class=\"blk-formula\">解：（1）理想电压源的电压恒定，与电流无关： U ＝ US＝ 10V。</p><p class=\"blk-formula\">（2）电阻元件的电压、电流满足欧姆定律： U ＝ IR ＝ 5I。</p><p class=\"blk-p\" id=\"c1s1b57\">（3）根据基尔霍夫电压定律： US＝ U ＋ UR＝ U ＋ IR，即 U ＝ US－ IR ＝ 10 － 5I。</p><p class=\"blk-p\" id=\"c1s1b58\">取电压标尺为 4V/cm，电流标尺为 1A/cm，各元件及支路的伏安特性如图 1-2-8 所示。</p>"
+    },
+    {
+     "no": "1-8",
+     "q": "<p class=\"blk-p\" id=\"c1s1b59\">图 1-2-9 中的电流 I 均为 2A。</p><p class=\"blk-p\" id=\"c1s1b60\">（1）求各图中支路电压。</p><p class=\"blk-p\" id=\"c1s1b61\">（2）求各图中电源、电阻及支路的功率，并讨论功率平衡关系。</p><figure class=\"blk-fig\" id=\"c1s1b62\"><img loading=\"lazy\" src=\"data/img/p17_0.jpg\" alt=\"图 1-2-9\"><figcaption>图 1-2-9</figcaption></figure>",
+     "a": "<p class=\"blk-mark\">解：（1）各图支路电压为</p><p class=\"blk-formula\">Ua＝ IR ＋ US＝ 2×2 ＋ 12 ＝ 16V</p><p class=\"blk-formula\">Ub＝－ IR ＋ US＝－ 2×2 ＋ 12 ＝ 8V</p><p class=\"blk-formula\">Uc＝ IR － US＝ 2×2 － 12 ＝－ 8V</p><p class=\"blk-formula\">Ud＝－ IR － US＝－ 2×2 － 12 ＝－ 16V</p><p class=\"blk-p\" id=\"c1s1b68\">（2）① 图 1-2-9 （a），标准电压源和电阻的 u、 i 参考方向都关联，都吸收功率</p><p class=\"blk-formula\">PR＝ I2R ＝ 22×2 ＝ 8W， PS＝ USI ＝ 12×2 ＝ 24W</p><p class=\"blk-formula\">支路吸收功率： P ＝ UaI ＝ 16×2 ＝ 32W；</p><p class=\"blk-formula\">PR＋ PS＝ P，所以功率平衡。</p><p class=\"blk-formula\">② 图 1-2-9 （b），电阻吸收功率： PR＝ I2R ＝ 8W；</p><p class=\"blk-formula\">标准电压源的 u、 i 参考方向非关联： PS＝ USI ＝ 24W；</p><p class=\"blk-formula\">支路吸收功率： P ＝ UbI ＝ 16W；</p><p class=\"blk-formula\">功率平衡关系： P ＝ PS－ PR。</p><p class=\"blk-formula\">③ 图 1-2-9 （c），电阻吸收功率： PR＝ I2R ＝ 8W；</p><p class=\"blk-formula\">标准电压源 u、 i 参考方向非关联，发出功率： PS＝ USI ＝ 24W；</p><p class=\"blk-formula\">支路吸收功率： P ＝ UCI ＝－ 16W，即放出功率 16W；</p><p class=\"blk-formula\">功率平衡关系：－ P ＝ PS－ PR。</p><p class=\"blk-p\" id=\"c1s1b80\">④ 图 1-2-9 （d），标准电压源和电阻的 u、 i 参考方向都关联，都吸收功率</p><p class=\"blk-formula\">PR＝ I2R ＝ 22×2 ＝ 8W， PS＝ USI ＝ 12×2 ＝ 24W</p><p class=\"blk-formula\">支路放出功率： P ＝ UdI ＝－ 32W，即吸收功率 32W；</p><p class=\"blk-formula\">PR＋ PS＝－ P，所以功率平衡。</p>"
+    },
+    {
+     "no": "1-9",
+     "q": "<p class=\"blk-p\" id=\"c1s1b84\">试求图 1-2-10 中各电路的电压 U，并分别讨论其功率平衡。</p><figure class=\"blk-fig\" id=\"c1s1b85\"><img loading=\"lazy\" src=\"data/img/p18_0.jpg\" alt=\"图 1-2-10\"><figcaption>图 1-2-10</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c1s1b86\">解：（1）图 1-2-10 （a）， IR＝ 8A， U ＝ UR＝ 2×IR＝ 2×8 ＝ 16V；</p><p class=\"blk-formula\">所以输入电路的吸收功率： P ＝ U×I ＝ 32W；</p><p class=\"blk-formula\">电流源发出功率： PI＝ 6×U ＝ 6×16 ＝ 96W；</p><p class=\"blk-formula\">电阻吸收功率： PR＝ 2×IR2＝ 2×82＝ 128W；</p><p class=\"blk-formula\">因为 P ＝ PR－ PI，所以功率平衡。</p><p class=\"blk-p\" id=\"c1s1b91\">（2）图 1-2-10 （b）， IR＝ 6 － 2 ＝ 4A， U ＝ UR＝ 2×IR＝ 2×4 ＝ 8V；</p><p class=\"blk-formula\">所以输入电路的发出功率： P ＝ U×I ＝ 16W；</p><p class=\"blk-formula\">电流源发出功率： PI＝ 6×U ＝ 6×8 ＝ 48W；</p><p class=\"blk-formula\">电阻吸收功率： PR＝ 2×IR2＝ 2×42＝ 32W；</p><p class=\"blk-formula\">因为 P ＝ PI－ PR，所以功率平衡。</p><p class=\"blk-p\" id=\"c1s1b96\">（3）图 1-2-10 （c）， IR＝ 2 － 4 ＝－ 2A， U ＝ UR＝ 3×IR＝ 3× （－ 2）＝－ 6V；</p><p class=\"blk-formula\">所以输入电路的吸收功率： P ＝ U×I ＝－ 12W；</p><p class=\"blk-formula\">电流源吸收功率： PI＝ 4× （－ 6）＝－ 24W；</p><p class=\"blk-formula\">电阻吸收功率： PR＝ 3×IR2＝ 3× （－ 2）2＝ 12W；</p><p class=\"blk-formula\">因为 P ＝ PI＋ PR，所以功率平衡。</p><p class=\"blk-p\" id=\"c1s1b101\">（4）图 1-2-10 （d）， IR＝ 5 － 3 ＝ 2A， U ＝ UR＝ 4×IR＝ 4×2 ＝ 8V；</p><p class=\"blk-formula\">所以输入电路的吸收功率： P ＝ U×I ＝ 40W；</p><p class=\"blk-formula\">电流源吸收功率： PI＝ 3×U ＝ 3×8 ＝ 24W；</p><p class=\"blk-formula\">电阻吸收功率： PR＝ 4×IR2＝ 4× （2）2＝ 16W；</p><p class=\"blk-formula\">因为 P ＝ PI＋ PR，所以功率平衡。</p>"
+    },
+    {
+     "no": "1-10",
+     "q": "<p class=\"blk-p\" id=\"c1s1b106\">图 1-2-11 中各电路的受控源是否可看为电阻？求各图中 a、 b 端口的等效电阻。</p><figure class=\"blk-fig\" id=\"c1s1b107\"><img loading=\"lazy\" src=\"data/img/p19_0.png\" alt=\"图 1-2-11\"><figcaption>图 1-2-11</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c1s1b108\">解：（1）图 1-2-11 （a），受控源可看作是电阻，设支路总电流为 I，则 U ＝ 20 （I － 0.2U），即 5U ＝ 20I，所以等效电阻</p><p class=\"blk-formula\">为： Rab＝ U/I ＝ 4Ω。</p><p class=\"blk-p\" id=\"c1s1b110\">（2）图 1-2-11 （b），受控源可看作电阻， U ＝ IR ＝ 20I，支路总电流 Iab＝ 3I，所以等效电阻为： Rab＝ Uab/Iab＝ 20/3 ＝6.67Ω。</p><p class=\"blk-p\" id=\"c1s1b111\">（3）图 1-2-11 （c），由于受控源电压与电流参考方向非关联，且受控源电压为 5I，因此 CCVS 可看做电阻，其阻值为：</p><p class=\"blk-formula\">Req＝－ 5I/I ＝－ 5Ω。</p><p class=\"blk-formula\">所以等效电阻为： Rab＝ Req＋ 10 ＝－ 5 ＋ 10 ＝ 5Ω。</p><p class=\"blk-p\" id=\"c1s1b114\">（4）图 1-2-11 （d），受控源可以看成电阻， Uab＝ 10U1＋ U1＝ 11U1＝ 11×20I ＝ 220I， Iab＝ I，所以等效电阻为： Rab＝</p><p class=\"blk-formula\">Uab/Iab＝ 220Ω。</p>"
+    },
+    {
+     "no": "1-11",
+     "q": "<p class=\"blk-p\" id=\"c1s1b116\">电路如图 1-2-12 所示，试求：</p><p class=\"blk-p\" id=\"c1s1b117\">（1）图（a）中， i1与 uab；</p><p class=\"blk-p\" id=\"c1s1b118\">（2）图（b）中， ucb。</p><figure class=\"blk-fig\" id=\"c1s1b119\"><img loading=\"lazy\" src=\"data/img/p20_0.png\" alt=\"图 1-2-12\"><figcaption>图 1-2-12</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c1s1b120\">解：（1）由图 1-2-12 （a）可得： 0.9i1＝ 10/5 ＝ 2A，则有： i1＝ 2/0.9≈2.222A；</p><p class=\"blk-p\" id=\"c1s1b121\">所以 uab＝ 4×iab＝ 4× （i1－ 0.9i1）＝ 4×0.1× （20/9） ≈0.889V。</p><p class=\"blk-p\" id=\"c1s1b122\">（2）由图 1-2-12 （b）可得： u1＝ 5×2 ＝ 10V，则有： i ＝ 0.05u1＝ 0.5A；</p><p class=\"blk-formula\">所以 Ucb＝ Uca＋ Uab＝ 20× （－ 0.5）－ 3 ＝－ 13V。</p>"
+    },
+    {
+     "no": "1-12",
+     "q": "<p class=\"blk-p\" id=\"c1s1b124\">我国自葛洲坝水电站至上海的高压直流输电线示意图如图 1-2-13 所示。输电线每根对地耐压为 500kV，导线额定电流为 1kA。每根导线电阻为 27Ω （全长 1088km）。当首端线间电压 U1为 1000kV 时，可传输多少功率到上海？传输效率是多少？</p><figure class=\"blk-fig\" id=\"c1s1b125\"><img loading=\"lazy\" src=\"data/img/p21_0.jpg\" alt=\"图 1-2-13\"><figcaption>图 1-2-13</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c1s1b126\">解：根据题意可知： U2＝ U1－ 2IR ＝ 1000 － 2×1×27 ＝ 946kV ＝ 9.46×105V；</p><p class=\"blk-formula\">所以传输功率为： P ＝ U2I ＝ 9.46×105×1 ＝ 9.46×105kW；</p><p class=\"blk-p\" id=\"c1s1b128\">传输效率为： η ＝（u2I） / （u1I）＝（u2/u1） ×100% ＝（946/1000） ×100% ＝ 94.6%。</p>"
+    },
+    {
+     "no": "1-13",
+     "q": "<p class=\"blk-p\" id=\"c1s1b129\">对图 1-2-14 所示电路，若：</p><p class=\"blk-p\" id=\"c1s1b130\">（1） R1、 R2、 R3不定。</p><p class=\"blk-formula\">（2） R1＝ R2＝ R3。</p><p class=\"blk-p\" id=\"c1s1b132\">在以上两种情况下，尽可能多地确定各电阻中的未知电流。</p><figure class=\"blk-fig\" id=\"c1s1b133\"><img loading=\"lazy\" src=\"data/img/p21_1.jpg\" alt=\"图 1-2-14\"><figcaption>图 1-2-14</figcaption></figure>",
+     "a": "<p class=\"blk-mark\">解：如图 1-2-15 电流标注所示。</p><figure class=\"blk-fig\" id=\"c1s1b135\"><img loading=\"lazy\" src=\"data/img/p22_0.jpg\" alt=\"图 1-2-15\"><figcaption>图 1-2-15</figcaption></figure><p class=\"blk-p\" id=\"c1s1b136\">（1）当 R1、 R2、 R3不定时，流过它们的电流也是不定的； i4＝ 3 ＋ 4 － 6 ＝ 1A； i5＝ i4＋ 2 －（－ 10）＝ 13A。</p><p class=\"blk-p\" id=\"c1s1b137\">（2）当 R1＝ R2＝ R3时， i4＝ 3 ＋ 4 － 6 ＝ 1A， i5＝ i4＋ 2 －（－ 10）＝ 13A。</p><p class=\"blk-p\" id=\"c1s1b138\">对右边回路和 B、 C 点分别列出 KVL、 KCL 方程</p><p class=\"blk-formula\">代入 R1＝ R2＝ R3并整理得</p><p class=\"blk-p\" id=\"c1s1b140\">解得： i1＝（10/3） A， i2＝（1/3） A， i3＝（－ 11/3） A。</p>"
+    },
+    {
+     "no": "1-14",
+     "q": "<p class=\"blk-p\" id=\"c1s1b141\">在图 1-2-16 所示电路中，已知 u12＝ 2V， u23＝ 3V， u25＝ 5V， u37＝ 3V， u67＝ 1V，尽可能多地确定其他各元件的电压。</p><figure class=\"blk-img\" id=\"x22_0\"><img loading=\"lazy\" src=\"data/img/p22_1.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x22_1\"><img loading=\"lazy\" src=\"data/img/p22_2.png\" alt=\"原书插图\"></figure><figure class=\"blk-fig\" id=\"c1s1b142\"><img loading=\"lazy\" src=\"data/img/p23_0.jpg\" alt=\"图 1-2-16\"><figcaption>图 1-2-16</figcaption></figure>",
+     "a": "<p class=\"blk-mark\">解：对各回路列出 KVL 方程</p><p class=\"blk-formula\">Ua＝ u15＝ u12＋ u25＝ 2 ＋ 5 ＝ 7V</p><p class=\"blk-formula\">Uk＝ u13＝ u12＋ u23＝ 2 ＋ 3 ＝ 5V</p><p class=\"blk-p\" id=\"c1s1b146\">Uf＝ u56＝ u23＋ u37－ u67－ u25＝ 3 ＋ 3 － 1 － 5 ＝ 0V</p><p class=\"blk-formula\">Ue＝ u36＝ u37－ u67＝ 3 － 1 ＝ 2V</p><p class=\"blk-formula\">Ui＝ u57＝ u56＋ u67＝ 0 ＋ 1 ＝ 1V</p><p class=\"blk-p\" id=\"c1s1b149\">所以各元件的电压为： Ua＝ 7V； Ub＝ 2V； Uc＝ 5V； Ud＝ 3V； Ue＝ 2V； Uf＝ 0V； Ug不定； Uh不定； Ui＝ 1V； Uj＝ 1V；</p><p class=\"blk-formula\">Uk＝ 5V。</p>"
+    },
+    {
+     "no": "1-15",
+     "q": "<p class=\"blk-p\" id=\"c1s1b151\">电路如图 1-2-17 所示，试求每个元件发出或吸收的功率。</p><figure class=\"blk-fig\" id=\"c1s1b152\"><img loading=\"lazy\" src=\"data/img/p23_1.jpg\" alt=\"图 1-2-17\"><figcaption>图 1-2-17</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c1s1b153\">解：（1）图 1-2-17 （a），由 KVL 可得： U ＝ IR ＋ 2U，解得 U ＝－ 1V；</p><p class=\"blk-formula\">电阻吸收功率： PR＝ I2R ＝ 0.52×2 ＝ 0.5W；</p><p class=\"blk-formula\">电压源吸收功率： PU＝－ UI ＝－（－ 1） ×0.5 ＝ 0.5W；</p><p class=\"blk-p\" id=\"c1s1b156\">受控源发出功率： P ＝ 2UI ＝ 2× （－ 1） ×0.5 ＝－ 1W，发出功率 1W。</p><p class=\"blk-p\" id=\"c1s1b157\">（2）图 1-2-17 （b），设流经 1Ω 电阻的电流为 I2，由 KCL 可得： I2＝ I1＋ 2I1＝ 3I1，所以由 KVL 得： 2 ＝ 2×I1＋ 1×3I1，解得 I1</p><p class=\"blk-formula\">＝ 0.4A。</p><p class=\"blk-p\" id=\"c1s1b159\">1Ω 电阻吸收功率： P1＝（I1＋ 2I1）2R1＝（3×0.4）2×1 ＝ 1.44W；</p><p class=\"blk-formula\">2Ω 电阻吸收功率： P2＝ I12R2＝ 0.42×2 ＝ 0.32W；</p><p class=\"blk-formula\">电压源发出功率： PU＝ USI1＝ 2×0.4 ＝ 0.8W；</p><p class=\"blk-p\" id=\"c1s1b162\">受控源发出功率： P ＝ 2I1U ＝ 2I1U1＝ 2×0.4×1.2 ＝ 0.96W。</p>"
+    },
+    {
+     "no": "1-16",
+     "q": "<p class=\"blk-p\" id=\"c1s1b163\">利用 KCL 与 KVL 求图 1-2-18 中 I （提示：利用 KVL 将 180V 电源支路电流用 I 来表示，然后在节点① 写 KCL 方程求解）。</p><figure class=\"blk-fig\" id=\"c1s1b164\"><img loading=\"lazy\" src=\"data/img/p24_0.jpg\" alt=\"图 1-2-18\"><figcaption>图 1-2-18</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c1s1b165\">解：设流经 20Ω 电阻的电流为 I1，方向向右，根据基尔霍夫电压定律可得： 20I1＋ 180 ＝ 15I，所以 I1＝（15I － 180） /20，列写节点① 的 KCL 方程，得 2 ＋ I ＋ I1＝ 0，将 I1表达式代入其中，解得 I ＝ 4A。</p>"
+    },
+    {
+     "no": "1-17",
+     "q": "<p class=\"blk-p\" id=\"c1s1b166\">（1）已知图 1-2-19 （a）中， R ＝ 2Ω， i1＝ 1A，求电流 i。</p><p class=\"blk-p\" id=\"c1s1b167\">（2）已知图 1-2-19 （b）中， uS＝ 10V， i1＝ 2A， R1＝ 4.5Ω， R2＝ 1Ω，求 i2。</p><figure class=\"blk-fig\" id=\"c1s1b168\"><img loading=\"lazy\" src=\"data/img/p25_0.png\" alt=\"图 1-2-19\"><figcaption>图 1-2-19</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c1s1b169\">解：（1）由图 1-2-19 （a）可列 KVL 方程： 10 ＋ 5i1－ iR ＝ 0。</p><p class=\"blk-formula\">代入已知条件得： i ＝ 7.5A。</p><p class=\"blk-p\" id=\"c1s1b171\">（2）由图 1-2-19 （b）可列 KVL 方程</p><p class=\"blk-formula\">代入已知条件得： i2＝ 6A。</p>"
+    },
+    {
+     "no": "1-18",
+     "q": "<p class=\"blk-p\" id=\"c1s1b173\">（1）试求图 1-2-20 （a）所示电路中控制量 I1及电压 U0。</p><p class=\"blk-p\" id=\"c1s1b174\">（2）试求图 1-2-20 （b）所示电路中控制量 u1及电压 u。</p><figure class=\"blk-img\" id=\"x25_0\"><img loading=\"lazy\" src=\"data/img/p25_1.png\" alt=\"原书插图\"></figure><p class=\"blk-p\" id=\"c1s1b175\">（a）（b）</p><figure class=\"blk-fig\" id=\"c1s1b176\"><img loading=\"lazy\" src=\"data/img/p26_0.png\" alt=\"图 1-2-20\"><figcaption>图 1-2-20</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c1s1b177\">解：（1）设 R1＝ 1kΩ， R2＝ 6kΩ，流经 R2的电流为 I2，方向向下， R3＝ 5kΩ，流经的电流为 I3， US＝ 20V，列 KVL、 KCL方程</p><p class=\"blk-formula\">解得： I1＝ 5mA， I2＝ 2mA， I3＝ 3mA， U0＝ 15V。</p><p class=\"blk-p\" id=\"c1s1b179\">（2）设电路流经电流为 I，方向为顺时针，建立 KVL 方程： 2 ＝ 103I ＋ 104I ＋ 10u1①</p><p class=\"blk-formula\">由图 1-2-20 （b）可知： u1＝ 104I ＋ 10u1②</p><p class=\"blk-formula\">联立式① ② 得： u1＝ 20V， u ＝ 200V。</p>"
+    },
+    {
+     "no": "1-19",
+     "q": "<p class=\"blk-p\" id=\"c1s1b182\">某同学用电能监控计量插座（一种可测小功率、电能的数字仪表）测得他家中一些家用电器在待机及正常工作情况下的消耗功率，列表如下：</p><figure class=\"blk-img\" id=\"x26_0\"><img loading=\"lazy\" src=\"data/img/p26_1.jpg\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x26_1\"><img loading=\"lazy\" src=\"data/img/p26_2.png\" alt=\"原书插图\"></figure><p class=\"blk-p\" id=\"c1s1b183\">家用电器用电量表上表中功率均为交流功率，计算电流时，参见 §9-4，可取平均功率因数 cosφ ＝ 0.85。</p><p class=\"blk-p\" id=\"c1s1b184\">（1）在夏天白日，除厨房外，各家用大电器待机状态下，耗电功率为多少？</p><p class=\"blk-p\" id=\"c1s1b185\">（2）在夏天晚上，厨房及各家用大电器均在使用时，耗电功率为多少？</p><p class=\"blk-p\" id=\"c1s1b186\">（3）求在夏天，所有电器都在待机状态时的耗电功率。由于待机，月消耗电能多少度电？</p><p class=\"blk-p\" id=\"c1s1b187\">（4）入户导线、熔断器（或断路器）应如何选用？</p><p class=\"blk-p\" id=\"c1s1b188\">（5）估计一下夏天整户月消耗多少度电。</p>",
+     "a": "<p class=\"blk-p\" id=\"c1s1b189\">解：（1）耗电功率 P ＝（4.7 ＋ 15.4 ＋ 12 ＋ 0.7 ＋ 3.4 ＋ 45 ＋ 45 ＋ 3 ＋ 5 ＋ 0.3 ＋ 3.4 ＋ 4 ＋ 34 ＋ 1.7 ＋ 22 ＋ 1.8 ＋ 7.9 ＋ 11 ＋ 140 ＋</p><p class=\"blk-formula\">1650 ＋ 1 ＋ 4.8 ＋ 0.4） ×0.85 ＝ 1714.03W。</p><p class=\"blk-p\" id=\"c1s1b191\">（2）耗电功率 P ＝（4.7 ＋ 15.4 ＋ 300 ＋ 197 ＋ 60 ＋ 68 ＋ 96 ＋ 3 ＋ 5 ＋ 5.9 ＋ 1000 ＋ 770 ＋ 34 ＋ 7.5 ＋ 22 ＋ 1.8 ＋ 7.9 ＋ 11 ＋ 140 ＋1210 ＋ 1200 ＋ 170 ＋ 1570 ＋ 1650 ＋ 1 ＋ 4.8 ＋ 0.4） ×0.85 ＝ 7272.09W。</p><p class=\"blk-p\" id=\"c1s1b192\">（3）电能 W ＝（12 ＋ 0.7 ＋ 3.4 ＋ 45 ＋ 0.3 ＋ 3.4 ＋ 4 ＋ 1.7） ×60×60×24×90×0.85 ＝ 465976800J ＝ 129.438 度。</p><p class=\"blk-p\" id=\"c1s1b193\">（4）根据晚上最大功率负荷选定导线宽度及断路器最大跳闸功率。</p><p class=\"blk-p\" id=\"c1s1b194\">（5）夏天整户月消耗电能： P（1）×3600×12×90 ＋ P（2）×12×90 ＋ W（3）＝ 1714.03×3600×12×90 ＋ 7272.09×12×90 ＋</p><p class=\"blk-formula\">465976800 ＝ 7137979297.2J ＝ 902.77 度。</p>"
+    },
+    {
+     "no": "1-20",
+     "q": "<p class=\"blk-p\" id=\"c1s1b196\">电解铝工业是耗电大户，每吨电解铝耗电 10000 度电以上。某电解铝工厂通过改革将电解铝的耗电率降低了接近10%，该厂每年生产电解铝近 1000 万吨。每年可节约电多少度？用电成本（以每度工业用电 0.53 元来计算）降低多少元？</p>",
+     "a": "<p class=\"blk-formula\">解：每年可节约电： 10000×10%×1×107＝ 1×1010度。</p><p class=\"blk-formula\">用电成本降低： 1×1010×0.53 ＝ 5.3×109元。</p>"
+    },
+    {
+     "no": "1-21",
+     "q": "<p class=\"blk-p\" id=\"c1s1b199\">某五号可充电电池的规格为： 1.2V， 2000mAh。</p><p class=\"blk-p\" id=\"c1s1b200\">（1）该电池充足电后，电池所含的电能为多少？</p><figure class=\"blk-img\" id=\"x27_0\"><img loading=\"lazy\" src=\"data/img/p27_0.jpg\" alt=\"原书插图\"></figure><p class=\"blk-p\" id=\"c1s1b201\">（2）将这一能量能做的功形象化地表示。</p><p class=\"blk-p\" id=\"c1s1b202\">（3）如果充电效率为 50%，当充电电流为 250mA 时，充电时间应为多少？</p>",
+     "a": "<p class=\"blk-p\" id=\"c1s1b203\">解：（1）该电池充满电后，电池所储存的电能为： W ＝ UIt ＝ 1.2×2000×10－3×3600 ＝ 8.64×103J。</p><p class=\"blk-p\" id=\"c1s1b204\">（2）该电池充电时将电能转化为化学能储存起来，电池提供电能时是把储存的化学能转化为电能。</p><p class=\"blk-p\" id=\"c1s1b205\">（3）根据 Q ＝ I·t·η，即 2000 ＝ 250·t·50%，解得 t ＝ 16h。</p>"
+    }
+   ]
+  },
+  {
+   "key": "1.3",
+   "kind": "exam",
+   "page": 29,
+   "endPage": 32,
+   "groups": [
+    {
+     "title": "一、选择题",
+     "html": "<p class=\"blk-p\" id=\"c1s2b1\">1 图 1-3-1 所示电路， 9V 电压源发出的功率 P ＝（）。[ 南京航空航天大学 2018 研 ]</p><figure class=\"blk-fig\" id=\"c1s2b2\"><img loading=\"lazy\" src=\"data/img/p29_0.jpg\" alt=\"图 1-3-1\"><figcaption>图 1-3-1</figcaption></figure><p class=\"blk-p\">A ． 9W B ．－ 9W C ． 18W D ．－ 18W</p><details class=\"ans\"><summary>显示答案与解析</summary><div class=\"ans-body\"><p><b class=\"ans-k\">答案：</b>C<br>本题关键在于求流过电压源的电流大小和方向。<br><b class=\"ans-k\">解析：</b>在该电路中，按照从左往右，从上往下的顺序取网孔电流 Im1、 Im2、 Im3、 Im4，方向为顺时针，列出网孔电流方程如下</p></div></details><p class=\"blk-formula\">Im1＝ 9A</p><p class=\"blk-formula\">Im2（2 ＋ 6 ＋ 6）－ 2Im1－ 6Im3－ 6Im4＝ 0</p><p class=\"blk-formula\">Im3（6 ＋ 3）－ 9 － 6Im2＝ 0</p><p class=\"blk-formula\">Im4（6 ＋ 3）＋ 9 － 6Im2＝ 0</p><p class=\"blk-p\" id=\"c1s2b8\">解得</p><p class=\"blk-formula\">Im2＝ 3A</p><p class=\"blk-formula\">Im3＝ 3A</p><p class=\"blk-formula\">Im4＝ 1A</p><p class=\"blk-formula\">所以电压源所在支路的电流为 Im3－ Im4＝ 2A，方向向左。</p><p class=\"blk-p\" id=\"c1s2b13\">电压源的电流电压方向非关联，所以 9V 电压源发出功率，大小为： P ＝ UI ＝ 9×2 ＝ 18W。</p><p class=\"blk-p\" id=\"c1s2b14\">2 如图 1-3-2 所示电路， 2A 电流源吸收的功率为（）。[ 电子科技大学 2016 研 ]</p><figure class=\"blk-fig\" id=\"c1s2b15\"><img loading=\"lazy\" src=\"data/img/p30_0.jpg\" alt=\"图 1-3-2\"><figcaption>图 1-3-2</figcaption></figure><p class=\"blk-p\">A ． 3W B ． 2W C ．－ 3W D ．－ 2W</p><details class=\"ans\"><summary>显示答案与解析</summary><div class=\"ans-body\"><p><b class=\"ans-k\">答案：</b>D<br>取 2A 电流源的电压电流为关联方向，求得吸收功率为 P2A＝－ 1×2 ＝－ 2W，电流源向外电路发送 2W 的功率，吸收功率为－ 2W。</p></div></details>"
+    },
+    {
+     "title": "二、填空题",
+     "html": "<p class=\"blk-p\">1 电压随时间周期性变化且平均值为零的时变电压源，称为 ______。[ 电子科技大学 2016 研 ]</p><details class=\"ans\"><summary>显示答案与解析</summary><div class=\"ans-body\"><p><b class=\"ans-k\">答案：</b>交流电压源<br><b class=\"ans-k\">解析：</b>2 满足集总参数电路的条件是 ______。[ 电子科技大学 2016 研 ]实际电路的尺寸要远小于电路工作时信号的电磁波长<b class=\"ans-k\">答案：</b>3 在恒定直流电源激励下， 2 秒内有 3 库伦的正电荷从 a 点移动到 b 点，则 iba＝ ______。[ 电子科技大学 2016 研 ]－ 1.5A<b class=\"ans-k\">答案：</b>电流的定义式 i ＝ dq/dt，方向为正电荷的移动方向。正电荷从 a 点移动到 b 点，则 iba＝－ iab， iab＝ 3/2 ＝ 1.5A。因</p></div></details><p class=\"blk-formula\">此， iba＝－ 3/2 ＝－ 1.5A。</p><p class=\"blk-p\">4 电压和电流的参考方向一致，称为 ______ 方向。[ 电子科技大学 2016 研 ]</p><details class=\"ans\"><summary>显示答案与解析</summary><div class=\"ans-body\"><p><b class=\"ans-k\">答案：</b>关联参考<br><b class=\"ans-k\">解析：</b>5 如图 1-3-3 所示电路，线性时不变电阻发出的功率为 ______。[ 电子科技大学 2016 研 ]</p></div></details><figure class=\"blk-fig\" id=\"c1s2b23\"><img loading=\"lazy\" src=\"data/img/p30_1.jpg\" alt=\"图 1-3-3\"><figcaption>图 1-3-3</figcaption></figure><details class=\"ans\"><summary>显示答案与解析</summary><div class=\"ans-body\"><p><b class=\"ans-k\">答案：</b>ui （W）<br>按照电流电压的关联参考方向，列出功率的表达式 p ＝－ ui，吸收的功率为正，发出的功率为负。则发出功率为ui （W）。</p></div></details>"
+    },
+    {
+     "title": "三、判断题",
+     "html": "<p class=\"blk-p\">独立源始终为电路提供能量。[ 重庆大学 2016 研 ]</p><details class=\"ans\"><summary>显示答案与解析</summary><div class=\"ans-body\"><p><b class=\"ans-k\">答案：</b>错<br><b class=\"ans-k\">解析：</b>独立电源是实际电源理想化后的有源元件，电压源的电压与电流源的电流由电源本身决定，其工作状态是由外电路决定的，可以为电路提供能量，也可从电路中吸收能量。</p></div></details>"
+    },
+    {
+     "title": "四、计算题",
+     "html": "<p class=\"blk-p\" id=\"c1s2b30\">1 计算图 1-3-4 所示电路中 Is产生的功率 Ps。[ 西安电子科技大学 2017 研 ]</p><figure class=\"blk-fig\" id=\"c1s2b31\"><img loading=\"lazy\" src=\"data/img/p31_0.jpg\" alt=\"图 1-3-4\"><figcaption>图 1-3-4</figcaption></figure><p class=\"blk-p\" id=\"c1s2b32\">解：如图 1-3-5 选取点 a、 b、 c，则 Uab＝ 30V， Ucb＝ 5×10 ＝ 50V，因此可计算电流源 Is两端电压为 Us＝ Uac＝ Uab－ Ucb＝ 30</p><p class=\"blk-formula\">－ 50 ＝－ 20V，故 Ps＝－ UsIs＝ 20×5 ＝ 100W。</p><figure class=\"blk-fig\" id=\"c1s2b34\"><img loading=\"lazy\" src=\"data/img/p31_1.jpg\" alt=\"图 1-3-5\"><figcaption>图 1-3-5</figcaption></figure><p class=\"blk-p\" id=\"c1s2b35\">2 在图 1-3-6 所示电路中，已知 US1＝ 5V， US3＝ 10V， R1＝ R2＝ R3＝ 2Ω，欲使电压源 US3既不发出也不吸收功率，那么电阻 R4的取值应该为多少？[ 浙江大学 2013 研 ]</p><figure class=\"blk-fig\" id=\"c1s2b36\"><img loading=\"lazy\" src=\"data/img/p32_0.jpg\" alt=\"图 1-3-6\"><figcaption>图 1-3-6</figcaption></figure><p class=\"blk-mark\">解：欲使电压源 US3无功率，则其所在支路的电流为 0，因此中间节点的电压为 US3，等效电路如图 1-3-7 所示。</p><figure class=\"blk-fig\" id=\"c1s2b38\"><img loading=\"lazy\" src=\"data/img/p32_1.jpg\" alt=\"图 1-3-7\"><figcaption>图 1-3-7</figcaption></figure><p class=\"blk-p\" id=\"c1s2b39\">回路中的电流为I ＝（US3－ US1） / （R1＋ R2）＝（10 － 5） / （2 ＋ 2）＝ 1.25A R4两端的电压为</p><p class=\"blk-formula\">U4＝ 6U1－ US3＝ 6IR1－ US3＝ 6×1.25×2 － 10 ＝ 5V</p><p class=\"blk-p\" id=\"c1s2b41\">因此 R4的值为</p><p class=\"blk-formula\">R4＝ U4/I ＝ 5/1.25 ＝ 4Ω</p>"
+    }
+   ]
+  }
+ ]
+}

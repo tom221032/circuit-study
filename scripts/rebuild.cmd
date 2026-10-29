@@ -1,0 +1,23 @@
+@echo off
+chcp 65001 >nul
+cd /d "%~dp0.."
+set PYTHONIOENCODING=utf-8
+echo 注意：本脚本不会重新做「视频知识点归纳」（那一步由 AI 阅读 data\kp\prompt\ 完成），
+echo       它只把 data\kp\raw\chNN.json 重新合并进笔记。
+echo.
+echo [1/7] 抽取 PDF 笔记与习题 ...
+python scripts\extract_pdf.py
+echo [2/7] 更新视频列表 ...
+python scripts\fetch_videos.py
+echo [3/7] 抓取 AI 字幕（需要已登录的浏览器窗口）...
+python scripts\fetch_subs.py
+echo [4/7] 挖掘知识点候选句 ...
+python scripts\kp_mine.py
+echo [5/7] 生成归纳提示词 ...
+python scripts\kp_prompt.py
+echo [6/7] 合并知识点卡片进笔记 ...
+python scripts\kp_merge.py
+echo [7/7] 生成搜索索引 ...
+python scripts\build_search.py
+echo 完成。
+pause

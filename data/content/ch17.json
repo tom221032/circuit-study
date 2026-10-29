@@ -1,0 +1,166 @@
+{
+ "n": 17,
+ "title": "非线性电路",
+ "page": 755,
+ "sections": [
+  {
+   "key": "17.1",
+   "kind": "notes",
+   "page": 755,
+   "endPage": 758,
+   "toc": [
+    {
+     "level": 1,
+     "text": "一、非线性电阻",
+     "anchor": "c17s0b0"
+    },
+    {
+     "level": 2,
+     "text": "1 非线性电阻元件分类",
+     "anchor": "c17s0b4"
+    },
+    {
+     "level": 2,
+     "text": "2 静态电阻与动态电阻（如图 17-1-3 所示）",
+     "anchor": "c17s0b9"
+    },
+    {
+     "level": 2,
+     "text": "3 非线性电阻的串联与并联",
+     "anchor": "c17s0b14"
+    },
+    {
+     "level": 1,
+     "text": "二、非线性电容",
+     "anchor": "c17s0b19"
+    },
+    {
+     "level": 2,
+     "text": "1 非线性电容元件分类",
+     "anchor": "c17s0b22"
+    },
+    {
+     "level": 2,
+     "text": "2 参数",
+     "anchor": "c17s0b26"
+    },
+    {
+     "level": 1,
+     "text": "三、非线性电感",
+     "anchor": "c17s0b28"
+    },
+    {
+     "level": 2,
+     "text": "1 非线性电感元件分类",
+     "anchor": "c17s0b31"
+    },
+    {
+     "level": 2,
+     "text": "2 参数",
+     "anchor": "c17s0b35"
+    },
+    {
+     "level": 1,
+     "text": "四、非线性电路",
+     "anchor": "c17s0b37"
+    },
+    {
+     "level": 2,
+     "text": "1 小信号分析法",
+     "anchor": "c17s0b39"
+    },
+    {
+     "level": 2,
+     "text": "2 静态工作点的确定",
+     "anchor": "c17s0b44"
+    }
+   ],
+   "html": "<h2 class=\"blk-h1\" id=\"c17s0b0\">一、非线性电阻</h2><aside class=\"kp k-concl\" id=\"kp-17-1\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">非线性元件的定义</span></div><div class=\"kp-t\">元件参数随电压、电流变化，即参数与电压、电流有关的元件称为非线性元件；只有线性化不带来本质差异时才能按线性元件处理。</div><a class=\"kp-src\" href=\"#/video/71?t=258\">第 71 集 · 04:18 ↗</a></aside><aside class=\"kp k-concl\" id=\"kp-17-14\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">理想二极管的模型</span></div><div class=\"kp-t\">理想二极管反向截止时相当于开路，正向导通时相当于短路，其伏安特性由两段直线构成。</div><a class=\"kp-src\" href=\"#/video/72?t=3043\">第 72 集 · 50:43 ↗</a></aside><p class=\"blk-p\" id=\"c17s0b1\">若电阻元件的伏安关系为非线性的，即称为非线性电阻元件。图形符号及伏安函数关系如图 17-1-1 和图 17-1-2 所示。</p><figure class=\"blk-fig\" id=\"c17s0b2\"><img loading=\"lazy\" src=\"data/img/p755_0.png\" alt=\"图 17-1-1 非线性电阻符号\"><figcaption>图 17-1-1 非线性电阻符号</figcaption></figure><figure class=\"blk-fig\" id=\"c17s0b3\"><img loading=\"lazy\" src=\"data/img/p755_1.png\" alt=\"图 17-1-2 伏安特性（流控电阻）\"><figcaption>图 17-1-2 伏安特性（流控电阻）</figcaption></figure><h3 class=\"blk-h2\" id=\"c17s0b4\">1 非线性电阻元件分类</h3><aside class=\"kp k-concl\" id=\"kp-17-3\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">流控型电阻的定义</span></div><div class=\"kp-t\">电流控制型（流控型）电阻的电压是电流的单值函数，即 u=f(i)；取定一个电流，对应的电压唯一。</div><a class=\"kp-src\" href=\"#/video/71?t=564\">第 71 集 · 09:24 ↗</a></aside><aside class=\"kp k-warn\" id=\"kp-17-4\"><div class=\"kp-h\"><span class=\"kp-kind\">注意</span><span class=\"kp-title\">单值关系只单向成立</span></div><div class=\"kp-t\">流控型的单值关系是单向的：电压是电流的单值函数，但电流不是电压的单值函数，一个电压可对应多个电流。</div><a class=\"kp-src\" href=\"#/video/71?t=632\">第 71 集 · 10:32 ↗</a></aside><p class=\"blk-formula\">（1）流控型电阻， u ＝ g （i）；</p><p class=\"blk-formula\">（2）压控型电阻， i ＝ f （u）；</p><p class=\"blk-p\" id=\"c17s0b7\">（3）既是流控又是压控型的电阻（单调型）， u ＝ g （i）， i ＝ f （u）；</p><p class=\"blk-p\" id=\"c17s0b8\">（4）既不是流控型又不是压控型的电阻。</p><h3 class=\"blk-h2\" id=\"c17s0b9\">2 静态电阻与动态电阻（如图 17-1-3 所示）</h3><aside class=\"kp k-formula\" id=\"kp-17-5\"><div class=\"kp-h\"><span class=\"kp-kind\">公式</span><span class=\"kp-title\">静态电阻的定义</span></div><div class=\"kp-t\">静态电阻定义为工作点 P 处的电压与电流之比，即 R=U/I，等于该点纵坐标除以横坐标。</div><a class=\"kp-src\" href=\"#/video/71?t=1363\">第 71 集 · 22:43 ↗</a></aside><aside class=\"kp k-formula\" id=\"kp-17-6\"><div class=\"kp-h\"><span class=\"kp-kind\">公式</span><span class=\"kp-title\">动态电阻的定义</span></div><div class=\"kp-t\">动态电阻等于伏安特性在工作点处切线的斜率 Rd=dU/dI=tanβ，β 是切线与 I 轴的夹角，分子分母不能颠倒。</div><a class=\"kp-src\" href=\"#/video/71?t=1499\">第 71 集 · 24:59 ↗</a></aside><p class=\"blk-p\" id=\"c17s0b10\">静态电阻</p><p class=\"blk-formula\">R ＝ u/i ＝ tanα</p><p class=\"blk-p\" id=\"c17s0b12\">动态电阻动态电导</p><figure class=\"blk-img\" id=\"x755_0\"><img loading=\"lazy\" src=\"data/img/p755_2.png\" alt=\"原书插图\"></figure><figure class=\"blk-fig\" id=\"c17s0b13\"><img loading=\"lazy\" src=\"data/img/p756_0.png\" alt=\"图 17-1-3\"><figcaption>图 17-1-3</figcaption></figure><h3 class=\"blk-h2\" id=\"c17s0b14\">3 非线性电阻的串联与并联</h3><aside class=\"kp k-concl\" id=\"kp-17-7\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">串并联等效的前提</span></div><div class=\"kp-t\">只有所有非线性元件的控制类型相同，才能写出其串联或并联等效电阻的伏安特性解析表达式。</div><a class=\"kp-src\" href=\"#/video/71?t=2409\">第 71 集 · 40:09 ↗</a></aside><aside class=\"kp k-infer\" id=\"kp-17-8\"><div class=\"kp-h\"><span class=\"kp-kind\">推论</span><span class=\"kp-title\">并联对应压控型</span></div><div class=\"kp-t\">压控型非线性电阻并联后仍是压控型：并联与压控型对应，串联与流控型对应，两者不能混搭。</div><a class=\"kp-src\" href=\"#/video/71?t=2594\">第 71 集 · 43:14 ↗</a></aside><p class=\"blk-p\" id=\"c17s0b15\">若串联的非线性电阻均为流控型，如 u1＝ g1（i）， u2＝ g2（i），则等效非线性电阻的伏安特性为</p><p class=\"blk-formula\">u ＝ u1＋ u2＝ g1（i）＋ g2（i）（流控型）</p><p class=\"blk-p\" id=\"c17s0b17\">若并联的非线性电阻均为压控型的，如 i1＝ f1（u）， i2＝ f2（u），则等效非线性电阻的伏安特性为</p><p class=\"blk-formula\">i ＝ i1＋ i2＝ f1（u）＋ f2（u）（压控型）</p><h2 class=\"blk-h1\" id=\"c17s0b19\">二、非线性电容</h2><p class=\"blk-p\" id=\"c17s0b20\">若电容元件的库伏关系为非线性的，则称为非线性电容元件。电路符号如图 17-1-4 所示。</p><figure class=\"blk-fig\" id=\"c17s0b21\"><img loading=\"lazy\" src=\"data/img/p756_1.png\" alt=\"图 17-1-4\"><figcaption>图 17-1-4</figcaption></figure><h3 class=\"blk-h2\" id=\"c17s0b22\">1 非线性电容元件分类</h3><p class=\"blk-formula\">（1）压控型电容元件， q ＝ f （u）；</p><p class=\"blk-formula\">（2）荷控型电容元件， u ＝ g （q）；</p><p class=\"blk-p\" id=\"c17s0b25\">（3）单调型电容元件。</p><h3 class=\"blk-h2\" id=\"c17s0b26\">2 参数</h3><figure class=\"blk-img\" id=\"x756_0\"><img loading=\"lazy\" src=\"data/img/p756_2.png\" alt=\"原书插图\"></figure><p class=\"blk-p\" id=\"c17s0b27\">静态电容动态电容</p><h2 class=\"blk-h1\" id=\"c17s0b28\">三、非线性电感</h2><p class=\"blk-p\" id=\"c17s0b29\">若电感元件的韦安关系为非线性的，即称为非线性电感元件，电路符号如图 17-1-5 所示。</p><figure class=\"blk-fig\" id=\"c17s0b30\"><img loading=\"lazy\" src=\"data/img/p757_0.png\" alt=\"图 17-1-5\"><figcaption>图 17-1-5</figcaption></figure><h3 class=\"blk-h2\" id=\"c17s0b31\">1 非线性电感元件分类</h3><p class=\"blk-formula\">（1）流控型电感元件， ψ ＝ f （i）；</p><p class=\"blk-formula\">（2）磁控型电感元件， i ＝ g （ψ）；</p><p class=\"blk-p\" id=\"c17s0b34\">（3）单调型电感元件。</p><h3 class=\"blk-h2\" id=\"c17s0b35\">2 参数</h3><p class=\"blk-p\" id=\"c17s0b36\">静态电感动态电感</p><h2 class=\"blk-h1\" id=\"c17s0b37\">四、非线性电路</h2><aside class=\"kp k-concl\" id=\"kp-17-2\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">非线性电路的分析依据</span></div><div class=\"kp-t\">非线性电路的分析依据仍是基尔霍夫定律（KCL、KVL），此外还要用非线性元件的伏安特性。</div><a class=\"kp-src\" href=\"#/video/71?t=316\">第 71 集 · 05:16 ↗</a></aside><p class=\"blk-p\" id=\"c17s0b38\">非线性电路的小信号分析：由于非线性元件的参数不等于常数，因此分析时不能用叠加定理和齐性定理。分析线性电路的基本理论依据依然是基尔霍夫定律。</p><figure class=\"blk-img\" id=\"x757_0\"><img loading=\"lazy\" src=\"data/img/p757_1.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x757_1\"><img loading=\"lazy\" src=\"data/img/p757_2.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x757_2\"><img loading=\"lazy\" src=\"data/img/p757_3.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x757_3\"><img loading=\"lazy\" src=\"data/img/p757_4.png\" alt=\"原书插图\"></figure><h3 class=\"blk-h2\" id=\"c17s0b39\">1 小信号分析法</h3><aside class=\"kp k-concl\" id=\"kp-17-9\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">小信号分析法的求解对象</span></div><div class=\"kp-t\">小信号分析法求的是非线性电阻上的电压 uT 和电流 iT；求出后其余线性部分可等效为戴维南或诺顿电路。</div><a class=\"kp-src\" href=\"#/video/72?t=202\">第 72 集 · 03:22 ↗</a></aside><aside class=\"kp k-formula\" id=\"kp-17-10\"><div class=\"kp-h\"><span class=\"kp-kind\">公式</span><span class=\"kp-title\">小偏差线性化只留一阶</span></div><div class=\"kp-t\">小偏差线性化只保留零阶和一阶导数项，二次及更高次项作为非线性项忽略。</div><a class=\"kp-src\" href=\"#/video/72?t=1048\">第 72 集 · 17:28 ↗</a></aside><aside class=\"kp k-concl\" id=\"kp-17-11\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">小信号等效电路</span></div><div class=\"kp-t\">小信号等效电路中直流偏置电源置零（电压源变导线），非线性电阻用工作点处的动态电阻 rd 代替。</div><a class=\"kp-src\" href=\"#/video/72?t=1481\">第 72 集 · 24:41 ↗</a></aside><aside class=\"kp k-formula\" id=\"kp-17-13\"><div class=\"kp-h\"><span class=\"kp-kind\">公式</span><span class=\"kp-title\">总响应为工作点加小信号</span></div><div class=\"kp-t\">非线性电阻的总电压、总电流等于静态工作点量与小信号量之和：uT=UQ+u1，iT=IQ+i1。</div><a class=\"kp-src\" href=\"#/video/72?t=1645\">第 72 集 · 27:25 ↗</a></aside><p class=\"blk-p\" id=\"c17s0b40\">（1）绘出直流电路，求出直流偏置电压作用时电路的直流工作点（UQ， IQ）（或待求量）；</p><p class=\"blk-p\" id=\"c17s0b41\">（2）根据非线性元件的伏安特性求出对于工作点处的电导；</p><p class=\"blk-p\" id=\"c17s0b42\">（3）绘出电路的小信号模型电路，计算出相应的待求量；</p><p class=\"blk-p\" id=\"c17s0b43\">（4）将直流分量与小信号分量叠加起来。</p><h3 class=\"blk-h2\" id=\"c17s0b44\">2 静态工作点的确定</h3><aside class=\"kp k-tip\" id=\"kp-17-12\"><div class=\"kp-h\"><span class=\"kp-kind\">技巧</span><span class=\"kp-title\">两种令零的场合</span></div><div class=\"kp-t\">求静态工作点时令小信号等于零；画小信号等效电路时令直流偏置电压等于零，二者类似叠加。</div><a class=\"kp-src\" href=\"#/video/72?t=1612\">第 72 集 · 26:52 ↗</a></aside><p class=\"blk-p\" id=\"c17s0b45\">图 17-1-6 （a）所示电路中，虚线框内为线性有源单端口网络的戴维南等效电路，非线性电阻特性为 i ＝ g （u）。</p><p class=\"blk-p\" id=\"c17s0b46\">静态工作点可由求解得到。也可作出非线性电阻和戴维南等效电路的伏安特性曲线，交点就是静态工作点，如图 17-1-6 （b）所示。</p><figure class=\"blk-fig\" id=\"c17s0b47\"><img loading=\"lazy\" src=\"data/img/p758_0.png\" alt=\"图 17-1-6\"><figcaption>图 17-1-6</figcaption></figure><figure class=\"blk-img\" id=\"x758_0\"><img loading=\"lazy\" src=\"data/img/p758_1.png\" alt=\"原书插图\"></figure><h3 class=\"blk-h2\" id=\"c17kpend\">视频补充结论（来自石群讲稿）</h3><aside class=\"kp k-tip\" id=\"kp-17-15\"><div class=\"kp-h\"><span class=\"kp-kind\">技巧</span><span class=\"kp-title\">分段线性化的定义域</span></div><div class=\"kp-t\">分段线性化时各段电导 G1、G2、G3 必须在全部电压 U 上有定义，不能只取有限区间的虚线段。</div><a class=\"kp-src\" href=\"#/video/72?t=4620\">第 72 集 · 1:17:00 ↗</a></aside><aside class=\"kp k-warn\" id=\"kp-17-16\"><div class=\"kp-h\"><span class=\"kp-kind\">注意</span><span class=\"kp-title\">虚短是线性区专属</span></div><div class=\"kp-t\">虚短只在线性区成立；运放进入正、负饱和区后 uD 不等于零，虚短不再成立。</div><a class=\"kp-src\" href=\"#/video/73?t=552\">第 73 集 · 09:12 ↗</a></aside><aside class=\"kp k-formula\" id=\"kp-17-17\"><div class=\"kp-h\"><span class=\"kp-kind\">公式</span><span class=\"kp-title\">状态方程的一般形式</span></div><div class=\"kp-t\">二阶非线性电路状态方程的一般形式：每个状态变量的导数可表示为两个状态变量和时间的函数。</div><a class=\"kp-src\" href=\"#/video/73?t=3105\">第 73 集 · 51:45 ↗</a></aside><aside class=\"kp k-warn\" id=\"kp-17-18\"><div class=\"kp-h\"><span class=\"kp-kind\">注意</span><span class=\"kp-title\">极限环与线性系统的区别</span></div><div class=\"kp-t\">非线性系统的动态点无论初始点在极限环内还是环外都转向极限环；线性系统改变初始条件或参数，轨道随之改变。</div><a class=\"kp-src\" href=\"#/video/74?t=1955\">第 74 集 · 32:35 ↗</a></aside><aside class=\"kp k-concl\" id=\"kp-17-19\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">混沌的本质与特征</span></div><div class=\"kp-t\">混沌是确定性系统中出现的不确定（类随机）行为，最显著特点是状态变量波形对初始值极为敏感。</div><a class=\"kp-src\" href=\"#/video/74?t=2406\">第 74 集 · 40:06 ↗</a></aside><aside class=\"kp k-concl\" id=\"kp-17-20\"><div class=\"kp-h\"><span class=\"kp-kind\">结论</span><span class=\"kp-title\">子谐波的定义</span></div><div class=\"kp-t\">非正弦周期解中频率为外施频率分数倍的谐波称为子谐波，这与线性电路只出现整数倍谐波不同。</div><a class=\"kp-src\" href=\"#/video/74?t=2841\">第 74 集 · 47:21 ↗</a></aside>"
+  },
+  {
+   "key": "17.2",
+   "kind": "ex",
+   "page": 759,
+   "endPage": 773,
+   "items": [
+    {
+     "no": "17-1",
+     "q": "<p class=\"blk-p\" id=\"c17s1b0\">如果通过非线性电阻的电流为 cos （ωt） A，要使该电阻两端的电压中含有 4ω 角频率的电压分量，试求该电阻的伏安特性，写出其解析表达式。</p>",
+     "a": "<p class=\"blk-formula\">解：由题设知 i ＝ cosωt。</p><p class=\"blk-p\" id=\"c17s1b2\">u ＝ cos （4ωt）＝ 2cos2（2ωt）－ 1 ＝ 2[2cos2（ωt）－ 1]2－ 1 ＝ 8cos4（ωt）－ 8cos2（ωt）＋ 1 ＝ 8i4－ 8i2＋ 1因此这是非线性电阻的伏安特性，该电阻两端含有 4ω 角频率的电压分量。</p>"
+    },
+    {
+     "no": "17-2",
+     "q": "<p class=\"blk-p\" id=\"c17s1b3\">写出图 17-2-1 所示电路的节点电压方程，假设电路中各非线性电阻的伏安特性为 i1＝ u13， i2＝ u22， i3＝ u33/2。</p><figure class=\"blk-fig\" id=\"c17s1b4\"><img loading=\"lazy\" src=\"data/img/p759_0.png\" alt=\"图 17-2-1\"><figcaption>图 17-2-1</figcaption></figure>",
+     "a": "<p class=\"blk-formula\">解：节点① 和② 的 KCL 方程为 i1＋ i2＝ 12， i3－ i2＝ 4。</p><p class=\"blk-formula\">电压关系： u1＝ un1， u2＝ un1－ un2， u3＝ un2。</p><p class=\"blk-p\" id=\"c17s1b7\">将题设中所给的条件和上面的电压关系代入 KCL 方程，得到节点电压方程为17-3 一个非线性电容的库伏特性为 u ＝ 1 ＋ 2q ＋ 3q2，如果电容从 q （t0）＝ 0 充电至 q （t）＝ 1C。试求此电容储存的能量。</p><p class=\"blk-mark\">解：电容充电时，它所吸收的功率为</p><figure class=\"blk-img\" id=\"x759_0\"><img loading=\"lazy\" src=\"data/img/p759_1.png\" alt=\"原书插图\"></figure><p class=\"blk-formula\">所以 pdt ＝（1 ＋ 2q ＋ 3q2） dq；</p><p class=\"blk-p\" id=\"c17s1b10\">可得17-4 非线性电感的韦安特性为 ψ ＝ i3，当有 2A 电流通过该电感时，试求此时的静态电感值。</p><p class=\"blk-mark\">解：根据电感跟电流的关系得静态电感值为</p><p class=\"blk-p\" id=\"c17s1b12\">动态电感值为17-5 已知图 17-2-2 所示电路中， US＝ 84V， R1＝ 2kΩ， R2＝ 10kΩ，非线性电阻 R3的伏安特性可用下式表示： i3＝ 0.3u3＋0.04u32。试求电流 i1和 i3。</p><figure class=\"blk-fig\" id=\"c17s1b13\"><img loading=\"lazy\" src=\"data/img/p760_0.png\" alt=\"图 17-2-2\"><figcaption>图 17-2-2</figcaption></figure><p class=\"blk-p\" id=\"c17s1b14\">解：建立节点电压方程（1/R1＋ 1/R2） u3＋ i3＝ uS/R1，将数据和相应的电压电流关系代入得 u32＋ 7.515u3－ 1.05 ＝ 0。</p><figure class=\"blk-img\" id=\"x760_0\"><img loading=\"lazy\" src=\"data/img/p760_1.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x760_1\"><img loading=\"lazy\" src=\"data/img/p760_2.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x760_2\"><img loading=\"lazy\" src=\"data/img/p760_3.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x760_3\"><img loading=\"lazy\" src=\"data/img/p760_4.png\" alt=\"原书插图\"></figure><p class=\"blk-formula\">解得 u3′ ＝ 0.13722V， u3″ ＝－ 7.65222V。</p><p class=\"blk-p\" id=\"c17s1b16\">对应的电流为</p><p class=\"blk-formula\">i3′ ＝ 0.3×0.13722 ＋ 0.04×0.137222≈0.04192A</p><p class=\"blk-p\" id=\"c17s1b18\">i1′ ＝ u3′/R2＋ i3′ ＝ 0.13722/ （10×103）＋ 0.04192≈0.04193A i3″ ＝ 0.3× （－ 7.65222）＋ 0.04× （－ 7.65222）2≈0.04659A i1″ ＝ u3″/R2＋ i3″ ＝－ 7.65222/ （10×103）＋ 0.04659≈0.04582A 17-6 图 17-2-3 所示电路由一个线性电阻 R，一个理想二极管和一个直流电压源串联组成。已知 R ＝ 2Ω， US＝ 1V，在 u-i平面上画出对应的伏安特性曲线。</p><figure class=\"blk-fig\" id=\"c17s1b19\"><img loading=\"lazy\" src=\"data/img/p761_0.png\" alt=\"图 17-2-3\"><figcaption>图 17-2-3</figcaption></figure><p class=\"blk-p\" id=\"c17s1b20\">解：各元件的伏安特性曲线如图 17-2-4 （a）所示， u ＝ Ri ＋ US＋ ud，当 u ＞ 1 时， i ＞ 0， u ＝ 2i ＋ 1；当 u ＜ 1 时，电路的电流</p><p class=\"blk-formula\">为 i ＝ 0，伏安特性曲线如图 17-2-4 （b）所示。</p><figure class=\"blk-fig\" id=\"c17s1b22\"><img loading=\"lazy\" src=\"data/img/p761_1.jpg\" alt=\"图 17-2-4\"><figcaption>图 17-2-4</figcaption></figure>"
+    },
+    {
+     "no": "17-7",
+     "q": "<p class=\"blk-p\" id=\"c17s1b23\">图 17-2-5 所示电路由一个线性电阻 R，一个理想二极管和一个直流电流源并联组成。已知 R ＝ 1Ω， Is＝ 1A，在 u-i 平面上画出对应的伏安特性曲线。</p><figure class=\"blk-fig\" id=\"c17s1b24\"><img loading=\"lazy\" src=\"data/img/p762_0.png\" alt=\"图 17-2-5\"><figcaption>图 17-2-5</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c17s1b25\">解：i ＝ u/R ＋ IS＋ id，当 u ＞ 0 时， id＝ 0， i ＝ u ＋ 1；当 u ＜ 0 时，二极管完全导通，其他电路被短路，伏安特性曲线如图 17-2-6 折线 ABC。</p><figure class=\"blk-fig\" id=\"c17s1b26\"><img loading=\"lazy\" src=\"data/img/p762_1.png\" alt=\"图 17-2-6\"><figcaption>图 17-2-6</figcaption></figure>"
+    },
+    {
+     "no": "17-8",
+     "q": "<p class=\"blk-p\" id=\"c17s1b27\">试设计一个由线性电阻，独立电源和理想二极管组成的一端口网络，要求它的伏安特性具有图 17-2-7 所示特性。</p><figure class=\"blk-fig\" id=\"c17s1b28\"><img loading=\"lazy\" src=\"data/img/p763_0.png\" alt=\"图 17-2-7\"><figcaption>图 17-2-7</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c17s1b29\">解：由曲线可知，当 u ＞ 0 时，电路中存在的并联支路二极管被完全导通，当 u ＜ 0 时，电路中 i ＝ 2u ＋ 2，所以可以得出电路中并联支路的电阻为 R ＝ 0.5Ω，并联电流源 IS＝ 2A，电路图如图 17-2-8 所示。</p><figure class=\"blk-fig\" id=\"c17s1b30\"><img loading=\"lazy\" src=\"data/img/p763_1.png\" alt=\"图 17-2-8\"><figcaption>图 17-2-8</figcaption></figure>"
+    },
+    {
+     "no": "17-9",
+     "q": "<p class=\"blk-p\" id=\"c17s1b31\">设图 17-2-9 所示电路中二极管的伏安特性可用下式表示式中 ud为二极管的电压，其单位为 V，已知 R1＝ 0.5Ω， R2＝ 0.5Ω， R3＝ 0.75Ω， US＝ 2V。试用图解法求出静态工作点。</p><figure class=\"blk-img\" id=\"x763_0\"><img loading=\"lazy\" src=\"data/img/p763_2.png\" alt=\"原书插图\"></figure><figure class=\"blk-fig\" id=\"c17s1b32\"><img loading=\"lazy\" src=\"data/img/p764_0.png\" alt=\"图 17-2-9\"><figcaption>图 17-2-9</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c17s1b33\">解：从二极管两端看左边的戴维南等效电路如图 17-2-10 （a）所示，其中 uoc＝ USR2/ （R1＋ R2）＝ 1V， Req＝ R3＋ R1//R2</p><p class=\"blk-formula\">＝ 0.75 ＋ 0.5//0.5 ＝ 1Ω。</p><p class=\"blk-p\" id=\"c17s1b35\">根据图 17-2-10 （a）可得 u ＝ uoc－ Reqi ＝ 1 － i，将此伏安特性曲线与二极管的伏安特性曲线在一个坐标系中绘出，如图 17-2-10 （b），可得静态工作点 Q 为 UQ＝ 0.34V， IQ＝ 0.66A。</p><figure class=\"blk-fig\" id=\"c17s1b36\"><img loading=\"lazy\" src=\"data/img/p764_1.jpg\" alt=\"图 17-2-10\"><figcaption>图 17-2-10</figcaption></figure>"
+    },
+    {
+     "no": "17-10",
+     "q": "<p class=\"blk-p\" id=\"c17s1b37\">图 17-2-11 所示非线性电阻电路中，非线性电阻的伏安特性为： u ＝ 2i ＋ i3。现已知当 uS（t）＝ 0 时，回路中的电流为 1A。如果 uS（t）＝ cos （ωt） V 时，试用小信号分析法求回路中的电流 i。</p><figure class=\"blk-fig\" id=\"c17s1b38\"><img loading=\"lazy\" src=\"data/img/p765_0.png\" alt=\"图 17-2-11\"><figcaption>图 17-2-11</figcaption></figure>",
+     "a": "<p class=\"blk-formula\">解：由题设可知，电路的静态工作点为 IQ＝ 1A，所以此时非线性电阻的动态电阻为</p><p class=\"blk-p\" id=\"c17s1b40\">当 uS（t）＝ cos （ωt） V 时，小信号电流为： i1＝ uS（t） / （2 ＋ 5）＝ {[cos （ωt） ]/7}A。</p><p class=\"blk-formula\">所以回路电流 i ＝ IQ＋ i1＝ {1 ＋ [cos （ωt） ]/7}A。</p>"
+    },
+    {
+     "no": "17-11",
+     "q": "<p class=\"blk-p\" id=\"c17s1b42\">图 17-2-12 所示电路中， R ＝ 2Ω，直流电压源 US＝ 9V，非线性电阻的伏安特性 u ＝－ 2i ＋ i3/3，若 uS（t）＝ costV，试求电流 i。</p><figure class=\"blk-fig\" id=\"c17s1b43\"><img loading=\"lazy\" src=\"data/img/p765_1.png\" alt=\"图 17-2-12\"><figcaption>图 17-2-12</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c17s1b44\">解：先得到电路的静态工作点，即当 uS（t）＝ 0 时电路的工作特点，此时的 KVL 方程为 Ri ＋ u ＝ US，将已知条件 u ＝－ 2i＋ i3/3 代入上述方程，得</p><p class=\"blk-formula\">2i － 2i ＋ i3/3 ＝ 9</p><p class=\"blk-formula\">解得： IQ＝ 3A。</p><figure class=\"blk-img\" id=\"x765_0\"><img loading=\"lazy\" src=\"data/img/p765_2.png\" alt=\"原书插图\"></figure><p class=\"blk-p\" id=\"c17s1b47\">所以此时非线性电阻的动态电阻为按照小信号分析法，求得小信号电流为： i1＝－ uS（t） / （2 ＋ 7）＝ [ －（cost） /9]A。</p><p class=\"blk-formula\">所以回路电流 i ＝ IQ＋ i1＝ [1 －（cost） /9]A。</p>"
+    },
+    {
+     "no": "17-12",
+     "q": "<p class=\"blk-p\" id=\"c17s1b49\">图 17-2-13 （a）所示电路中，直流电压源 US＝ 3.5V， R ＝ 1Ω，非线性电阻的伏安特性曲线如图 17-2-13 （b）所示。</p><p class=\"blk-p\" id=\"c17s1b50\">（1）试用图解法求静态工作点；</p><p class=\"blk-p\" id=\"c17s1b51\">（2）如将曲线分成 OC、 CD 和 DE 三段，试用分段线性化法求静态工作点，并与（1）的结果相比较。</p><figure class=\"blk-fig\" id=\"c17s1b52\"><img loading=\"lazy\" src=\"data/img/p766_0.png\" alt=\"图 17-2-13\"><figcaption>图 17-2-13</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c17s1b53\">解：（1）线性元件电阻的伏安关系方程为 u ＝ US－ Ri ＝ 3.5 － i，将此伏安特性关系与图（b）在一个 u-i 平面上绘出，如图17-2-14 所示，交点 Q 即是静态工作点，即静态工作点可近似为 IQ≈1.5A， UQ≈2V。</p><figure class=\"blk-img\" id=\"x766_0\"><img loading=\"lazy\" src=\"data/img/p766_1.jpg\" alt=\"原书插图\"></figure><figure class=\"blk-fig\" id=\"c17s1b54\"><img loading=\"lazy\" src=\"data/img/p767_0.png\" alt=\"图 17-2-14\"><figcaption>图 17-2-14</figcaption></figure><p class=\"blk-p\" id=\"c17s1b55\">（2）非线性电阻曲线方程近似为：</p><p class=\"blk-formula\">OC： u ＝ i （0≤i ＜ 1A， 0≤u ＜ 1V）；</p><p class=\"blk-formula\">CD： u ＝ 2i － 1 （1A≤i ＜ 2A， 1V≤u ＜ 3V）；</p><p class=\"blk-formula\">DE： u ＝ 3i － 3 （2A≤i≤3A， 3V≤u≤6V）。</p><p class=\"blk-p\" id=\"c17s1b59\">即此非线性电阻在每一个分段是线性元件。其与伏安关系方程 u ＝ 3.5 － i 的交点为 IQ＝ 1.5A， UQ＝ 2V，这个结果与（1）是相同的。</p>"
+    },
+    {
+     "no": "17-13",
+     "q": "<p class=\"blk-p\" id=\"c17s1b60\">图 17-2-15 所示电路中，非线性电阻的伏安特性为 i ＝ u2，试求电路的静态工作点及该点的动态电阻 Rd。</p><figure class=\"blk-fig\" id=\"c17s1b61\"><img loading=\"lazy\" src=\"data/img/p767_1.jpg\" alt=\"图 17-2-15\"><figcaption>图 17-2-15</figcaption></figure>",
+     "a": "<p class=\"blk-p\" id=\"c17s1b62\">解：建立 KCL 方程： I0＝ u/R ＋ i，即 2u ＋ u2＝ 3，解得 u ＝ 1V 或－ 3V （舍掉）。</p><p class=\"blk-formula\">所以电路的静态工作点为 UQ＝ 1V，动态电阻为</p>"
+    },
+    {
+     "no": "17-14",
+     "q": "<p class=\"blk-p\" id=\"c17s1b64\">图 17-2-16 所示电路中，非线性电阻的伏安特性为 u ＝ i3，如将此电阻突然与一个充电的电容接通，试求电容两端</p><p class=\"blk-formula\">的电压 uC，设 uC（0＋）＝ U0。</p><figure class=\"blk-fig\" id=\"c17s1b66\"><img loading=\"lazy\" src=\"data/img/p768_0.png\" alt=\"图 17-2-16\"><figcaption>图 17-2-16</figcaption></figure>",
+     "a": "<p class=\"blk-mark\">解：根据电容的 VCR，可知</p><p class=\"blk-p\" id=\"c17s1b68\">其中，将其代入上式，得解此微分方程 uC（t）＝ [ － 2t/ （3C）＋ A]3/2，将初始条件 uC（0＋）＝ U0代入解得</p><p class=\"blk-formula\">uC（t）＝ [ － 2t/ （3C）＋ U02/3]3/2V</p>"
+    },
+    {
+     "no": "17-15",
+     "q": "<p class=\"blk-p\" id=\"c17s1b70\">在图 17-2-17 （a）所示电路中，线性电容通过非线性电阻放电，非线性电阻伏安特性如图 17-2-17 （b）所示。已</p><p class=\"blk-formula\">知 C ＝ 1F， uC（0－）＝ 3V，试求 uC。</p><figure class=\"blk-img\" id=\"x768_0\"><img loading=\"lazy\" src=\"data/img/p768_1.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x768_1\"><img loading=\"lazy\" src=\"data/img/p768_2.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x768_2\"><img loading=\"lazy\" src=\"data/img/p768_3.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x768_3\"><img loading=\"lazy\" src=\"data/img/p768_4.png\" alt=\"原书插图\"></figure><figure class=\"blk-fig\" id=\"c17s1b72\"><img loading=\"lazy\" src=\"data/img/p769_0.jpg\" alt=\"图 17-2-17\"><figcaption>图 17-2-17</figcaption></figure>",
+     "a": "<p class=\"blk-mark\">解：根据电路图和电容的 VCR 可知：</p><p class=\"blk-p\" id=\"c17s1b74\">非线性电阻伏安关系曲线分为下列几段，如图 17-2-18 所示。</p><p class=\"blk-formula\">P0P1直线段： i ＝ uR－ 1， 2V≤uR≤3V， 1A≤i≤2A；</p><p class=\"blk-formula\">P1P2直线段： i ＝－ uR＋ 3， 1V≤uR≤2V， 1A≤i≤2A；</p><p class=\"blk-formula\">P2O 直线段： i ＝ 2uR， 0≤uR≤1V， 0≤i≤2A。</p><figure class=\"blk-fig\" id=\"c17s1b78\"><img loading=\"lazy\" src=\"data/img/p769_1.png\" alt=\"图 17-2-18\"><figcaption>图 17-2-18</figcaption></figure><p class=\"blk-formula\">初始条件 uC（0＋）＝ uC（0－）＝ 3V，所以：</p><p class=\"blk-p\" id=\"c17s1b80\">（1）当从 P0到 P1时，作出等效电路如图 17-2-19 （a）所示，此时间段</p><figure class=\"blk-img\" id=\"x769_0\"><img loading=\"lazy\" src=\"data/img/p769_2.png\" alt=\"原书插图\"></figure><p class=\"blk-formula\">其中 τ1＝ RC ＝ 1s，从 P0到 P1所需时间 t1为</p><p class=\"blk-formula\">于是 uC（t）＝（1 ＋ 2e－t） V， 0≤t≤0.693s。</p><figure class=\"blk-fig\" id=\"c17s1b83\"><img loading=\"lazy\" src=\"data/img/p770_0.png\" alt=\"图 17-2-19 （a）\"><figcaption>图 17-2-19 （a）</figcaption></figure><p class=\"blk-p\" id=\"c17s1b84\">（2）当从 P1到 P2时，作出等效电路如图 17-2-19 （b）所示，此时间段</p><p class=\"blk-formula\">其中 τ1＝ RC ＝－ 1s，从 P0到 P2所需时间 t2为</p><p class=\"blk-p\" id=\"c17s1b86\">于是 uC（t）＝（3 － et－0.693） V， 0.393s≤t≤1.386s。</p><figure class=\"blk-img\" id=\"x770_0\"><img loading=\"lazy\" src=\"data/img/p770_1.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x770_1\"><img loading=\"lazy\" src=\"data/img/p770_2.jpg\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x770_2\"><img loading=\"lazy\" src=\"data/img/p770_3.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x770_3\"><img loading=\"lazy\" src=\"data/img/p770_4.png\" alt=\"原书插图\"></figure><figure class=\"blk-fig\" id=\"c17s1b87\"><img loading=\"lazy\" src=\"data/img/p771_0.jpg\" alt=\"图 17-2-19 （b）\"><figcaption>图 17-2-19 （b）</figcaption></figure><p class=\"blk-p\" id=\"c17s1b88\">（3）当从 P2到 O 时，作出等效电路如图 17-2-19 （c）所示，此时间段其中 τ1＝ RC ＝ 0.5s，于是 uC（t）＝ e－2（t－1.386）V， t≥1.386s。</p><figure class=\"blk-fig\" id=\"c17s1b89\"><img loading=\"lazy\" src=\"data/img/p771_1.png\" alt=\"图 17-2-19 （c）\"><figcaption>图 17-2-19 （c）</figcaption></figure>"
+    },
+    {
+     "no": "17-16",
+     "q": "<p class=\"blk-p\" id=\"c17s1b90\">含有非线性电感的一阶动态电路如图 17-2-20 所示，已知直流电压源 US＝ 40V，小扰动电压源，线性电阻 R1＝ 10Ω， R2＝ 40Ω，非线性电感 ψ ＝ 0.5i3（ψ 单位为 Wb， i 单位为 A）。求 t ＞ 0时的响应 iL（t）， u2（t）。</p><figure class=\"blk-fig\" id=\"c17s1b91\"><img loading=\"lazy\" src=\"data/img/p771_2.jpg\" alt=\"图 17-2-20\"><figcaption>图 17-2-20</figcaption></figure>",
+     "a": "<p class=\"blk-formula\">解：当直流 US＝ 40V 单独作用时：</p><figure class=\"blk-img\" id=\"x771_0\"><img loading=\"lazy\" src=\"data/img/p771_3.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x771_1\"><img loading=\"lazy\" src=\"data/img/p771_4.jpg\" alt=\"原书插图\"></figure><p class=\"blk-p\" id=\"c17s1b93\">则可得：</p><p class=\"blk-p\" id=\"c17s1b94\">因此，当单独作用时，电路对应的运算模型如图 17-2-21 所示。</p><figure class=\"blk-fig\" id=\"c17s1b95\"><img loading=\"lazy\" src=\"data/img/p772_0.jpg\" alt=\"图 17-2-21\"><figcaption>图 17-2-21</figcaption></figure><p class=\"blk-p\" id=\"c17s1b96\">故可得：</p><p class=\"blk-p\" id=\"c17s1b97\">所以，可得出：</p><p class=\"blk-p\" id=\"c17s1b98\">综上可得：</p><figure class=\"blk-img\" id=\"x772_0\"><img loading=\"lazy\" src=\"data/img/p772_1.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x772_1\"><img loading=\"lazy\" src=\"data/img/p772_2.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x772_2\"><img loading=\"lazy\" src=\"data/img/p772_3.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x772_3\"><img loading=\"lazy\" src=\"data/img/p772_4.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x772_4\"><img loading=\"lazy\" src=\"data/img/p772_5.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x772_5\"><img loading=\"lazy\" src=\"data/img/p772_6.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x772_6\"><img loading=\"lazy\" src=\"data/img/p772_7.png\" alt=\"原书插图\"></figure>"
+    },
+    {
+     "no": "17-17",
+     "q": "<p class=\"blk-p\" id=\"c17s1b99\">（综合设计题）已知 Lorenz 混沌系统为系统参数 a ＝ 10， b ＝ 28， c ＝ 8/3，试应用电路元件电阻、电容、运算放大器、乘法器来设计实现 Lorenz 混沌系统。</p>",
+     "a": "<p class=\"blk-mark\">解：略。此题属于延伸内容，了解即可。</p><figure class=\"blk-img\" id=\"x773_0\"><img loading=\"lazy\" src=\"data/img/p773_0.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x773_1\"><img loading=\"lazy\" src=\"data/img/p773_1.png\" alt=\"原书插图\"></figure>"
+    }
+   ]
+  },
+  {
+   "key": "17.3",
+   "kind": "exam",
+   "page": 774,
+   "endPage": 778,
+   "groups": [
+    {
+     "title": "名校考研真题",
+     "html": "<p class=\"blk-p\" id=\"c17s2b0\">计算题1 如图 17-3-1 所示，， iS（t）＝ 2000 ＋ 20sin3t （mA）， u ＝ i2＋ 2i，求 R 的平均功率。[ 北京交通大学 2023 研 ]</p><figure class=\"blk-fig\" id=\"c17s2b1\"><img loading=\"lazy\" src=\"data/img/p774_0.jpg\" alt=\"图 17-3-1\"><figcaption>图 17-3-1</figcaption></figure><p class=\"blk-mark\">解：求静态工作点，直流大信号：电感短路，电容开路。</p><p class=\"blk-formula\">uS0＝ 20V， iS0＝ 2A。</p><p class=\"blk-p\" id=\"c17s2b4\">如图 17-3-2 （a）所示，可得：</p><p class=\"blk-formula\">得出静态工作点 i ＝ 3A 或－ 10A， u ＝ 15V 或 80V。</p><p class=\"blk-p\" id=\"c17s2b6\">交流作用时，。</p><p class=\"blk-formula\">当 ω ＝ 1rad/s 时，</p><p class=\"blk-p\" id=\"c17s2b8\">·</p><p class=\"blk-formula\">US－ 1＝ 1 ∠ 0°V。</p><p class=\"blk-p\" id=\"c17s2b10\">如图 17-3-2 （b）所示，可得：</p><p class=\"blk-formula\">Z ＝ j// （－ 9j）＝ 9j/8</p><p class=\"blk-formula\">当 Rd＝ 8Ω 时，</p><p class=\"blk-p\" id=\"c17s2b13\">。</p><p class=\"blk-formula\">当 Rd＝－ 18Ω 时，</p><p class=\"blk-p\" id=\"c17s2b15\">。</p><figure class=\"blk-img\" id=\"x774_0\"><img loading=\"lazy\" src=\"data/img/p774_1.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x774_1\"><img loading=\"lazy\" src=\"data/img/p774_2.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x774_2\"><img loading=\"lazy\" src=\"data/img/p774_3.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x774_3\"><img loading=\"lazy\" src=\"data/img/p774_4.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x774_4\"><img loading=\"lazy\" src=\"data/img/p774_5.png\" alt=\"原书插图\"></figure><p class=\"blk-formula\">当 ω ＝ 2rad/s 时，</p><p class=\"blk-p\" id=\"c17s2b17\">·</p><p class=\"blk-formula\">US－ 2＝ 2 ∠ 0°V。</p><p class=\"blk-p\" id=\"c17s2b19\">如图 17-3-2 （c）所示，可得：</p><p class=\"blk-p\" id=\"c17s2b20\">Z ＝ 5// （j2 － j0.5）＋（j2// － j4.5）＝ 4.99 ∠ 85.26°Ω</p><p class=\"blk-formula\">当 Rd＝ 8Ω 时，</p><p class=\"blk-p\" id=\"c17s2b22\">。</p><p class=\"blk-formula\">当 Rd＝－ 18Ω 时，</p><p class=\"blk-p\" id=\"c17s2b24\">。</p><p class=\"blk-formula\">当 ω ＝ 3rad/s 时，</p><p class=\"blk-formula\">， uS＝ 0，如图 17-3-2 （d）所示。</p><p class=\"blk-formula\">最后，当 i ＝ 3A 时， R 的平均功率为：</p><p class=\"blk-formula\">当 i ＝－ 10A 时， R 的平均功率为：</p><figure class=\"blk-img\" id=\"x775_0\"><img loading=\"lazy\" src=\"data/img/p775_0.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x775_1\"><img loading=\"lazy\" src=\"data/img/p775_1.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x775_2\"><img loading=\"lazy\" src=\"data/img/p775_2.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x775_3\"><img loading=\"lazy\" src=\"data/img/p775_3.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x775_4\"><img loading=\"lazy\" src=\"data/img/p775_4.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x775_5\"><img loading=\"lazy\" src=\"data/img/p775_5.png\" alt=\"原书插图\"></figure><figure class=\"blk-fig\" id=\"c17s2b29\"><img loading=\"lazy\" src=\"data/img/p776_0.jpg\" alt=\"图 17-3-2\"><figcaption>图 17-3-2</figcaption></figure><p class=\"blk-p\" id=\"c17s2b30\">2 如图 17-3-3 所示电路，已知 u ＝ i2－ 17i，试求 i 和 i1的值。[ 西安交通大学 2016 研 ]</p><figure class=\"blk-fig\" id=\"c17s2b31\"><img loading=\"lazy\" src=\"data/img/p776_1.jpg\" alt=\"图 17-3-3\"><figcaption>图 17-3-3</figcaption></figure><p class=\"blk-mark\">解：先求非线性电阻以外电路的戴维南等效。</p><p class=\"blk-p\" id=\"c17s2b33\">（1）求开路电压 uoc将非线性电阻开路后，可列回路 KVL 方程： 80 ＝（20 ＋ 40） i1－ 20i1。</p><p class=\"blk-formula\">解得： i1＝ 2A。</p><p class=\"blk-formula\">故开路电压为： uoc＝ 80 － 20i1＝ 40V。</p><p class=\"blk-p\" id=\"c17s2b36\">（2）求等效电阻 Req由外施电压源法求等效电阻的电路如图 17-3-4 （a）所示，可列回路方程</p><p class=\"blk-formula\">解得： Req＝ uS/iS＝ 20Ω。</p><figure class=\"blk-fig\" id=\"c17s2b38\"><img loading=\"lazy\" src=\"data/img/p777_0.png\" alt=\"图 17-3-4 （a）\"><figcaption>图 17-3-4 （a）</figcaption></figure><p class=\"blk-p\" id=\"c17s2b39\">得戴维南等效电路如图 17-3-4 （b）所示。</p><figure class=\"blk-fig\" id=\"c17s2b40\"><img loading=\"lazy\" src=\"data/img/p777_1.jpg\" alt=\"图 17-3-4 （b）\"><figcaption>图 17-3-4 （b）</figcaption></figure><p class=\"blk-formula\">对该电路列 KVL 方程，有： 20i ＋ i2－ 17i ＝ 40。</p><figure class=\"blk-img\" id=\"x777_0\"><img loading=\"lazy\" src=\"data/img/p777_2.jpg\" alt=\"原书插图\"></figure><p class=\"blk-formula\">解得： i ＝－ 8A 或 i ＝ 5A。</p><p class=\"blk-p\" id=\"c17s2b43\">当 i ＝－ 8A 时， i1＝（80 － u） /20 ＝（80 － 82－ 17×8） /20 ＝－ 6A。</p><p class=\"blk-p\" id=\"c17s2b44\">当 i ＝ 5A 时， i1＝（80 － u） /20 ＝（80 － 52＋ 17×5） /20 ＝ 7A。</p>"
+    }
+   ]
+  }
+ ]
+}

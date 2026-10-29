@@ -1,0 +1,29 @@
+{
+  "_note": "ASR 常见错字 -> 正确术语。kp_mine.py 在挖候选前先做替换；归纳阶段还会二次纠偏。",
+  "terms": [
+    {"wrong": "向量", "right": "相量"},
+    {"wrong": "阻亢", "right": "阻抗"},
+    {"wrong": "容亢", "right": "容抗"},
+    {"wrong": "感亢", "right": "感抗"},
+    {"wrong": "导那", "right": "导纳"},
+    {"wrong": "协振", "right": "谐振"},
+    {"wrong": "戴伟南", "right": "戴维南"},
+    {"wrong": "基耳霍夫", "right": "基尔霍夫"},
+    {"wrong": "诺登", "right": "诺顿"},
+    {"wrong": "赋值", "right": "幅值"},
+    {"wrong": "项位", "right": "相位"},
+    {"wrong": "迭加", "right": "叠加"},
+    {"wrong": "赞态", "right": "暂态"},
+    {"wrong": "阶月", "right": "阶跃"},
+    {"wrong": "冲激", "right": "冲激"},
+    {"wrong": "卷集", "right": "卷积"},
+    {"wrong": "频普", "right": "频谱"},
+    {"wrong": "傅立叶", "right": "傅里叶"},
+    {"wrong": "二端网口", "right": "二端口"},
+    {"wrong": "星三角变换", "right": "星三角形变换"},
+    {"wrong": "开入", "right": "开路"},
+    {"wrong": "短入", "right": "短路"},
+    {"wrong": "复频域", "right": "复频域"},
+    {"wrong": "拉式变换", "right": "拉普拉斯变换"}
+  ]
+}

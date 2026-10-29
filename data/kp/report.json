@@ -1,0 +1,302 @@
+{
+ "total": 354,
+ "chapters": [
+  {
+   "n": 1,
+   "count": 19,
+   "byKind": {
+    "结论": 10,
+    "注意": 5,
+    "公式": 2,
+    "技巧": 1,
+    "推论": 1
+   },
+   "missing_episodes": [],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 2,
+   "count": 20,
+   "byKind": {
+    "公式": 8,
+    "注意": 3,
+    "结论": 3,
+    "推论": 2,
+    "技巧": 4
+   },
+   "missing_episodes": [
+    6
+   ],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 3,
+   "count": 19,
+   "byKind": {
+    "注意": 5,
+    "结论": 7,
+    "推论": 2,
+    "公式": 2,
+    "技巧": 3
+   },
+   "missing_episodes": [
+    9
+   ],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 4,
+   "count": 20,
+   "byKind": {
+    "结论": 8,
+    "注意": 7,
+    "技巧": 3,
+    "公式": 2
+   },
+   "missing_episodes": [
+    17
+   ],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 5,
+   "count": 18,
+   "byKind": {
+    "注意": 4,
+    "结论": 7,
+    "公式": 3,
+    "推论": 2,
+    "技巧": 2
+   },
+   "missing_episodes": [],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 6,
+   "count": 20,
+   "byKind": {
+    "结论": 5,
+    "技巧": 1,
+    "公式": 9,
+    "注意": 2,
+    "推论": 3
+   },
+   "missing_episodes": [],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 7,
+   "count": 20,
+   "byKind": {
+    "结论": 8,
+    "注意": 3,
+    "技巧": 4,
+    "公式": 4,
+    "推论": 1
+   },
+   "missing_episodes": [
+    26,
+    29,
+    32,
+    33
+   ],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 2,
+   "dupe_detail": []
+  },
+  {
+   "n": 8,
+   "count": 19,
+   "byKind": {
+    "公式": 10,
+    "技巧": 2,
+    "注意": 6,
+    "结论": 1
+   },
+   "missing_episodes": [],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 9,
+   "count": 20,
+   "byKind": {
+    "结论": 8,
+    "公式": 7,
+    "技巧": 2,
+    "注意": 2,
+    "推论": 1
+   },
+   "missing_episodes": [],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 10,
+   "count": 20,
+   "byKind": {
+    "注意": 7,
+    "结论": 6,
+    "公式": 5,
+    "技巧": 2
+   },
+   "missing_episodes": [],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 11,
+   "count": 20,
+   "byKind": {
+    "结论": 11,
+    "公式": 5,
+    "注意": 3,
+    "技巧": 1
+   },
+   "missing_episodes": [],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 1,
+   "dupe_detail": []
+  },
+  {
+   "n": 12,
+   "count": 19,
+   "byKind": {
+    "结论": 8,
+    "注意": 6,
+    "公式": 4,
+    "技巧": 1
+   },
+   "missing_episodes": [],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 13,
+   "count": 20,
+   "byKind": {
+    "结论": 9,
+    "技巧": 4,
+    "注意": 5,
+    "公式": 1,
+    "推论": 1
+   },
+   "missing_episodes": [
+    56
+   ],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 4,
+   "dupe_detail": []
+  },
+  {
+   "n": 14,
+   "count": 20,
+   "byKind": {
+    "结论": 3,
+    "公式": 12,
+    "注意": 1,
+    "技巧": 4
+   },
+   "missing_episodes": [
+    59
+   ],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 15,
+   "count": 20,
+   "byKind": {
+    "结论": 8,
+    "注意": 6,
+    "推论": 2,
+    "公式": 3,
+    "技巧": 1
+   },
+   "missing_episodes": [],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 16,
+   "count": 20,
+   "byKind": {
+    "结论": 9,
+    "注意": 7,
+    "公式": 4
+   },
+   "missing_episodes": [],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  },
+  {
+   "n": 17,
+   "count": 20,
+   "byKind": {
+    "结论": 9,
+    "注意": 3,
+    "公式": 5,
+    "推论": 1,
+    "技巧": 2
+   },
+   "missing_episodes": [],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 6,
+   "dupe_detail": []
+  },
+  {
+   "n": 18,
+   "count": 20,
+   "byKind": {
+    "注意": 4,
+    "推论": 1,
+    "结论": 8,
+    "公式": 6,
+    "技巧": 1
+   },
+   "missing_episodes": [
+    80
+   ],
+   "invalid": 0,
+   "dupe": 0,
+   "unmatched": 0,
+   "dupe_detail": []
+  }
+ ]
+}

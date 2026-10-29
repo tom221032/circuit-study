@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>电路 · 邱关源第六版 学习站</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>⚡</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar">
+    <a class="brand" href="#/">
+      <span class="brand-icon">⚡</span>
+      <span>
+        <b>电路</b>
+        <small>邱关源 · 第六版</small>
+      </span>
+    </a>
+
+    <div class="side-search">
+      <input id="sideSearch" type="search" placeholder="搜索笔记 / 字幕 / 题目…" autocomplete="off">
+    </div>
+
+    <nav class="chapter-nav" id="chapterNav"></nav>
+
+    <div class="side-foot">
+      <div class="progress-mini">
+        <div class="pm-label"><span>总进度</span><b id="pmText">0%</b></div>
+        <div class="pm-bar"><i id="pmBar"></i></div>
+      </div>
+      <a class="side-link" href="#/search">全站搜索</a>
+      <a class="side-link" href="books/notes.pdf" target="_blank" rel="noopener">原书 PDF</a>
+    </div>
+  </aside>
+
+  <main class="main" id="main">
+    <header class="topbar">
+      <button class="icon-btn only-mobile" id="menuBtn" aria-label="菜单">☰</button>
+      <div class="crumbs" id="crumbs"></div>
+      <div class="top-actions">
+        <input id="topSearch" class="top-search" type="search" placeholder="搜索…" autocomplete="off">
+        <a class="btn ghost" href="#/search">🔍</a>
+      </div>
+    </header>
+    <div id="view" class="view"></div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>
