@@ -1,4 +1,6 @@
 // 电路学习站 —— 纯前端，数据全部来自 data/
+import { renderMathIn } from './math.js';
+
 const $ = (s, r = document) => r.querySelector(s);
 const $$ = (s, r = document) => Array.from(r.querySelectorAll(s));
 
@@ -452,6 +454,7 @@ async function viewChapter(view, n, q) {
       reader.innerHTML = `<div class="notice">来自原书 p.${sec.page}–${sec.endPage}，按题型分组。</div>
         ${sec.groups.map(g => `<section style="margin-bottom:22px"><h2 class="blk-h1">${esc(g.title)}</h2>${g.html}</section>`).join('')}`;
     }
+    renderMathIn(reader);
   }
   $$('.tab').forEach(t => t.addEventListener('click', () => { paint(t.dataset.kind); history.replaceState(null, '', `#/chapter/${n}?tab=${t.dataset.kind}`); }));
   paint(activeKind);
@@ -530,6 +533,7 @@ async function viewVideo(view, page, q) {
         <div class="tr-foot"><span>点句子：跳到该处播放</span><span id="trInfo"></span></div>
       </aside>
     </div>`;
+  renderMathIn(view);
 
   $('#btnDone').addEventListener('click', e => {
     if (S.store.watched[v.page]) delete S.store.watched[v.page]; else S.store.watched[v.page] = Date.now();
@@ -716,6 +720,7 @@ async function viewSearch(view, q) {
           <span>第 ${it.c} 章 ${esc(it.ct || '')}</span><span>p.${it.p}</span><span class="r-go">${it.k === 'ex' && it.no ? '题 ' + esc(it.no) : '打开 →'}</span></div>
         <div class="r-text">${hl(it.x, query)}</div></a>`;
     }).join('');
+    renderMathIn(results);
   }
 
   $$('.filters .chip').forEach(b => b.addEventListener('click', () => {

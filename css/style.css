@@ -391,3 +391,23 @@ img{max-width:100%}
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
 }
+
+/* ---------- KaTeX 行内公式 ---------- */
+.math-inline{display:inline;white-space:nowrap}
+.katex{font-size:1.06em;line-height:1.25;color:inherit;text-rendering:auto}
+.blk-formula .katex{font-size:1.1em}
+.res .r-text .katex{font-size:1.02em}
+.katex-display{margin:.55em 0}
+[data-theme="dark"] .katex .mord,
+[data-theme="dark"] .katex .mop,
+[data-theme="dark"] .katex .mbin,
+[data-theme="dark"] .katex .mrel,
+[data-theme="dark"] .katex .mopen,
+[data-theme="dark"] .katex .mclose,
+[data-theme="dark"] .katex .mpunct,
+[data-theme="dark"] .katex .minner,
+[data-theme="dark"] .katex .mfrac,
+[data-theme="dark"] .katex .msupsub,
+[data-theme="dark"] .katex .mspace{color:inherit}
+[data-theme="dark"] .katex .frac-line{border-color:currentColor}
+[data-theme="dark"] .katex .sqrt > .sqrt-line{border-color:currentColor}
