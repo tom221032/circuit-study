@@ -11,6 +11,7 @@ const S = {
 S.store.watched ||= {};
 S.store.bookmarks ||= {};
 S.store.notes ||= {};
+S.store.edits ||= {};
 S.store.last ||= null;
 
 const cache = new Map();
@@ -21,6 +22,152 @@ async function getJSON(path) {
   return p;
 }
 function save() { localStorage.setItem('circuit-study-v1', JSON.stringify(S.store)); }
+
+/* ---------------- 编辑原文（调试功能） ----------------
+   - 顶栏 ✎ 开关：打开后可点正文任意段落直接改（编辑期间不跑 KaTeX，显示原始文本）
+   - 撤销 / 恢复各 15 步：一次连续输入算一步（停手 450ms 或失焦时提交）
+   - 「复原全部」清空所有改动并重绘，同时清空撤销/恢复栈，避免两者互相干扰
+   ------------------------------------------------------ */
+const EDIT_LIMIT = 15;
+const EDIT_SEL = '.blk-p, .blk-mark, .blk-h1, .blk-h2, .blk-formula, figcaption, .kp-title, .kp-t, .ans-body p';
+let editUndo = [], editRedo = [], editOrig = new Map(), editBase = new Map();
+let editTimers = new Map(), editSaveT = 0;
+
+function editableUnder(root) {
+  const all = $$(EDIT_SEL, root);
+  return all.filter(el => !all.some(o => o !== el && o.contains(el)));
+}
+function stampEdits(root, base) {
+  const nodes = editableUnder(root);
+  editOrig = new Map();
+  editBase = new Map();
+  nodes.forEach((el, i) => {
+    const uid = `${base}:${el.id || 'i' + i}`;
+    el.dataset.uid = uid;
+    editOrig.set(uid, el.innerHTML);
+    const saved = S.store.edits[uid];
+    if (saved != null && saved !== el.innerHTML) el.innerHTML = saved;
+    el.classList.toggle('edited', saved != null);
+    editBase.set(uid, el.innerHTML);
+  });
+  return nodes;
+}
+function editSaveSoon() {
+  clearTimeout(editSaveT);
+  editSaveT = setTimeout(save, 400);
+}
+function editSyncBar() {
+  const bar = $('#editBar');
+  if (!bar) return;
+  bar.hidden = !S.editMode;
+  $('#edUndoN').textContent = editUndo.length;
+  $('#edRedoN').textContent = editRedo.length;
+  $('#edUndo').disabled = !editUndo.length;
+  $('#edRedo').disabled = !editRedo.length;
+}
+function editCommitEl(el) {
+  const uid = el.dataset.uid;
+  if (!uid) return;
+  const t = editTimers.get(el);
+  if (t) { clearTimeout(t); editTimers.delete(el); }
+  const before = editBase.get(uid);
+  const after = el.innerHTML;
+  if (before == null || before === after) return;
+  editBase.set(uid, after);
+  const changed = after !== editOrig.get(uid);
+  el.classList.toggle('edited', changed);
+  if (!changed) delete S.store.edits[uid];
+  else S.store.edits[uid] = after;
+  save();
+  editUndo.push({ uid, before, after });
+  if (editUndo.length > EDIT_LIMIT) editUndo.shift();
+  editRedo = [];
+  editSyncBar();
+}
+function editFlushAll() {
+  [...editTimers.keys()].forEach(el => editCommitEl(el));
+}
+function editWrite(uid, html) {
+  if (html === editOrig.get(uid)) delete S.store.edits[uid];
+  else S.store.edits[uid] = html;
+  editBase.set(uid, html);
+  save();
+  const orig = editOrig.get(uid);
+  $$('[data-uid]').forEach(el => {
+    if (el.dataset.uid !== uid) return;
+    if (el.innerHTML !== html) el.innerHTML = html;
+    el.classList.toggle('edited', html !== orig);
+  });
+}
+function editUndoStep() {
+  editFlushAll();
+  const e = editUndo.pop();
+  if (!e) { toast('没有可撤销的修改了'); return false; }
+  editWrite(e.uid, e.before);
+  editRedo.push(e);
+  if (editRedo.length > EDIT_LIMIT) editRedo.shift();
+  editSyncBar();
+  return true;
+}
+function editRedoStep() {
+  editFlushAll();
+  const e = editRedo.pop();
+  if (!e) { toast('没有可恢复的修改了'); return false; }
+  editWrite(e.uid, e.after);
+  editUndo.push(e);
+  if (editUndo.length > EDIT_LIMIT) editUndo.shift();
+  editSyncBar();
+  return true;
+}
+function editResetAll() {
+  editTimers.forEach(t => clearTimeout(t));
+  editTimers.clear();
+  S.store.edits = {};
+  save();
+  editUndo = []; editRedo = [];
+  editBase.clear();
+  editSyncBar();
+  const y = window.scrollY;
+  Promise.resolve(route()).then(() => requestAnimationFrame(() => window.scrollTo(0, y)));
+  toast('已复原全部修改，撤销记录一并清空');
+}
+function makeEditable(nodes) {
+  nodes.forEach(el => {
+    el.setAttribute('contenteditable', 'true');
+    el.setAttribute('spellcheck', 'false');
+    el.classList.add('editable');
+    el.addEventListener('input', () => {
+      const uid = el.dataset.uid;
+      if (!uid) return;
+      const changed = el.innerHTML !== editOrig.get(uid);
+      el.classList.toggle('edited', changed);
+      if (!changed) delete S.store.edits[uid];
+      else S.store.edits[uid] = el.innerHTML;
+      editSaveSoon();
+      const t = editTimers.get(el);
+      if (t) clearTimeout(t);
+      editTimers.set(el, setTimeout(() => editCommitEl(el), 450));
+    });
+    el.addEventListener('blur', () => editCommitEl(el));
+    el.addEventListener('keydown', e => {
+      // 段落内换行用 <br>，避免 contenteditable 自己套 <div>
+      if (e.key === 'Enter' && !e.isComposing) {
+        e.preventDefault();
+        document.execCommand('insertLineBreak');
+      }
+    });
+  });
+}
+function setEditMode(on) {
+  S.editMode = !!on;
+  document.body.classList.toggle('editing', S.editMode);
+  const btn = $('#btnEdit');
+  if (btn) btn.setAttribute('aria-pressed', String(S.editMode));
+  editSyncBar();
+  const y = window.scrollY;
+  Promise.resolve(route()).then(() => requestAnimationFrame(() => window.scrollTo(0, y)));
+  toast(S.editMode ? '编辑模式：点任意段落直接改；Esc 退出' : '已退出编辑，公式恢复排版');
+}
 
 const pad2 = n => String(n).padStart(2, '0');
 function fmtDur(sec) {
@@ -166,7 +313,7 @@ function applyTheme(t) {
   const meta = document.querySelector('meta[name="theme-color"]');
   if (meta) meta.content = THEME_META[t];
 }
-const FS_STEPS = [0.9, 1, 1.08, 1.16, 1.24];
+const FS_STEPS = [0.8, 0.9, 1, 1.15, 1.3, 1.45, 1.6, 1.75];
 function applyFs(v) {
   v = Math.max(FS_STEPS[0], Math.min(FS_STEPS[FS_STEPS.length - 1], Number(v) || 1));
   document.documentElement.style.setProperty('--fs', String(v));
@@ -175,7 +322,12 @@ function applyFs(v) {
 function stepFs(dir) {
   const cur = Number(S.store.fs || 1);
   let i = FS_STEPS.findIndex(x => Math.abs(x - cur) < 0.001);
-  if (i < 0) i = 1;
+  if (i < 0) {
+    // 记录里的值不在档位内（比如旧版本存的 1.08）：取最接近的档
+    let best = 0;
+    FS_STEPS.forEach((x, k) => { if (Math.abs(x - cur) < Math.abs(FS_STEPS[best] - cur)) best = k; });
+    i = best;
+  }
   const next = i + dir;
   if (next < 0) return toast('已经是最小字号');
   if (next >= FS_STEPS.length) return toast('已经是最大字号');
@@ -241,84 +393,240 @@ const noteImgDel = id => idb('readwrite', st => st.delete(id));
 
 // 压缩后用 JPEG 存库，避免 localStorage 5MB 上限
 async function shrinkImage(file, maxSide = 1500, quality = 0.85) {
-  const bmp = await createImageBitmap(file);
-  const scale = Math.min(1, maxSide / Math.max(bmp.width, bmp.height));
-  const w = Math.max(1, Math.round(bmp.width * scale));
-  const h = Math.max(1, Math.round(bmp.height * scale));
+  // 不同来源的图片（截图/相册/某些 PNG 编码）不一定能被 createImageBitmap 解开，
+  // 这里退一步用 <img> 解码，再不行就原样存文件，保证「一定能插进去」。
+  let src = null;
+  try {
+    src = await createImageBitmap(file);
+  } catch (e) {
+    src = null;
+  }
+  let url = '';
+  if (!src) {
+    url = URL.createObjectURL(file);
+    try {
+      src = await new Promise((res, rej) => {
+        const im = new Image();
+        im.onload = () => res(im);
+        im.onerror = () => rej(new Error('decode failed'));
+        im.src = url;
+      });
+    } catch (e) {
+      URL.revokeObjectURL(url);
+      return { blob: file, w: 0, h: 0, type: file.type || 'image/png' };
+    }
+  }
+  const sw = src.width || src.naturalWidth || 0;
+  const sh = src.height || src.naturalHeight || 0;
+  if (!sw || !sh) {
+    if (url) URL.revokeObjectURL(url);
+    if (src.close) src.close();
+    return { blob: file, w: 0, h: 0, type: file.type || 'image/png' };
+  }
+  const scale = Math.min(1, maxSide / Math.max(sw, sh));
+  const w = Math.max(1, Math.round(sw * scale));
+  const h = Math.max(1, Math.round(sh * scale));
   const cv = document.createElement('canvas');
   cv.width = w; cv.height = h;
   const g = cv.getContext('2d');
   g.fillStyle = '#fff'; g.fillRect(0, 0, w, h);
-  g.drawImage(bmp, 0, 0, w, h);
-  if (bmp.close) bmp.close();
+  g.drawImage(src, 0, 0, w, h);
+  if (src.close) src.close();
+  if (url) URL.revokeObjectURL(url);
   const blob = await new Promise(r => cv.toBlob(r, 'image/jpeg', quality));
-  if (!blob) throw new Error('toBlob failed');
+  if (!blob) return { blob: file, w: sw, h: sh, type: file.type || 'image/png' };
   return { blob, w, h, type: 'image/jpeg' };
+}
+
+// 同一张图片在多次渲染间复用 objectURL，避免重复创建
+const imgUrlCache = new Map();
+function imgUrlFor(id, blob) {
+  let u = imgUrlCache.get(id);
+  if (!u) { u = URL.createObjectURL(blob); imgUrlCache.set(id, u); }
+  return u;
+}
+
+// 把一张图包成「不可拆分」的行内块，图片就夹在文字中间
+function nimgWrap(id, blob) {
+  const span = document.createElement('span');
+  span.className = 'nimg';
+  span.setAttribute('contenteditable', 'false');
+  span.dataset.img = String(id);
+  const img = document.createElement('img');
+  img.src = imgUrlFor(id, blob);
+  img.alt = '笔记图片';
+  span.appendChild(img);
+  const del = document.createElement('button');
+  del.type = 'button';
+  del.className = 'nimg-del';
+  del.title = '删除这张图';
+  del.textContent = '✕';
+  span.appendChild(del);
+  return span;
+}
+
+// 存盘时把行内图块降级成 <img src="noteimg:ID">，正文文字原样保留
+function serializeNote(el) {
+  const clone = el.cloneNode(true);
+  clone.querySelectorAll('.nimg').forEach(w => {
+    const id = w.dataset.img;
+    const img = document.createElement('img');
+    img.setAttribute('data-img', id);
+    img.setAttribute('src', `noteimg:${id}`);
+    w.replaceWith(img);
+  });
+  clone.querySelectorAll('br[data-ph]').forEach(b => b.remove());
+  return clone.innerHTML;
 }
 
 async function initNoteEditor(n) {
   const key = 'ch' + n;
-  const ta = $('#myNote');
-  if (!ta) return;
-  ta.value = (S.store.notes && S.store.notes[key]) || '';
-  ta.addEventListener('input', () => { S.store.notes[key] = ta.value; save(); });
-
+  const el = $('#myNote');
+  if (!el) return;
   const box = $('#noteEditor');
-  const strip = $('#noteImgs');
   const fileInput = $('#noteFile');
-  let urls = [];
 
-  async function paint() {
-    let rows = [];
-    try { rows = (await noteImgs(key)) || []; } catch (e) {
-      if (strip) strip.innerHTML = '<span class="hint">这台浏览器不支持本地图片存储</span>';
-      return;
-    }
-    urls.forEach(u => URL.revokeObjectURL(u));
-    urls = [];
-    if (!strip) return;
-    strip.innerHTML = rows.map((r, i) => {
-      const u = URL.createObjectURL(r.blob);
-      urls.push(u);
-      return `<div class="note-thumb" data-id="${r.id}" data-url="${u}">
-        <img src="${u}" alt="笔记图片 ${i + 1}" loading="lazy">
-        <button class="del" type="button" data-del="${r.id}" title="删除这张图">✕</button></div>`;
-    }).join('');
-    $$('.note-thumb', strip).forEach(el => {
-      $('img', el).addEventListener('click', () => openLightbox(el.dataset.url));
-      $('.del', el).addEventListener('click', async ev => {
-        ev.stopPropagation();
-        try { await noteImgDel(Number(el.dataset.del)); toast('已删除图片'); paint(); }
-        catch (e) { toast('删除失败'); }
-      });
-    });
+  const markDirty = () => {
+    S.store.notes[key] = serializeNote(el);
+    save();
+  };
+
+  // ---- 载入：正文 + 行内图片 ----
+  let rows = [];
+  try { rows = (await noteImgs(key)) || []; } catch (e) {
+    rows = [];
+  }
+  // 丢掉空 blob（历史失败插入留下的坏记录），避免出现破图
+  const bad = rows.filter(r => !r.blob || !r.blob.size);
+  if (bad.length) {
+    bad.forEach(r => noteImgDel(r.id).catch(() => {}));
+    rows = rows.filter(r => r.blob && r.blob.size);
+  }
+  const byId = new Map(rows.map(r => [r.id, r]));
+  const raw = (S.store.notes && S.store.notes[key]) || '';
+
+  if (/<(img|br|div|span|p)\b/i.test(raw)) {
+    // 先去掉 noteimg: 占位 src，避免浏览器把它当成真请求（控制台会报 ERR_UNKNOWN_URL_SCHEME）
+    el.innerHTML = raw.replace(/(<img[^>]*?)\ssrc="noteimg:[^"]*"/g, '$1');
+  } else {
+    el.textContent = raw; // 老版本纯文本笔记
   }
 
-  async function addFiles(files) {
-    const list = Array.from(files || []).filter(f => f && String(f.type).startsWith('image/'));
-    if (!list.length) return;
+  const used = new Set();
+  [...el.querySelectorAll('img')].forEach(img => {
+    const id = Number(img.dataset.img || String(img.getAttribute('src') || '').replace('noteimg:', ''));
+    const rec = byId.get(id);
+    if (!rec) { img.remove(); return; }
+    used.add(id);
+    img.replaceWith(nimgWrap(id, rec.blob));
+  });
+
+  // 老版本里「单独列出」的图片没有进正文，这里补到笔记末尾，避免丢图。
+  // 只有当正文里一张图都没有（= 纯老格式）时才补，避免已被删掉的图又冒出来。
+  const orphans = used.size ? [] : rows.filter(r => !used.has(r.id));
+  if (orphans.length) {
+    if (el.textContent && !/\n$/.test(el.textContent)) el.appendChild(document.createElement('br'));
+    orphans.forEach(r => {
+      el.appendChild(nimgWrap(r.id, r.blob));
+      el.appendChild(document.createElement('br'));
+      used.add(r.id);
+    });
+    markDirty();
+  }
+
+  // ---- 存盘 + 清理不再引用的图片 ----
+  let timer = 0;
+  const scheduleSave = () => {
+    clearTimeout(timer);
+    timer = setTimeout(async () => {
+      markDirty();
+      const keep = new Set([...el.querySelectorAll('.nimg')].map(w => Number(w.dataset.img)));
+      rows.forEach(r => { if (!keep.has(r.id)) noteImgDel(r.id).catch(() => {}); });
+    }, 260);
+  };
+  el.addEventListener('input', scheduleSave);
+  el.addEventListener('blur', () => { clearTimeout(timer); markDirty(); });
+
+  // 回车统一插 <br>（默认会插 <div>，多次回车会嵌套出越来越深的 div）
+  el.addEventListener('keydown', e => {
+    if (e.key === 'Enter' && !e.shiftKey && !e.isComposing) {
+      e.preventDefault();
+      document.execCommand('insertLineBreak');
+      scheduleSave();
+    }
+  });
+
+  // ---- 在光标处插入 ----
+  const caretInside = () => {
+    const s = window.getSelection();
+    return s && s.rangeCount && el.contains(s.getRangeAt(0).commonAncestorContainer);
+  };
+  function insertNode(node, withBreak = false) {
+    const sel = window.getSelection();
+    el.focus();
+    if (caretInside()) {
+      const r = sel.getRangeAt(0);
+      r.deleteContents();
+      r.insertNode(node);
+      let last = node;
+      if (withBreak) {
+        const br = document.createElement('br');
+        node.parentNode.insertBefore(br, node.nextSibling);
+        last = br;
+      }
+      const after = document.createRange();
+      after.setStartAfter(last);
+      after.collapse(true);
+      sel.removeAllRanges();
+      sel.addRange(after);
+    } else {
+      el.appendChild(node);
+      if (withBreak) el.appendChild(document.createElement('br'));
+    }
+    markDirty();
+  }
+
+  // ---- 图片入库并在光标处插入 ----
+  async function addFiles(files, atDropPoint) {
+    const list = Array.from(files || []).filter(f => f && f.size > 0 && String(f.type).startsWith('image/'));
+    if (!list.length) { toast('没读到图片文件（可能已失效，请重新选择）'); return; }
     let ok = 0;
     for (const f of list) {
       try {
         const { blob, w, h, type } = await shrinkImage(f);
-        await noteImgAdd({ note: key, blob, w, h, type, name: f.name || '截图', ts: Date.now() });
+        const id = await noteImgAdd({ note: key, blob, w, h, type, name: f.name || '截图', ts: Date.now() });
+        const node = nimgWrap(id, blob);
+        rows.push({ id, note: key, blob, w, h, type });
+        insertNode(node, true);
         ok++;
       } catch (e) { console.error(e); }
     }
-    toast(ok ? `已插入 ${ok} 张图片` : '图片处理失败');
-    paint();
+    if (ok) toast(`已插入 ${ok} 张图片`);
+    else toast('图片处理失败');
   }
 
+  // 按钮选图
   const btn = $('#noteImgBtn');
   if (btn) btn.addEventListener('click', () => fileInput && fileInput.click());
-  if (fileInput) fileInput.addEventListener('change', () => { addFiles(fileInput.files); fileInput.value = ''; });
-
-  // 粘贴截图
-  ta.addEventListener('paste', e => {
-    const files = Array.from((e.clipboardData && e.clipboardData.files) || []);
-    if (files.length) { e.preventDefault(); addFiles(files); }
+  if (fileInput) fileInput.addEventListener('change', () => {
+    addFiles(fileInput.files);
+    fileInput.value = '';
   });
-  // 拖拽
+
+  // 粘贴：有图就插图，纯文本就按光标插入
+  el.addEventListener('paste', e => {
+    const dt = e.clipboardData;
+    if (!dt) return;
+    const files = Array.from(dt.files || []);
+    if (files.length) { e.preventDefault(); addFiles(files); return; }
+    const text = dt.getData('text/plain');
+    if (text) {
+      e.preventDefault();
+      document.execCommand('insertText', false, text);
+    }
+  });
+
+  // 拖拽：插到落点位置
   if (box) {
     ['dragenter', 'dragover'].forEach(t => box.addEventListener(t, e => {
       if (e.dataTransfer && Array.from(e.dataTransfer.types || []).includes('Files')) {
@@ -329,11 +637,54 @@ async function initNoteEditor(n) {
     box.addEventListener('drop', e => {
       box.classList.remove('note-drop');
       if (e.dataTransfer && e.dataTransfer.files && e.dataTransfer.files.length) {
-        e.preventDefault(); addFiles(e.dataTransfer.files);
+        e.preventDefault();
+        const r = document.caretRangeFromPoint ? document.caretRangeFromPoint(e.clientX, e.clientY) : null;
+        if (r && el.contains(r.startContainer)) {
+          el.focus();
+          const sel = window.getSelection();
+          sel.removeAllRanges();
+          sel.addRange(r);
+        }
+        addFiles(e.dataTransfer.files);
       }
     });
   }
-  paint();
+
+  // 点击缩略图看大图 / 点 ✕ 删图
+  el.addEventListener('click', e => {
+    const del = e.target.closest && e.target.closest('.nimg-del');
+    if (del) {
+      e.preventDefault();
+      const wrap = del.closest('.nimg');
+      if (!wrap) return;
+      const id = Number(wrap.dataset.img);
+      wrap.remove();
+      rows = rows.filter(r => r.id !== id);
+      noteImgDel(id).catch(() => {});
+      markDirty();
+      toast('已删除图片');
+      return;
+    }
+    const img = e.target.closest && e.target.closest('.nimg img');
+    if (img) openLightbox(img.src);
+  });
+
+  // 图片上按 Backspace/Delete 直接删整块
+  el.addEventListener('keydown', e => {
+    if (e.key !== 'Backspace' && e.key !== 'Delete') return;
+    const sel = window.getSelection();
+    if (!sel || !sel.rangeCount || !sel.isCollapsed) return;
+    let node = sel.getRangeAt(0).startContainer;
+    let wrap = node.nodeType === 1 ? node.closest('.nimg') : node.parentElement && node.parentElement.closest('.nimg');
+    if (wrap) {
+      e.preventDefault();
+      const id = Number(wrap.dataset.img);
+      wrap.remove();
+      rows = rows.filter(r => r.id !== id);
+      noteImgDel(id).catch(() => {});
+      markDirty();
+    }
+  });
 }
 
 // ---------------- chapter ----------------
@@ -381,13 +732,12 @@ async function viewChapter(view, n, q) {
           <details>
             <summary>✎ 我的本章笔记（自动保存在本机，可粘贴图片）</summary>
             <div class="note-editor" id="noteEditor">
-              <textarea id="myNote" placeholder="在这里写自己的推导、易错点…… 截图可以直接 Ctrl+V 粘贴，也可以拖进来。"></textarea>
+              <div class="rich" id="myNote" contenteditable="true" spellcheck="false" data-ph="在这里写自己的推导、易错点…… 截图可以直接 Ctrl+V 粘贴，也可以拖进来；图片会插在光标所在的位置。"></div>
               <div class="note-tools">
-                <button class="btn ghost" id="noteImgBtn" type="button">🖼 插入图片</button>
-                <span class="hint">支持粘贴截图 / 拖入图片 / 从相册选择，图片只存在这台设备上</span>
+                <button class="btn ghost" id="noteImgBtn" type="button">🖼 在光标处插入图片</button>
+                <span class="hint">粘贴截图 / 拖入图片 / 选文件都行，图片按插入位置夹在文字中间；点大图可预览，点图片右上角 ✕ 删除</span>
               </div>
               <input type="file" id="noteFile" accept="image/*" multiple hidden>
-              <div class="note-imgs" id="noteImgs"></div>
             </div>
           </details>
         </div>
@@ -395,7 +745,7 @@ async function viewChapter(view, n, q) {
 
       <aside class="side-panel">
         <h3>本章视频 · ${vs.length} 集</h3>
-        <div class="vlist">
+        <div class="vlist-videos">
           ${vs.map(v => `<a class="vitem ${S.store.watched[v.page] ? 'done' : ''}" href="#/video/${v.page}">
             <span class="idx">${pad2(v.page)}</span>
             <span class="t">${esc(v.title)}${hasSub(v) ? '' : ' <span class="nosub">无字幕</span>'}</span>
@@ -454,7 +804,9 @@ async function viewChapter(view, n, q) {
       reader.innerHTML = `<div class="notice">来自原书 p.${sec.page}–${sec.endPage}，按题型分组。</div>
         ${sec.groups.map(g => `<section style="margin-bottom:22px"><h2 class="blk-h1">${esc(g.title)}</h2>${g.html}</section>`).join('')}`;
     }
-    renderMathIn(reader);
+    const nodes = stampEdits(reader, `c${n}:${kind}`);
+    if (S.editMode) makeEditable(nodes);
+    else renderMathIn(reader);
   }
   $$('.tab').forEach(t => t.addEventListener('click', () => { paint(t.dataset.kind); history.replaceState(null, '', `#/chapter/${n}?tab=${t.dataset.kind}`); }));
   paint(activeKind);
@@ -755,8 +1107,48 @@ function wireChrome() {
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
     if (!$('#lightbox').hidden) { closeLightbox(); return; }
-    if ($('#sidebar').classList.contains('open')) setSidebar(false);
+    if ($('#sidebar').classList.contains('open')) { setSidebar(false); return; }
+    if (S.editMode) setEditMode(false);
   });
+
+  // ---- 编辑原文：开关 / 撤销 / 恢复 / 复原 ----
+  const editBtn = $('#btnEdit');
+  if (editBtn) editBtn.addEventListener('click', () => setEditMode(!S.editMode));
+  document.addEventListener('click', e => {
+    const shot = e.target.closest && e.target.closest('.kp-shot');
+    if (shot && shot.src) { e.preventDefault(); openLightbox(shot.src); }
+  });
+  const edUndo = $('#edUndo'), edRedo = $('#edRedo'), edExit = $('#edExit'), edReset = $('#edReset');
+  if (edUndo) edUndo.addEventListener('click', () => editUndoStep());
+  if (edRedo) edRedo.addEventListener('click', () => editRedoStep());
+  if (edExit) edExit.addEventListener('click', () => setEditMode(false));
+  let resetArm = 0;
+  if (edReset) edReset.addEventListener('click', () => {
+    if (!Object.keys(S.store.edits).length) { toast('还没有任何修改'); return; }
+    if (!resetArm) {
+      edReset.classList.add('armed');
+      edReset.textContent = '再点一次确认';
+      resetArm = setTimeout(() => {
+        resetArm = 0; edReset.classList.remove('armed'); edReset.textContent = '复原全部';
+      }, 3200);
+      return;
+    }
+    clearTimeout(resetArm); resetArm = 0;
+    edReset.classList.remove('armed'); edReset.textContent = '复原全部';
+    editResetAll();
+  });
+  document.addEventListener('keydown', e => {
+    if (!S.editMode) return;
+    if (e.target.closest && e.target.closest('#noteEditor')) return; // 笔记框用浏览器自带撤销
+    const k = (e.key || '').toLowerCase();
+    if ((e.ctrlKey || e.metaKey) && k === 'z') {
+      e.preventDefault();
+      if (e.shiftKey) editRedoStep(); else editUndoStep();
+    } else if ((e.ctrlKey || e.metaKey) && k === 'y') {
+      e.preventDefault();
+      editRedoStep();
+    }
+  }, true);
 
   // 滑动手势关侧栏
   let sx = 0, sy = 0;

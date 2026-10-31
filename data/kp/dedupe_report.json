@@ -1,0 +1,755 @@
+{
+ "dropped": [
+  {
+   "title": "注意：②如电阻上的电压与电流参考方向",
+   "frame": "p02_000038.jpg",
+   "by": "title",
+   "kept": "p02_000044.jpg",
+   "ch": 1
+  },
+  {
+   "title": "不能：作为“激励”",
+   "frame": "p03_001028.jpg",
+   "by": "title",
+   "kept": "p03_000943.jpg",
+   "ch": 1
+  },
+  {
+   "title": "注意：5种基本理想电路元件有三个特征",
+   "frame": "p01_000806.jpg",
+   "by": "title",
+   "kept": "p01_000830.jpg",
+   "ch": 1
+  },
+  {
+   "title": "注意",
+   "frame": "p01_000758.jpg",
+   "by": "text",
+   "ch": 1
+  },
+  {
+   "title": "小结：KCL是对支路电流的线性约束",
+   "frame": "p03_004139.jpg",
+   "by": "text",
+   "ch": 1
+  },
+  {
+   "title": "公式：1 电阻的串联和并联",
+   "frame": "p04_004734.jpg",
+   "by": "title",
+   "kept": "p04_004731.jpg",
+   "ch": 2
+  },
+  {
+   "title": "公式：1 电阻的串联和并联",
+   "frame": "p04_001557.jpg",
+   "by": "title",
+   "kept": "p04_004731.jpg",
+   "ch": 2
+  },
+  {
+   "title": "小结：（1）回路法的一般步骤：①选定",
+   "frame": "p10_001317.jpg",
+   "by": "title",
+   "kept": "p10_001322.jpg",
+   "ch": 3
+  },
+  {
+   "title": "结论：KVL的独立方程数=基本回路数",
+   "frame": "p08_003155.jpg",
+   "by": "title",
+   "kept": "p08_003154.jpg",
+   "ch": 3
+  },
+  {
+   "title": "2）基本回路的数目是一定的，为连支数",
+   "frame": "p09_001211.jpg",
+   "by": "text",
+   "ch": 3
+  },
+  {
+   "title": "总结：现以示例来说明这种相似联系",
+   "frame": "p18_004353.jpg",
+   "by": "title",
+   "kept": "p18_004358.jpg",
+   "ch": 4
+  },
+  {
+   "title": "注意：最大功率传输定理用于一端口电路",
+   "frame": "p18_000308.jpg",
+   "by": "text",
+   "ch": 4
+  },
+  {
+   "title": "注意：替代后电路必须有唯一解无电压源",
+   "frame": "p14_001707.jpg",
+   "by": "frame",
+   "kept": "p15_003859.jpg",
+   "ch": 4
+  },
+  {
+   "title": "注意：不超过饱和电压（即保证工作在线",
+   "frame": "p19_010110.jpg",
+   "by": "title",
+   "kept": "p19_010055.jpg",
+   "ch": 5
+  },
+  {
+   "title": "不能：②电容储存的能量一定大于或等于",
+   "frame": "p21_003150.jpg",
+   "by": "title",
+   "kept": "p21_003139.jpg",
+   "ch": 6
+  },
+  {
+   "title": "注意：电导体由绝缘材料分开就可以产生",
+   "frame": "p21_000518.jpg",
+   "by": "title",
+   "kept": "p21_000346.jpg",
+   "ch": 6
+  },
+  {
+   "title": "公式：动态电路的方程及其初始条件",
+   "frame": "p23_000515.jpg",
+   "by": "title",
+   "kept": "p23_000459.jpg",
+   "ch": 7
+  },
+  {
+   "title": "公式：动态电路的方程及其初始条件",
+   "frame": "p29_005337.jpg",
+   "by": "title",
+   "kept": "p23_000459.jpg",
+   "ch": 7
+  },
+  {
+   "title": "不能：就是说uc不可能跃变",
+   "frame": "p32_002315.jpg",
+   "by": "title",
+   "kept": "p32_002314.jpg",
+   "ch": 7
+  },
+  {
+   "title": "推论：动态电路的方程及其初始条件",
+   "frame": "p26_005546.jpg",
+   "by": "title",
+   "kept": "p26_005120.jpg",
+   "ch": 7
+  },
+  {
+   "title": "推论：动态电路的方程及其初始条件",
+   "frame": "p26_005552.jpg",
+   "by": "title",
+   "kept": "p26_005120.jpg",
+   "ch": 7
+  },
+  {
+   "title": "公式：动态电路的方程及其初始条件",
+   "frame": "p33_010612.jpg",
+   "by": "title",
+   "kept": "p23_000459.jpg",
+   "ch": 7
+  },
+  {
+   "title": "公式：动态电路的方程及其初始条件",
+   "frame": "p33_010619.jpg",
+   "by": "title",
+   "kept": "p23_000459.jpg",
+   "ch": 7
+  },
+  {
+   "title": "结论：在有效值（振幅）初相上的“差异",
+   "frame": "p35_002152.jpg",
+   "by": "frame",
+   "kept": "p35_002116.jpg",
+   "ch": 8
+  },
+  {
+   "title": "公式：相量法基础",
+   "frame": "p35_001902.jpg",
+   "by": "title",
+   "kept": "p35_001900.jpg",
+   "ch": 8
+  },
+  {
+   "title": "结论：各支路电压、电流的特解都是与激",
+   "frame": "p35_001857.jpg",
+   "by": "title",
+   "kept": "p35_001827.jpg",
+   "ch": 8
+  },
+  {
+   "title": "结论：各支路电压、电流的特解都是与激",
+   "frame": "p35_001858.jpg",
+   "by": "title",
+   "kept": "p35_001827.jpg",
+   "ch": 8
+  },
+  {
+   "title": "注意：相量的幅角表示正弦量的初相位",
+   "frame": "p35_003112.jpg",
+   "by": "title",
+   "kept": "p35_003109.jpg",
+   "ch": 8
+  },
+  {
+   "title": "注意",
+   "frame": "p35_001324.jpg",
+   "by": "text",
+   "ch": 8
+  },
+  {
+   "title": "公式：电路定律的相量形式",
+   "frame": "p36_002311.jpg",
+   "by": "title",
+   "kept": "p36_010059.jpg",
+   "ch": 8
+  },
+  {
+   "title": "公式：电路定律的相量形式",
+   "frame": "p36_002331.jpg",
+   "by": "title",
+   "kept": "p36_010059.jpg",
+   "ch": 8
+  },
+  {
+   "title": "公式：电路定律的相量形式",
+   "frame": "p36_002346.jpg",
+   "by": "title",
+   "kept": "p36_010059.jpg",
+   "ch": 8
+  },
+  {
+   "title": "公式：电路定律的相量形式",
+   "frame": "p36_002353.jpg",
+   "by": "title",
+   "kept": "p36_010059.jpg",
+   "ch": 8
+  },
+  {
+   "title": "注意：但继续提高cosβ所需电容很大",
+   "frame": "p41_001847.jpg",
+   "by": "text",
+   "ch": 9
+  },
+  {
+   "title": "公式：阻抗和导纳及其相互等效变换",
+   "frame": "p37_011118.jpg",
+   "by": "title",
+   "kept": "p37_011117.jpg",
+   "ch": 9
+  },
+  {
+   "title": "公式：阻抗和导纳及其相互等效变换",
+   "frame": "p37_011125.jpg",
+   "by": "title",
+   "kept": "p37_011117.jpg",
+   "ch": 9
+  },
+  {
+   "title": "公式：正弦稳态电路的相量分析",
+   "frame": "p39_004705.jpg",
+   "by": "title",
+   "kept": "p39_004752.jpg",
+   "ch": 9
+  },
+  {
+   "title": "公式：正弦稳态电路的相量分析",
+   "frame": "p39_004708.jpg",
+   "by": "title",
+   "kept": "p39_004752.jpg",
+   "ch": 9
+  },
+  {
+   "title": "公式：阻抗和导纳及其相互等效变换",
+   "frame": "p41_004137.jpg",
+   "by": "title",
+   "kept": "p37_011117.jpg",
+   "ch": 9
+  },
+  {
+   "title": "公式：阻抗和导纳及其相互等效变换",
+   "frame": "p41_004133.jpg",
+   "by": "title",
+   "kept": "p37_011117.jpg",
+   "ch": 9
+  },
+  {
+   "title": "公式：正弦稳态电路的功率分析",
+   "frame": "p40_001251.jpg",
+   "by": "title",
+   "kept": "p40_001516.jpg",
+   "ch": 9
+  },
+  {
+   "title": "公式：4 互感元件的伏安关系",
+   "frame": "p45_002049.jpg",
+   "by": "title",
+   "kept": "p45_004405.jpg",
+   "ch": 10
+  },
+  {
+   "title": "注意：两线圈的自磁链和互磁链相助",
+   "frame": "p42_003646.jpg",
+   "by": "title",
+   "kept": "p42_003647.jpg",
+   "ch": 10
+  },
+  {
+   "title": "公式：4 互感元件的伏安关系",
+   "frame": "p45_002036.jpg",
+   "by": "title",
+   "kept": "p45_004405.jpg",
+   "ch": 10
+  },
+  {
+   "title": "注意：与输入、输出变量的类型以及端口",
+   "frame": "p46_001424.jpg",
+   "by": "title",
+   "kept": "p46_001942.jpg",
+   "ch": 11
+  },
+  {
+   "title": "公式：1 谐振条件",
+   "frame": "p49_001405.jpg",
+   "by": "text",
+   "ch": 11
+  },
+  {
+   "title": "公式：2 RLC 并联谐振电路的特点",
+   "frame": "p49_001746.jpg",
+   "by": "title",
+   "kept": "p49_000952.jpg",
+   "ch": 11
+  },
+  {
+   "title": "注意：两个功率表之一的读数可能为负",
+   "frame": "p53_002420.jpg",
+   "by": "title",
+   "kept": "p53_002316.jpg",
+   "ch": 12
+  },
+  {
+   "title": "结论：电源中性点和负载中性点不等电位",
+   "frame": "p52_003848.jpg",
+   "by": "title",
+   "kept": "p52_004043.jpg",
+   "ch": 12
+  },
+  {
+   "title": "技巧：对称三相电路的分析计算",
+   "frame": "p51_000621.jpg",
+   "by": "title",
+   "kept": "p51_000617.jpg",
+   "ch": 12
+  },
+  {
+   "title": "公式：三相电路的线电压（电流）与相电",
+   "frame": "p51_000936.jpg",
+   "by": "title",
+   "kept": "p51_000741.jpg",
+   "ch": 12
+  },
+  {
+   "title": "公式：三相电路的线电压（电流）与相电",
+   "frame": "p52_001315.jpg",
+   "by": "title",
+   "kept": "p51_000741.jpg",
+   "ch": 12
+  },
+  {
+   "title": "技巧：对称三相电源",
+   "frame": "p53_003412.jpg",
+   "by": "title",
+   "kept": "p53_003742.jpg",
+   "ch": 12
+  },
+  {
+   "title": "结论：电源中性点和负载中性点不等电位",
+   "frame": "p52_003825.jpg",
+   "by": "title",
+   "kept": "p52_004043.jpg",
+   "ch": 12
+  },
+  {
+   "title": "结论：三相对称的非正弦周期量（奇谐波",
+   "frame": "p57_001107.jpg",
+   "by": "text",
+   "ch": 13
+  },
+  {
+   "title": "公式：2 电路元件的运算模型",
+   "frame": "p61_011017.jpg",
+   "by": "title",
+   "kept": "p61_010831.jpg",
+   "ch": 14
+  },
+  {
+   "title": "公式：2 电路元件的运算模型",
+   "frame": "p61_011037.jpg",
+   "by": "title",
+   "kept": "p61_010831.jpg",
+   "ch": 14
+  },
+  {
+   "title": "结论：可见对于由R、L(M)、C及受",
+   "frame": "p61_003138.jpg",
+   "by": "title",
+   "kept": "p61_003048.jpg",
+   "ch": 14
+  },
+  {
+   "title": "结论：可以先求各函数的象函数再进行相",
+   "frame": "p59_004151.jpg",
+   "by": "title",
+   "kept": "p58_004151.jpg",
+   "ch": 14
+  },
+  {
+   "title": "公式：应用拉氏变换法分析线性电路（运",
+   "frame": "p60_001952.jpg",
+   "by": "title",
+   "kept": "p60_001916.jpg",
+   "ch": 14
+  },
+  {
+   "title": "公式：应用拉氏变换法分析线性电路（运",
+   "frame": "p58_000329.jpg",
+   "by": "title",
+   "kept": "p60_001916.jpg",
+   "ch": 14
+  },
+  {
+   "title": "公式：应用拉氏变换法分析线性电路（运",
+   "frame": "p59_000329.jpg",
+   "by": "title",
+   "kept": "p60_001916.jpg",
+   "ch": 14
+  },
+  {
+   "title": "公式：应用拉氏变换法分析线性电路（运",
+   "frame": "p58_000437.jpg",
+   "by": "title",
+   "kept": "p60_001916.jpg",
+   "ch": 14
+  },
+  {
+   "title": "公式：应用拉氏变换法分析线性电路（运",
+   "frame": "p59_000437.jpg",
+   "by": "title",
+   "kept": "p60_001916.jpg",
+   "ch": 14
+  },
+  {
+   "title": "注意：积分域积分下限从0_开始",
+   "frame": "p59_001832.jpg",
+   "by": "title",
+   "kept": "p58_001832.jpg",
+   "ch": 14
+  },
+  {
+   "title": "注意：积分域积分下限从0_开始",
+   "frame": "p58_001828.jpg",
+   "by": "title",
+   "kept": "p58_001832.jpg",
+   "ch": 14
+  },
+  {
+   "title": "注意：积分域积分下限从0_开始",
+   "frame": "p59_001828.jpg",
+   "by": "title",
+   "kept": "p58_001832.jpg",
+   "ch": 14
+  },
+  {
+   "title": "技巧：应用拉氏变换法分析线性电路（运",
+   "frame": "p60_000205.jpg",
+   "by": "title",
+   "kept": "p61_010751.jpg",
+   "ch": 14
+  },
+  {
+   "title": "公式：应用拉氏变换法分析线性电路（运",
+   "frame": "p60_000048.jpg",
+   "by": "title",
+   "kept": "p60_001916.jpg",
+   "ch": 14
+  },
+  {
+   "title": "公式：应用拉氏变换法分析线性电路（运",
+   "frame": "p60_000312.jpg",
+   "by": "title",
+   "kept": "p60_001916.jpg",
+   "ch": 14
+  },
+  {
+   "title": "必须：首先必须选择一组独立割集",
+   "frame": "p62_002145.jpg",
+   "by": "title",
+   "kept": "p62_002109.jpg",
+   "ch": 15
+  },
+  {
+   "title": "必须：首先必须选择一组独立割集",
+   "frame": "p62_002209.jpg",
+   "by": "title",
+   "kept": "p62_002109.jpg",
+   "ch": 15
+  },
+  {
+   "title": "必须：首先必须选择一组独立割集",
+   "frame": "p62_002233.jpg",
+   "by": "title",
+   "kept": "p62_002109.jpg",
+   "ch": 15
+  },
+  {
+   "title": "注意：列表法不采用复合支路定义",
+   "frame": "p66_003708.jpg",
+   "by": "title",
+   "kept": "p66_003649.jpg",
+   "ch": 15
+  },
+  {
+   "title": "注意：列表法不采用复合支路定义",
+   "frame": "p66_003728.jpg",
+   "by": "title",
+   "kept": "p66_003649.jpg",
+   "ch": 15
+  },
+  {
+   "title": "推论：二端口特性方程",
+   "frame": "p67_003845.jpg",
+   "by": "title",
+   "kept": "p67_003649.jpg",
+   "ch": 16
+  },
+  {
+   "title": "注意：2.根据不同的网络参数和方程可",
+   "frame": "p69_001850.jpg",
+   "by": "title",
+   "kept": "p69_001539.jpg",
+   "ch": 16
+  },
+  {
+   "title": "公式：二端口特性方程",
+   "frame": "p67_012633.jpg",
+   "by": "title",
+   "kept": "p67_012214.jpg",
+   "ch": 16
+  },
+  {
+   "title": "结论：级联后所得复合二端口T参数矩阵",
+   "frame": "p70_001737.jpg",
+   "by": "title",
+   "kept": "p70_001717.jpg",
+   "ch": 16
+  },
+  {
+   "title": "注意：此时上述关系式将不成立",
+   "frame": "p70_004526.jpg",
+   "by": "title",
+   "kept": "p70_003554.jpg",
+   "ch": 16
+  },
+  {
+   "title": "注意：此时上述关系式将不成立",
+   "frame": "p70_004624.jpg",
+   "by": "title",
+   "kept": "p70_003554.jpg",
+   "ch": 16
+  },
+  {
+   "title": "注意：与右下图对比",
+   "frame": "p74_003127.jpg",
+   "by": "title",
+   "kept": "p74_002811.jpg",
+   "ch": 17
+  },
+  {
+   "title": "注意：与右下图对比",
+   "frame": "p74_003139.jpg",
+   "by": "title",
+   "kept": "p74_002811.jpg",
+   "ch": 17
+  },
+  {
+   "title": "注意：静态电阻与动态电阻都与工作点有",
+   "frame": "p71_002554.jpg",
+   "by": "title",
+   "kept": "p71_002728.jpg",
+   "ch": 17
+  },
+  {
+   "title": "注意：静态电阻与动态电阻都与工作点有",
+   "frame": "p71_002724.jpg",
+   "by": "title",
+   "kept": "p71_002728.jpg",
+   "ch": 17
+  },
+  {
+   "title": "公式：2 静态电阻与动态电阻（如图 ",
+   "frame": "p74_004130.jpg",
+   "by": "frame",
+   "kept": "p74_004006.jpg",
+   "ch": 17
+  },
+  {
+   "title": "公式：非线性电路",
+   "frame": "p74_004154.jpg",
+   "by": "title",
+   "kept": "p74_004006.jpg",
+   "ch": 17
+  },
+  {
+   "title": "公式：非线性电路",
+   "frame": "p74_004721.jpg",
+   "by": "title",
+   "kept": "p74_004006.jpg",
+   "ch": 17
+  },
+  {
+   "title": "公式：非线性电路",
+   "frame": "p74_004737.jpg",
+   "by": "title",
+   "kept": "p74_004006.jpg",
+   "ch": 17
+  },
+  {
+   "title": "公式：非线性电路",
+   "frame": "p74_004812.jpg",
+   "by": "title",
+   "kept": "p74_004006.jpg",
+   "ch": 17
+  },
+  {
+   "title": "始条件如何，在所研究电路虫最终将建立",
+   "frame": "p74_002650.jpg",
+   "by": "text",
+   "ch": 17
+  },
+  {
+   "title": "不能：再沿着AB]线段继续移动",
+   "frame": "p72_012622.jpg",
+   "by": "title",
+   "kept": "p72_012404.jpg",
+   "ch": 17
+  },
+  {
+   "title": "必须：只要沿线流动的电流随空间距离变",
+   "frame": "p75_001414.jpg",
+   "by": "title",
+   "kept": "p75_000916.jpg",
+   "ch": 18
+  },
+  {
+   "title": "必须：只要沿线流动的电流随空间距离变",
+   "frame": "p75_001427.jpg",
+   "by": "title",
+   "kept": "p75_000916.jpg",
+   "ch": 18
+  },
+  {
+   "title": "注意：②采用满足无畸变条件的传输线y",
+   "frame": "p78_003228.jpg",
+   "by": "title",
+   "kept": "p78_003038.jpg",
+   "ch": 18
+  },
+  {
+   "title": "结论：必然引起讯号振幅的畸变和相位的",
+   "frame": "p78_001621.jpg",
+   "by": "title",
+   "kept": "p78_001840.jpg",
+   "ch": 18
+  },
+  {
+   "title": "注意： tan 2元元 +Zc 4 ",
+   "frame": "p79_000250.jpg",
+   "by": "title",
+   "kept": "p79_000242.jpg",
+   "ch": 18
+  },
+  {
+   "title": "公式：均匀传输线方程的正弦稳态解",
+   "frame": "p80_000133.jpg",
+   "by": "title",
+   "kept": "p80_000114.jpg",
+   "ch": 18
+  }
+ ],
+ "byChapter": {
+  "1": {
+   "kept": 11,
+   "dropped": 5
+  },
+  "2": {
+   "kept": 3,
+   "dropped": 2
+  },
+  "3": {
+   "kept": 12,
+   "dropped": 3
+  },
+  "4": {
+   "kept": 12,
+   "dropped": 3
+  },
+  "5": {
+   "kept": 6,
+   "dropped": 1
+  },
+  "6": {
+   "kept": 5,
+   "dropped": 2
+  },
+  "7": {
+   "kept": 12,
+   "dropped": 7
+  },
+  "8": {
+   "kept": 10,
+   "dropped": 10
+  },
+  "9": {
+   "kept": 12,
+   "dropped": 8
+  },
+  "10": {
+   "kept": 6,
+   "dropped": 3
+  },
+  "11": {
+   "kept": 10,
+   "dropped": 3
+  },
+  "12": {
+   "kept": 12,
+   "dropped": 7
+  },
+  "13": {
+   "kept": 12,
+   "dropped": 1
+  },
+  "14": {
+   "kept": 11,
+   "dropped": 15
+  },
+  "15": {
+   "kept": 12,
+   "dropped": 5
+  },
+  "16": {
+   "kept": 12,
+   "dropped": 6
+  },
+  "17": {
+   "kept": 12,
+   "dropped": 11
+  },
+  "18": {
+   "kept": 12,
+   "dropped": 6
+  }
+ }
+}

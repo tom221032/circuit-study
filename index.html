@@ -51,6 +51,7 @@
       <div class="top-actions">
         <input id="topSearch" class="top-search" type="search" placeholder="搜索…" autocomplete="off">
         <a class="btn ghost only-desk" href="#/search" title="全站搜索">🔍</a>
+        <button class="icon-btn" id="btnEdit" title="编辑原文（调试）" aria-label="编辑原文" aria-pressed="false">✎</button>
         <button class="icon-btn" id="btnTheme" title="浅色 / 暗色" aria-label="切换主题">◐</button>
         <span class="fs-ctl" role="group" aria-label="字号">
           <button class="icon-btn fs-btn" id="btnFsDown" title="缩小字号">A−</button>
@@ -63,6 +64,13 @@
 </div>
 
 <div class="scrim" id="scrim" hidden></div>
+<div class="editbar" id="editBar" hidden>
+  <span class="eb-tag">编辑原文</span>
+  <button class="btn ghost eb-btn" id="edUndo" title="撤销（Ctrl+Z）">↶ 撤销 <b id="edUndoN">0</b>/15</button>
+  <button class="btn ghost eb-btn" id="edRedo" title="恢复（Ctrl+Shift+Z）">↷ 恢复 <b id="edRedoN">0</b>/15</button>
+  <button class="btn ghost eb-btn eb-reset" id="edReset" title="丢掉所有修改，回到原始文本">复原全部</button>
+  <button class="btn ghost eb-btn" id="edExit" title="退出编辑（Esc）">完成</button>
+</div>
 <div class="lightbox" id="lightbox" hidden><img alt="笔记图片"><button class="lb-close" aria-label="关闭">✕</button></div>
 <div class="toast" id="toast"></div>
 <script src="vendor/katex/katex.min.js"></script>

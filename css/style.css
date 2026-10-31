@@ -203,6 +203,15 @@ img{max-width:100%}
 .kp-src{display:inline-block;margin-top:7px;font-family:var(--mono);font-size:11.5px;color:var(--accent);
   border-bottom:1px dotted currentColor;text-decoration:none}
 .kp-src:hover{color:var(--accent2)}
+/* 视频截图知识点：板书图 + 标签 */
+.kp.kvis{border-left-color:#3a6d8c;padding-bottom:14px;background:color-mix(in srgb,var(--panel) 92%,#3a6d8c 8%)}
+.kp.kvis .kp-tagvis{font-family:var(--mono);font-size:10px;color:var(--ink2);border:1px solid var(--line);
+  border-radius:999px;padding:0 6px;flex:none}
+.kp.kvis .kp-shot{margin:8px 0 10px}
+.kp-shot{display:block;width:100%;max-width:560px;margin:8px 0 6px;border:1px solid var(--line);
+  border-radius:8px;background:#fff;cursor:zoom-in;transition:box-shadow .15s,transform .15s}
+.kp-shot:hover{box-shadow:0 4px 16px rgba(0,0,0,.18);transform:translateY(-1px)}
+[data-theme="dark"] .kp-shot{background:#e9e6df;border-color:#2b3641}
 .kp.k-concl{border-left-color:#1f5f8b}.kp.k-concl .kp-kind{background:#1f5f8b}
 .kp.k-infer{border-left-color:#2f7d5d}.kp.k-infer .kp-kind{background:#2f7d5d}
 .kp.k-warn{border-left-color:#a06a34}.kp.k-warn .kp-kind{background:#a06a34}
@@ -232,20 +241,25 @@ img{max-width:100%}
 .note-card>summary{cursor:pointer;font-size:13px;color:var(--muted);list-style:none}
 .note-card>summary::-webkit-details-marker{display:none}
 .note-editor{margin-top:12px}
-.note-editor textarea{width:100%;min-height:130px;border:1px solid var(--line);border-radius:8px;padding:10px;
-  font-family:var(--serif);font-size:calc(15px * var(--fs));line-height:1.8;outline:none;resize:vertical;
+/* 可编辑正文：高度跟着内容走，不再固定高度/内滚动 */
+.note-editor .rich{width:100%;min-height:132px;height:auto;max-height:none;overflow:visible;
+  border:1px solid var(--line);border-radius:8px;padding:10px 12px;white-space:pre-wrap;word-break:break-word;
+  font-family:var(--serif);font-size:calc(15px * var(--fs));line-height:1.85;outline:none;cursor:text;
   background:var(--field);color:var(--ink)}
-.note-editor textarea:focus{border-color:var(--accent)}
+.note-editor .rich:focus{border-color:var(--accent)}
+.note-editor .rich:empty::before{content:attr(data-ph);color:var(--muted);pointer-events:none}
+/* 行内图片：夹在文字流里，点击看大图，右上角 ✕ 删除 */
+.note-editor .nimg{position:relative;display:inline-block;vertical-align:top;margin:4px 8px 4px 0;
+  max-width:100%;line-height:0}
+.note-editor .nimg img{max-width:min(100%,620px);height:auto;border-radius:8px;border:1px solid var(--line);
+  display:block;cursor:zoom-in;background:var(--panel)}
+.note-editor .nimg-del{position:absolute;top:6px;right:6px;width:22px;height:22px;border-radius:50%;border:0;
+  background:rgba(0,0,0,.55);color:#fff;font-size:12px;line-height:1;cursor:pointer;padding:0;
+  opacity:0;transition:opacity .12s}
+.note-editor .nimg:hover .nimg-del,.note-editor .nimg-del:focus{opacity:1}
+.note-editor .nimg-del:hover{background:rgba(0,0,0,.8)}
 .note-tools{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-top:10px}
 .note-tools .hint{font-size:11.5px;color:var(--muted)}
-.note-imgs{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
-.note-imgs:empty{display:none}
-.note-thumb{position:relative;width:124px;height:92px;border-radius:8px;overflow:hidden;border:1px solid var(--line);
-  background:var(--field);cursor:zoom-in}
-.note-thumb img{width:100%;height:100%;object-fit:cover;display:block}
-.note-thumb .del{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;border:0;
-  background:rgba(0,0,0,.55);color:#fff;font-size:11px;line-height:1;cursor:pointer;padding:0}
-.note-thumb .del:hover{background:rgba(0,0,0,.8)}
 .note-drop{outline:2px dashed var(--accent);outline-offset:6px;border-radius:10px}
 
 /* side: videos */
@@ -253,7 +267,7 @@ img{max-width:100%}
   border-radius:var(--radius);box-shadow:var(--shadow);overflow:hidden}
 .side-panel h3{margin:0;padding:13px 16px;font-size:13px;letter-spacing:.04em;border-bottom:1px solid var(--line);
   color:var(--muted);font-weight:600}
-.vlist{max-height:calc(100vh - 160px);overflow-y:auto}
+.vlist-videos{max-height:calc(100vh - 160px);overflow-y:auto}
 .vitem{display:flex;gap:10px;padding:10px 14px;border-bottom:1px solid var(--line2);color:inherit;font-size:13px;line-height:1.5}
 .vitem:hover{background:var(--hover);text-decoration:none}
 .vitem.active{background:var(--accent-soft)}
@@ -340,14 +354,14 @@ img{max-width:100%}
 @media (max-width:1180px){
   .ch-layout{grid-template-columns:minmax(0,1fr)}
   .side-panel{position:static}
-  .vlist{max-height:340px}
+  .vlist-videos{max-height:340px}
   .v-layout{grid-template-columns:minmax(0,1fr)}
   .transcript{position:static;max-height:460px}
 }
 @media (max-width:900px){
   .app{grid-template-columns:1fr}
   .crumbs{overflow:hidden}
-  .crumbs b{white-space:nowrap}
+  .crumbs b{white-space:nowrap;flex:0 1 auto;min-width:0}
   .sidebar{position:fixed;left:0;top:0;z-index:60;width:284px;max-width:82vw;transform:translateX(-100%);
     transition:transform .22s;box-shadow:0 0 40px rgba(0,0,0,.4);padding-top:calc(18px + env(safe-area-inset-top))}
   .sidebar.open{transform:none}
@@ -371,7 +385,7 @@ img{max-width:100%}
   .ex-a{padding:11px 12px 4px}
   .ans-body{padding:10px 12px}
   .kp{padding:10px 12px}
-  .note-thumb{width:96px;height:74px}
+  .note-editor .nimg img{max-width:100%}
   .search-hero h1{font-size:calc(19px * var(--fs))}
   .res .r-text{font-size:calc(14.5px * var(--fs))}
   .tr-line{font-size:calc(13px * var(--fs))}
@@ -386,14 +400,18 @@ img{max-width:100%}
   .icon-btn{width:32px;height:32px}
   .crumbs{gap:5px;font-size:12px}
   .crumbs .sep{display:none}
-  .note-thumb{width:100%;height:120px;max-width:160px}
+  .note-editor .nimg{display:block;margin:6px 0}
+  .note-editor .nimg img{max-width:100%}
 }
 @media (prefers-reduced-motion:reduce){
   *{transition:none!important;animation:none!important;scroll-behavior:auto!important}
 }
 
 /* ---------- KaTeX 行内公式 ---------- */
-.math-inline{display:inline;white-space:nowrap}
+.math-inline{display:inline-block;max-width:100%;vertical-align:baseline;white-space:nowrap;
+  overflow-x:auto;overflow-y:hidden;scrollbar-width:thin}
+.math-inline::-webkit-scrollbar{height:5px}
+.math-inline::-webkit-scrollbar-thumb{background:var(--line2);border-radius:3px}
 .katex{font-size:1.06em;line-height:1.25;color:inherit;text-rendering:auto}
 .blk-formula .katex{font-size:1.1em}
 .res .r-text .katex{font-size:1.02em}
@@ -411,3 +429,35 @@ img{max-width:100%}
 [data-theme="dark"] .katex .mspace{color:inherit}
 [data-theme="dark"] .katex .frac-line{border-color:currentColor}
 [data-theme="dark"] .katex .sqrt > .sqrt-line{border-color:currentColor}
+
+/* ---- 编辑原文（调试） ---- */
+.top-actions #btnEdit[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.editable{outline:1px dashed transparent;outline-offset:2px;border-radius:4px;transition:background .15s}
+body.editing .editable:hover{background:var(--hover);outline-color:var(--line2)}
+body.editing .editable:focus{outline:2px solid var(--accent);background:var(--panel);box-shadow:0 0 0 4px color-mix(in srgb, var(--accent) 14%, transparent)}
+body.editing .editable:empty::before{content:"（空段落，可直接输入）";color:var(--muted);font-size:13px}
+body.editing .reader{padding-bottom:96px}
+body.editing .editable .katex{pointer-events:none}
+
+.editbar{position:fixed;left:50%;bottom:18px;transform:translateX(-50%);z-index:60;
+  display:flex;align-items:center;gap:8px;flex-wrap:wrap;justify-content:center;
+  padding:8px 12px;border-radius:14px;background:var(--panel);border:1px solid var(--line2);
+  box-shadow:0 10px 28px rgba(10,13,17,.18);max-width:calc(100vw - 24px)}
+.editbar[hidden]{display:none}
+.eb-tag{font-size:12px;font-weight:700;color:var(--accent);letter-spacing:.04em}
+.eb-btn{font-size:13px;padding:5px 10px;white-space:nowrap}
+.eb-btn b{font-weight:700}
+.eb-btn:disabled{opacity:.42;cursor:not-allowed}
+.eb-reset{color:#b4452f;border-color:#dcb6aa}
+.eb-reset.armed{background:#b4452f;color:#fff;border-color:#b4452f}
+@media (max-width:560px){
+  .editbar{left:8px;right:8px;transform:none;bottom:10px;gap:6px;padding:7px 8px}
+  .eb-btn{font-size:12px;padding:4px 7px}
+  .eb-tag{width:100%;text-align:center}
+}
+
+/* 编辑模式下把提示条抬到工具条上方，避免遮挡 */
+body.editing .toast{bottom:96px}
+@media (max-width:560px){ body.editing .toast{bottom:132px} }
+body.editing .editable.edited,
+body.editing .editable.edited:hover{box-shadow:inset 3px 0 0 var(--accent2);padding-left:8px;margin-left:-8px}
