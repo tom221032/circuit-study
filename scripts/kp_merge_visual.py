@@ -21,6 +21,7 @@ from __future__ import annotations
 
 import html
 import json
+import re
 import shutil
 import sys
 from collections import Counter
@@ -55,6 +56,18 @@ def drop_set() -> set[tuple[int, str]]:
     return {(int(it["ch"]), it["frame"]) for it in items if it.get("ch") and it.get("frame")}
 
 
+def display_title(raw: str) -> str:
+    """卡片上显示的标题：去掉与类型徽章重复的前缀、列表序号与截断的半句。"""
+    t = (raw or "").strip()
+    t = re.sub(r"^(注意|结论|推论|公式|技巧|小结|总结|要点|不能|必须|只能|一定|易错|切记|重点|关键)"
+               r"\s*[：:]\s*", "", t)
+    t = re.sub(r"^[①②③④⑤⑥⑦⑧⑨⑩*＊·\-—、,，.。:：)）(\（\s]+", "", t)
+    t = t.rstrip("的，,；;、")
+    if len(t) >= 17 and not t.endswith("…"):
+        t += "…"
+    return t
+
+
 def card_html(pt, n, i):
     kind = pt["kind"]
     cls = K.KIND_CLS.get(kind, "tip")
@@ -63,11 +76,12 @@ def card_html(pt, n, i):
     t = int(pt["src"]["t"])
     # 截图卡片只显示「标题 + 截图 + 出处」；OCR 文本仅留在 data-ocr 里给搜索用
     ocr = " ".join((pt.get("text") or "").split())
+    title = display_title(pt["title"])
     return (
         f'<aside class="kp kvis k-{cls}" id="kpv-{n}-{i}" data-frame="{html.escape(frame)}" '
         f'data-ocr="{html.escape(ocr)}">'
         f'<div class="kp-h"><span class="kp-kind">{kind}</span>'
-        f'<span class="kp-title">{html.escape(pt["title"])}</span>'
+        f'<span class="kp-title">{html.escape(title)}</span>'
         f'<span class="kp-tagvis">视频截图</span></div>'
         f'<img class="kp-shot" src="data/frames/{html.escape(frame)}" '
         f'alt="第 {page} 集 {K.mmss(t)} 板书截图" loading="lazy">'
@@ -111,6 +125,11 @@ def process(n: int, videos: dict, check_only: bool) -> dict | None:
             continue
         nt = K.norm_text(text)
         if any(K.similar(nt, K.norm_text(k["text"])) > 0.75 for k in kept):
+            issues["dupe"] += 1
+            continue
+        # 同一章不出现重复标题 / 同一张截图（去重后的最终形态再兜一层）
+        dt = display_title(title)
+        if any(display_title(k["title"]) == dt for k in kept) or any(k["frame"] == frame for k in kept):
             issues["dupe"] += 1
             continue
         anchor, matched = K.resolve_anchor(p.get("heading"), toc)

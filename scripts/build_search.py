@@ -9,14 +9,15 @@ ROOT = Path(__file__).resolve().parent.parent
 DATA = ROOT / "data"
 BLOCK_RE = re.compile(r'<(p|h2|h3|figure|figcaption)[^>]*?(?: id="([^"]*)")?[^>]*>(.*?)</\1>', re.S)
 KP_RE = re.compile(
-    r'<aside class="kp k-[a-z]+" id="([^"]+)"[^>]*>[\s\S]*?'
-    r'<span class="kp-kind">([^<]+)</span>\s*<span class="kp-title">([^<]*)</span>[\s\S]*?</div>[\s\S]*?'
-    r'<div class="kp-t">([^<]*)</div>[\s\S]*?'
+    r'<aside class="kp k-[a-z]+" id="([^"]+)">\s*<div class="kp-h">\s*'
+    r'<span class="kp-kind">([^<]+)</span>\s*<span class="kp-title">([^<]*)</span></div>\s*'
+    r'<div class="kp-t">([^<]*)</div>\s*'
     r'<a class="kp-src" href="#/video/(\d+)\?t=(\d+)"', re.S)
+# 视频截图卡片：正文不显示，OCR 文本存在 data-ocr 里，只用于搜索
 KPV_RE = re.compile(
-    r'<aside class="kp kvis[^"]*" id="(kpv-[^"]+)"[^>]*data-ocr="([^"]*)"[^>]*>[\s\S]*?'
-    r'<span class="kp-kind">([^<]+)</span>\s*<span class="kp-title">([^<]*)</span>[\s\S]*?'
-    r'<a class="kp-src" href="#/video/(\d+)\?t=(\d+)"', re.S)
+    r'<aside class="kp kvis[^"]*" id="(kpv-[^"]+)" data-frame="([^"]*)" data-ocr="([^"]*)">[\s\S]*?'
+    r'<span class="kp-kind">([^<]+)</span>\s*<span class="kp-title">([^<]*)</span>'
+    r'[\s\S]*?<a class="kp-src" href="#/video/(\d+)\?t=(\d+)"', re.S)
 DETAILS_RE = re.compile(r"<details[\s\S]*?</details>", re.S)
 
 
@@ -49,17 +50,16 @@ def main():
                         chunk = text[i:i + 200]
                         items.append({"k": "note", "c": n, "ct": ctitle, "p": sec["page"],
                                       "a": anchor, "x": chunk})
-                seen_ids = set()
+                seen_kp = set()
                 for m in KPV_RE.finditer(html_str):
-                    anchor, ocr, kd, title, vpage, vt = m.groups()
-                    seen_ids.add(anchor)
+                    anchor, frame, ocr, kd, title, vpage, vt = m.groups()
+                    seen_kp.add(anchor)
+                    x = html.unescape(title) + " " + html.unescape(ocr)
                     items.append({"k": "kp", "c": n, "ct": ctitle, "p": sec["page"],
                                   "a": anchor, "kd": kd, "v": int(vpage), "t": int(vt),
-                                  "x": html.unescape(title + " " + ocr)[:300]})
+                                  "x": " ".join(x.split())[:300]})
                 for m in KP_RE.finditer(html_str):
                     anchor, kd, title, body, vpage, vt = m.groups()
-                    if anchor in seen_ids:
-                        continue
                     items.append({"k": "kp", "c": n, "ct": ctitle, "p": sec["page"],
                                   "a": anchor, "kd": kd, "v": int(vpage), "t": int(vt),
                                   "x": (title + " " + body)[:300]})

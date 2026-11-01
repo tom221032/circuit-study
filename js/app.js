@@ -1104,6 +1104,11 @@ function wireChrome() {
   if (lb) {
     lb.addEventListener('click', e => { if (e.target === lb || e.target.classList.contains('lb-close')) closeLightbox(); });
   }
+  // 视频截图卡片：点图开灯箱
+  document.addEventListener('click', e => {
+    const shot = e.target.closest && e.target.closest('.kp-shot');
+    if (shot) { e.preventDefault(); openLightbox(shot.src); }
+  });
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;
     if (!$('#lightbox').hidden) { closeLightbox(); return; }
@@ -1114,10 +1119,6 @@ function wireChrome() {
   // ---- 编辑原文：开关 / 撤销 / 恢复 / 复原 ----
   const editBtn = $('#btnEdit');
   if (editBtn) editBtn.addEventListener('click', () => setEditMode(!S.editMode));
-  document.addEventListener('click', e => {
-    const shot = e.target.closest && e.target.closest('.kp-shot');
-    if (shot && shot.src) { e.preventDefault(); openLightbox(shot.src); }
-  });
   const edUndo = $('#edUndo'), edRedo = $('#edRedo'), edExit = $('#edExit'), edReset = $('#edReset');
   if (edUndo) edUndo.addEventListener('click', () => editUndoStep());
   if (edRedo) edRedo.addEventListener('click', () => editRedoStep());

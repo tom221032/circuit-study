@@ -6,12 +6,20 @@
 
 用法：
     set GITHUB_TOKEN=你的令牌          # classic: public_repo / fine-grained: Contents: Read and write
-    python scripts\\deploy_api.py            # 真正提交
-    python scripts\\deploy_api.py --dry-run  # 只列出会新增/修改/删除哪些文件
+    python scripts\\deploy_api.py             # 真正提交
+    python scripts\\deploy_api.py --dry-run   # 只列出会新增/修改/删除哪些文件
+    python scripts\\deploy_api.py --no-wait   # 配额用完时不要等，直接退出
+    python scripts\\deploy_api.py --batch 80  # 建 tree 时每批的条目数（默认 100）
     python scripts\\deploy_api.py -m "提交说明"
 
 原理：读远端 tree → 用 git 的 blob 规则（sha1("blob <len>\\0" + 内容)）逐个比对本地文件 →
-只为有差异的文件上传 blob → 建 tree / commit → 移动 main 分支指针 → Pages 自动重建。
+只为有差异的文件上传 blob → 分批建 tree（带 base_tree 串起来）→ 建 commit → 移动 main 分支指针
+→ Pages 自动重建。
+
+稳健性：
+  * 自动跳过 .gitignore 里以 / 结尾的目录（_frames/、_shots/ 等中间产物不会上传）；
+  * 5xx / 连接错误自动重试（指数退避），建 tree 时若仍失败则把这一批对半拆开再试；
+  * 403 rate limit 会读 /rate_limit 的剩余配额与重置时间，默认等到重置后继续（--no-wait 关闭）。
 """
 
 from __future__ import annotations
@@ -21,6 +29,7 @@ import getpass
 import hashlib
 import json
 import os
+import random
 import sys
 import time
 import urllib.error
@@ -32,21 +41,45 @@ OWNER = "tom221032"
 REPO = "circuit-study"
 BRANCH = "main"
 ROOT = Path(__file__).resolve().parent.parent
-def _ignored_dirs() -> set[str]:
-    """把 .gitignore 里以 / 结尾的目录也排除，避免把中间产物（_frames/、_shots/）传上去。"""
-    out: set[str] = set()
-    gi = ROOT / ".gitignore"
-    if gi.exists():
-        for line in gi.read_text(encoding="utf-8").splitlines():
-            line = line.strip()
-            if line and not line.startswith("#") and line.endswith("/"):
-                out.add(line.rstrip("/").lstrip("/"))
-    return out
-
-
-SKIP_DIRS = {".git", "__pycache__", "_probe", "node_modules"} | _ignored_dirs()
+SKIP_DIRS = {".git", "__pycache__", "_probe", "node_modules"}
 SKIP_FILES = {"push.cmd", ".gitignore"}
 API = "https://api.github.com"
+
+RETRY_STATUS = {500, 502, 503, 504, 522, 524}
+RETRY_MAX = 5
+RETRY_BASE = 1.5
+WAIT_LIMIT = 70 * 60          # 等配额重置最多等这么久
+DEFAULT_BATCH = 100
+
+WAIT_ENABLED = True
+
+
+# ---------------------------------------------------------------- 基础工具
+
+def read_gitignore_dirs() -> set[str]:
+    """.gitignore 里以 / 结尾（或本地确实是目录）的条目 —— 这些目录不上传。"""
+    extra: set[str] = set()
+    gi = ROOT / ".gitignore"
+    if not gi.exists():
+        return extra
+    try:
+        text = gi.read_text(encoding="utf-8", errors="replace")
+    except OSError:
+        return extra
+    for raw in text.splitlines():
+        s = raw.strip()
+        if not s or s.startswith("#") or s.startswith("!"):
+            continue
+        s = s.lstrip("/").rstrip()
+        if s.endswith("/"):
+            extra.add(s.rstrip("/"))
+        elif "*" not in s and (ROOT / s).is_dir():
+            extra.add(s)
+    return extra
+
+
+def skip_dirs() -> set[str]:
+    return SKIP_DIRS | read_gitignore_dirs()
 
 
 def token() -> str:
@@ -59,69 +92,11 @@ def token() -> str:
     return t
 
 
-RETRY_STATUS = {500, 502, 503, 504, 522, 524}
-RETRY_MAX = 4          # 首次 + 3 次重试
-RETRY_BASE = 1.5       # 秒，指数退避
-
-WAIT_LIMIT = 70 * 60   # 等配额重置最多等 70 分钟
-WAIT_ENABLED = True    # 配额用尽时是否自动等重置（--no-wait 关掉）
+def fmt_reset(epoch: float) -> str:
+    return time.strftime("%H:%M:%S", time.localtime(epoch or time.time()))
 
 
-def _limits(tok: str):
-    """读 /rate_limit（不消耗核心配额）→ (remaining, reset_epoch)。失败返回 (None, 0)。"""
-    req = urllib.request.Request(API + "/rate_limit")
-    req.add_header("Authorization", f"Bearer {tok}")
-    req.add_header("User-Agent", "circuit-study-deploy")
-    req.add_header("Accept", "application/vnd.github+json")
-    try:
-        with urllib.request.urlopen(req, timeout=30) as r:
-            core = json.loads(r.read()).get("resources", {}).get("core", {})
-        return int(core.get("remaining", 0)), int(core.get("reset", 0))
-    except Exception:
-        return None, 0
-
-
-def _fmt_reset(reset: int) -> str:
-    if not reset:
-        return "未知"
-    return time.strftime("%H:%M:%S", time.localtime(reset))
-
-
-def quota_report(tok: str, need: int) -> bool:
-    """开工前看一眼配额。返回 True 表示够用。"""
-    remaining, reset = _limits(tok)
-    if remaining is None:
-        print("配额：读不到 /rate_limit，继续（失败会自己等重置）。")
-        return True
-    print(f"配额：剩余 {remaining} 次 / 每小时 5000；本次约需 {need} 次；重置时间 {_fmt_reset(reset)}")
-    return remaining >= need
-
-
-def wait_for_quota(reset: int, need: int, allow_wait: bool) -> bool:
-    """配额不够时等到重置。返回 False 表示不该等（没开 --wait 或等太久）。"""
-    now = time.time()
-    secs = max(0, int(reset - now)) + 20
-    if not allow_wait:
-        print(f"\n[X] 配额不够（还需要约 {need} 次）。两种办法：")
-        print("    1) 等重置后再跑：上面的重置时间到了直接双击 push.cmd；")
-        print("    2) 这次就等：python scripts\\deploy_api.py --wait")
-        return False
-    if secs > WAIT_LIMIT:
-        print(f"[X] 要等 {secs/60:.0f} 分钟才能重置，超过 {WAIT_LIMIT/60:.0f} 分钟上限。")
-        return False
-    print(f"\n配额用完，等 {secs/60:.1f} 分钟后重置（Ctrl+C 可随时中止）…")
-    left = secs
-    while left > 0:
-        step = min(30, left)
-        time.sleep(step)
-        left -= step
-        print(f"    还剩 {left/60:.1f} 分钟…")
-    print("    继续。")
-    return True
-
-
-def _once(path: str, tok: str, method: str, payload, raw: bool):
-    url = path if path.startswith("http") else API + path
+def _once(url: str, tok: str, method: str, payload, raw: bool):
     data = None
     req = urllib.request.Request(url, method=method)
     req.add_header("Authorization", f"Bearer {tok}")
@@ -134,50 +109,72 @@ def _once(path: str, tok: str, method: str, payload, raw: bool):
     try:
         with urllib.request.urlopen(req, data, timeout=90) as r:
             body = r.read()
-            return r.status, (body if raw else json.loads(body or b"{}"))
+            return r.status, (body if raw else json.loads(body or b"{}")), dict(r.headers)
     except urllib.error.HTTPError as e:
         body = e.read()
         try:
             info = json.loads(body)
         except Exception:
             info = {"raw": body[:400].decode("utf-8", "replace")}
-        return e.code, info
+        return e.code, info, dict(e.headers or {})
+    except (urllib.error.URLError, TimeoutError, ConnectionError) as e:
+        return 0, {"error": str(e)}, {}
 
 
-def _rate_limited(st: int, info) -> bool:
-    return st == 403 and isinstance(info, dict) and "rate limit" in str(info.get("message", "")).lower()
+def limits(tok: str):
+    """(remaining, reset_epoch)；读 /rate_limit 不消耗核心配额。"""
+    st, info, _ = _once(f"{API}/rate_limit", tok, "GET", None, False)
+    if st != 200 or not isinstance(info, dict):
+        return None, None
+    core = (info.get("resources") or {}).get("core") or {}
+    return core.get("remaining"), core.get("reset")
 
 
-def api(path: str, tok: str, method: str = "GET", payload=None, raw=False, allow_wait=None):
-    """带重试的 GitHub API 调用：5xx / 网络抖动退避重试；403 配额用尽则等重置再试。"""
-    if allow_wait is None:
-        allow_wait = WAIT_ENABLED
-    last = (0, {"message": "not executed"})
-    waited = False
+def wait_for_quota(reset: float, need: int, allow_wait: bool) -> bool:
+    if not allow_wait:
+        print(f"! 配额不足（本次约需 {need}），重置时间 {fmt_reset(reset)}；"
+              f"按 --no-wait 要求退出。稍后重跑，或去掉 --no-wait 让它等。")
+        return False
+    wait = max(5.0, (reset or time.time()) - time.time() + 5)
+    if wait > WAIT_LIMIT:
+        print(f"! 配额要等到 {fmt_reset(reset)} 才重置，超过 {WAIT_LIMIT // 60} 分钟，先退出。")
+        return False
+    print(f"  配额已用完，等 {int(wait)}s 到 {fmt_reset(reset)} 自动继续…")
+    while wait > 0:
+        time.sleep(min(30, wait))
+        wait -= 30
+        print(f"    还差 {max(0, int(wait))}s")
+    return True
+
+
+def api(path: str, tok: str, method: str = "GET", payload=None, raw=False,
+        allow_wait=None):
+    """带重试的 API 调用。5xx 退避重试；403 配额用完时按需等待。"""
+    url = path if path.startswith("http") else API + path
+    allowed = WAIT_ENABLED if allow_wait is None else allow_wait
+    delay = RETRY_BASE
     for attempt in range(1, RETRY_MAX + 1):
-        try:
-            st, info = _once(path, tok, method, payload, raw)
-        except (urllib.error.URLError, TimeoutError, OSError) as e:
-            st, info = 0, {"message": f"{type(e).__name__}: {e}"}
-        last = (st, info)
+        st, info, headers = _once(url, tok, method, payload, raw)
+        if st in RETRY_STATUS or st == 0:
+            if attempt == RETRY_MAX:
+                return st, info
+            sleep = delay + random.uniform(0, 0.6)
+            print(f"    {st or '连接失败'}，{sleep:.1f}s 后重试（{attempt}/{RETRY_MAX - 1}）")
+            time.sleep(sleep)
+            delay *= 2
+            continue
+        if st == 403 and isinstance(info, dict) and "rate limit" in str(info.get("message", "")).lower():
+            reset = float(headers.get("X-RateLimit-Reset") or 0) or (time.time() + 60)
+            rem = headers.get("X-RateLimit-Remaining")
+            print(f"  403 配额用完（剩余 {rem}），重置 {fmt_reset(reset)}")
+            if not wait_for_quota(reset, 1, allowed):
+                return st, info
+            continue
+        return st, info
+    return st, info
 
-        if _rate_limited(st, info):
-            _, reset = _limits(tok)
-            if not waited and wait_for_quota(reset, 1, allow_wait):
-                waited = True
-                attempt -= 1
-                continue
-            return st, info
 
-        if st not in RETRY_STATUS and st != 0:
-            return st, info
-        if attempt == RETRY_MAX:
-            break
-        wait = RETRY_BASE ** attempt
-        print(f"    ! {method} {path.split('?')[0]} → {st or '网络异常'}，{wait:.1f}s 后重试（{attempt}/{RETRY_MAX - 1}）")
-        time.sleep(wait)
-    return last
-
+# ---------------------------------------------------------------- 本地/远端比对
 
 def blob_sha(data: bytes) -> str:
     h = hashlib.sha1()
@@ -188,8 +185,9 @@ def blob_sha(data: bytes) -> str:
 
 def local_files() -> dict[str, bytes]:
     out: dict[str, bytes] = {}
+    dirs = skip_dirs()
     for dirpath, dirnames, filenames in os.walk(ROOT):
-        dirnames[:] = [d for d in dirnames if d not in SKIP_DIRS]
+        dirnames[:] = [d for d in dirnames if d not in dirs]
         for name in filenames:
             if name in SKIP_FILES:
                 continue
@@ -223,25 +221,56 @@ def remote_tree(tok: str):
     return commit_sha, tree_sha, remote, tree.get("truncated", False)
 
 
+def build_tree(tok: str, base: str, entries: list, batch: int, depth: int = 0) -> str:
+    """分批建 tree：每批以 base_tree 指向上一批的 sha。单批 5xx 时对半拆开重试。"""
+    if not entries:
+        return base
+    sha = base
+    for i in range(0, len(entries), batch):
+        chunk = entries[i:i + batch]
+        sha = _post_tree(tok, sha, chunk, depth)
+        print(f"    tree 批次 {i // batch + 1}/{(len(entries) + batch - 1) // batch}（{len(chunk)} 条）")
+    return sha
+
+
+def _post_tree(tok: str, base: str, entries: list, depth: int) -> str:
+    st, info = api(f"/repos/{OWNER}/{REPO}/git/trees", tok, "POST",
+                   {"base_tree": base, "tree": entries})
+    if st in (200, 201):
+        return info["sha"]
+    if st in RETRY_STATUS and len(entries) > 1 and depth < 6:
+        mid = len(entries) // 2
+        print(f"    这一批 {len(entries)} 条仍失败（{st}），对半拆开重试")
+        first = _post_tree(tok, base, entries[:mid], depth + 1)
+        return _post_tree(tok, first, entries[mid:], depth + 1)
+    sys.exit(f"建 tree 失败 {st}: {info}")
+
+
 def batch_size(argv: list[str]) -> int:
     if "--batch" in argv:
         try:
             n = int(argv[argv.index("--batch") + 1])
-            return max(1, min(n, 500))
-        except (IndexError, ValueError):
+            return max(1, min(500, n))
+        except Exception:
             pass
-    return 120
+    return DEFAULT_BATCH
 
+
+# ---------------------------------------------------------------- 主流程
 
 def main() -> int:
     global WAIT_ENABLED
     WAIT_ENABLED = "--no-wait" not in sys.argv
     dry = "--dry-run" in sys.argv
+    batch = batch_size(sys.argv)
     message = "更新站点"
     if "-m" in sys.argv:
         message = sys.argv[sys.argv.index("-m") + 1]
 
     print(f"本地目录：{ROOT}")
+    skipped = sorted(skip_dirs() - {"__pycache__"})
+    if skipped:
+        print(f"跳过目录：{', '.join(skipped)}")
     tok = "" if dry and not (os.environ.get("GITHUB_TOKEN") or os.environ.get("GH_TOKEN")) else token()
 
     local = local_files()
@@ -286,14 +315,11 @@ def main() -> int:
         print("\n[dry-run] 未做任何写入。")
         return 0
 
-    needed = len(add) + len(mod) + 10
-    print()
-    if not quota_report(tok, needed):
-        _, reset = _limits(tok)
-        if not wait_for_quota(reset, needed, WAIT_ENABLED):
-            return 1
-        if not quota_report(tok, needed):
-            print("[X] 配额仍未恢复，稍后再试。")
+    need = len(add) + len(mod) + 6
+    rem, reset = limits(tok)
+    if rem is not None:
+        print(f"\n配额：剩余 {rem}/5000；本次约需 {need}；重置时间 {fmt_reset(reset)}")
+        if rem < need and not wait_for_quota(reset or time.time() + 60, need, WAIT_ENABLED):
             return 1
 
     todo = add + mod
@@ -303,17 +329,18 @@ def main() -> int:
         st, info = api(f"/repos/{OWNER}/{REPO}/git/blobs", tok, "POST", {
             "content": base64.b64encode(local[rel]).decode("ascii"),
             "encoding": "base64",
-        })
+        }, allow_wait=WAIT_ENABLED)
         if st not in (200, 201):
             raise RuntimeError(f"blob {rel} 失败 {st}: {info}")
         return rel, info["sha"]
 
     shas = {}
-    with ThreadPoolExecutor(max_workers=6) as ex:
-        for i, (rel, sha) in enumerate(ex.map(make_blob, todo), 1):
-            shas[rel] = sha
-            if i % 10 == 0 or i == len(todo):
-                print(f"  {i}/{len(todo)}")
+    if todo:
+        with ThreadPoolExecutor(max_workers=4) as ex:
+            for i, (rel, sha) in enumerate(ex.map(make_blob, todo), 1):
+                shas[rel] = sha
+                if i % 20 == 0 or i == len(todo):
+                    print(f"  {i}/{len(todo)}")
 
     entries = []
     for rel in add + mod:
@@ -321,23 +348,11 @@ def main() -> int:
     for rel in delete:
         entries.append({"path": rel, "mode": "100644", "type": "blob", "sha": None})
 
-    # 一次提交里文件太多时，GitHub 的 /git/trees 偶发 502；分小批串成一串树更稳
-    batch = batch_size(sys.argv)
-    chunks = [entries[i:i + batch] for i in range(0, len(entries), batch)] or [[]]
-    tree = tree_sha
-    if len(chunks) > 1:
-        print(f"\n建 tree：{len(entries)} 项，分 {len(chunks)} 批（每批 ≤{batch} 项）…")
-    for bi, chunk in enumerate(chunks, 1):
-        st, new_tree = api(f"/repos/{OWNER}/{REPO}/git/trees", tok, "POST",
-                           {"base_tree": tree, "tree": chunk})
-        if st not in (200, 201):
-            sys.exit(f"建 tree 失败（第 {bi}/{len(chunks)} 批，{len(chunk)} 项）{st}: {new_tree}")
-        tree = new_tree["sha"]
-        if len(chunks) > 1:
-            print(f"  {bi}/{len(chunks)} ok")
+    print(f"\n建 tree（{len(entries)} 条，每批 {batch}）…")
+    new_tree_sha = build_tree(tok, tree_sha, entries, batch)
 
     st, new_commit = api(f"/repos/{OWNER}/{REPO}/git/commits", tok, "POST",
-                         {"message": message, "tree": tree, "parents": [head]})
+                         {"message": message, "tree": new_tree_sha, "parents": [head]})
     if st not in (200, 201):
         sys.exit(f"建 commit 失败 {st}: {new_commit}")
 

@@ -39,6 +39,12 @@ CUES_WARN = ("注意", "易错", "切记", "必须", "不能")
 CUES_FORM = ("公式", "定理", "定律", "方程", "表达式")
 CUES_INFER = ("推论", "推广", "可推出", "由此", "可见")
 
+# 是否可以算「结论 / 注意」，只以该帧画面上的文字为准：
+# 候选只来自 _frames/ocr/*.json（画面 OCR），本脚本不读 data/subs/、不读
+# data/kp/candidates/（后者是字幕派生）。改动此文件时请保持这一点。
+JUDGE_SOURCE = "frame-ocr-only"
+PRIMARY_KINDS = ("结论", "注意")
+
 
 def cjk_len(s: str) -> int:
     return len(CJK.findall(s))
@@ -174,7 +180,8 @@ def pick_title(body: str, lines: list[str], kind: str, heading: str | None, cap:
         if segs:
             head = max(segs[:3], key=cjk_len)
             return f"{c}：{head}"[:cap]
-        return c
+        # 只有提示词、没有实义短句 → 不把它当标题（返回空，调用方可丢弃或退化）
+        return ""
     if heading:
         return f"{kind}：{short_heading(heading)}"[:cap]
     cand = [t for t in lines if cjk_len(t) >= 4]
@@ -206,6 +213,8 @@ def main(argv: list[str]) -> int:
         cap = int(argv[i + 1])
         argv = argv[:i] + argv[i + 2:]
     wanted = [int(a) for a in argv if a.isdigit()]
+
+    print("判定依据：仅画面 OCR 文本（" + JUDGE_SOURCE + "），不读取字幕", flush=True)
 
     rows_by_ch: dict[int, list[dict]] = defaultdict(list)
     for f in sorted((FR / "ocr").glob("p*.json")):
@@ -256,6 +265,11 @@ def main(argv: list[str]) -> int:
             kind = classify(body)
             heading = match_heading(body + " " + " ".join(it["lines"]), toc)
             title = pick_title(body, it["lines"], kind, heading)
+            if not title:
+                # 板书上只有「注意/结论」这类提示词，没有可当标题的实义短句 → 用正文开头兜底
+                title = f"{kind}：" + pick_text(body, 16)
+            if cjk_len(re.sub(r"^[^：:]*[：:]", "", title)) < 3:
+                continue
             if title in old_titles:
                 continue
             cand.append({
@@ -270,6 +284,8 @@ def main(argv: list[str]) -> int:
 
         points, seen_hash, seen_title, seen_text = [], [], {}, []
         dropped = []
+        # 「结论 / 注意」优先占名额，其余类型（公式/推论/技巧）补位
+        cand.sort(key=lambda p: 0 if p["kind"] in PRIMARY_KINDS else 1)
         for pt in cand:
             if len(points) >= cap:
                 break

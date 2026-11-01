@@ -75,6 +75,23 @@ def candidate_windows() -> dict[int, list[dict]]:
     return out
 
 
+def grid_windows(pages, videos, stride=120.0, span=4.0):
+    """不依赖字幕的兜底窗口：整集按固定间隔切窗口（用于无字幕的三集）。"""
+    out = {}
+    for page in pages:
+        v = videos.get(page)
+        if not v:
+            continue
+        dur = float(v.get("duration") or 0)
+        ch = int(v.get("chapter") or 0)
+        wins, t = [], 0.0
+        while t + span <= dur:
+            wins.append({"t0": t, "t1": t + span, "text": "", "chapter": ch})
+            t += stride
+        out[page] = wins
+    return out
+
+
 def ff_headers(ck: dict[str, str]) -> list[str]:
     cookie = "; ".join(f"{k}={v}" for k, v in ck.items())
     return ["-user_agent", B.UA,
@@ -177,7 +194,15 @@ def main(argv: list[str]) -> int:
     pages = [int(a) for a in argv if a.isdigit()]
     videos = {int(v["page"]): v for v in
               json.loads((ROOT / "data" / "videos.json").read_text(encoding="utf-8"))["videos"]}
-    wins = candidate_windows()
+    grid = "--grid" in argv
+    stride = 120.0
+    if "--stride" in argv:
+        stride = float(argv[argv.index("--stride") + 1])
+    if grid:
+        wins = grid_windows(pages or [], videos, stride=stride)
+        print(f"网格模式：{len(wins)} 集，间隔 {stride:.0f}s / 窗口 4s（不使用字幕）", flush=True)
+    else:
+        wins = candidate_windows()
     FRAMES.mkdir(parents=True, exist_ok=True)
     IDX_DIR.mkdir(parents=True, exist_ok=True)
     DONE_DIR.mkdir(parents=True, exist_ok=True)

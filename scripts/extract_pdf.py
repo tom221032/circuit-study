@@ -2,6 +2,7 @@
 """从教材笔记 PDF 抽取 18 章的结构、正文、题目、插图 -> data/course.json + data/content/*.json + data/img/*"""
 import html
 import json
+import hashlib
 import re
 import sys
 from pathlib import Path
@@ -58,10 +59,178 @@ def join_lines(a: str, b: str) -> str:
 
 
 class Page:
-    __slots__ = ("no", "lines", "images")
+    __slots__ = ("no", "lines", "images", "lines_y", "text_at", "img_boxes")
 
     def __init__(self, no, lines, images):
         self.no, self.lines, self.images = no, lines, images
+        self.lines_y = [None] * len(lines)
+        self.text_at = []
+        self.img_boxes = []
+
+
+CTM_TOKEN = re.compile(
+    rb"q|Q|((?:[-\d.]+ +){5}[-\d.]+) +cm|/([^\s/\[\]()<>{}]+) +Do")
+
+
+def _mul(m, n):
+    a, b, c, d, e, f = m
+    A, B, C, D, E, F = n
+    return [a * A + c * B, b * A + d * B,
+            a * C + c * D, b * C + d * D,
+            a * E + c * F + e, b * E + d * F + f]
+
+
+def _pt(m, x, y):
+    a, b, c, d, e, f = m
+    return (a * x + c * y + e, b * x + d * y + f)
+
+
+def _hash_bytes(b):
+    return hashlib.sha1(bytes(b)).hexdigest()
+
+
+def _xobj(resources, name):
+    try:
+        res = resources.get_object() if hasattr(resources, "get_object") else resources
+        xo = res.get("/XObject")
+        if xo is None:
+            return None
+        xo = xo.get_object() if hasattr(xo, "get_object") else xo
+        ref = xo.get("/" + name)
+        return ref.get_object() if hasattr(ref, "get_object") else ref
+    except Exception:
+        return None
+
+
+def image_boxes(page):
+    """扫描内容流，返回每张图的 bbox 及它在 page.images 里的下标 k。
+
+    阅读顺序 = y 递减；Form XObject 会递归进去；内联图片（BI…EI）忽略。
+    """
+    try:
+        page_data = page.get_contents().get_data()
+    except Exception:
+        return []
+    try:
+        imgs = list(page.images)
+    except Exception:
+        imgs = []
+    n2k = {}
+    for k, im in enumerate(imgs):
+        try:
+            n2k.setdefault(Path(im.name).stem, k)
+        except Exception:
+            pass
+
+    out = []
+    seen = set()
+
+    def scan(data, resources, base):
+        stack = []
+        ctm = list(base)
+        for m in CTM_TOKEN.finditer(data):
+            tok = m.group(0)
+            if tok == b"q":
+                stack.append(list(ctm))
+            elif tok == b"Q":
+                ctm = stack.pop() if stack else list(base)
+            elif m.group(1):
+                try:
+                    ctm = _mul(ctm, [float(x) for x in m.group(1).split()])
+                except ValueError:
+                    continue
+            elif m.group(2):
+                name = m.group(2).decode("latin-1")
+                obj = _xobj(resources, name)
+                if obj is None:
+                    continue
+                if obj.get("/Subtype") == "/Form":
+                    mat = obj.get("/Matrix") or [1, 0, 0, 1, 0, 0]
+                    try:
+                        m2 = [float(x) for x in mat]
+                    except Exception:
+                        m2 = [1, 0, 0, 1, 0, 0]
+                    inner = obj.get("/Resources") or resources
+                    try:
+                        sdata = obj.get_data()
+                    except Exception:
+                        continue
+                    scan(sdata, inner, _mul(ctm, m2))
+                    continue
+                k = n2k.get(name)
+                if k is None or k in seen:
+                    continue
+                seen.add(k)
+                pts = [_pt(ctm, x, y) for x, y in ((0, 0), (1, 0), (0, 1), (1, 1))]
+                xs = [p[0] for p in pts]
+                ys = [p[1] for p in pts]
+                out.append({"k": k, "name": name, "x0": min(xs), "x1": max(xs),
+                            "y0": min(ys), "y1": max(ys)})
+
+    try:
+        scan(page_data, page.get("/Resources"), [1, 0, 0, 1, 0, 0])
+    except Exception:
+        return []
+    return out
+
+
+def text_positions(page):
+    """[(y, x, text)]，与 image_boxes 同一坐标空间；阅读顺序 = y 递减。"""
+    out = []
+
+    def visit(text, cm, tm, font_dict, font_size):
+        if not text or not text.strip():
+            return
+        x = tm[4] * cm[0] + tm[5] * cm[2] + cm[4]
+        y = tm[4] * cm[1] + tm[5] * cm[3] + cm[5]
+        out.append((y, x, text))
+
+    try:
+        page.extract_text(visitor_text=visit)
+    except Exception:
+        pass
+    return out
+
+
+def _align_line_y(lines, text_at):
+    """把 extract_text() 的行与逐块坐标对齐：返回每行的 y（对不上给 None）。"""
+    if not text_at:
+        return [None] * len(lines)
+    bands = []
+    for y, x, t in sorted(text_at, key=lambda c: (-c[0], c[1])):
+        if bands and abs(bands[-1][0] - y) <= 3:
+            bands[-1][1].append((x, t))
+        else:
+            bands.append([y, [(x, t)]])
+    band_text = [re.sub(r"\s+", "", "".join(t for _, t in sorted(items))) for y, items in bands]
+    ys, pos = [], 0
+    for line in lines:
+        key = re.sub(r"\s+", "", line)[:10]
+        hit = None
+        for k in range(pos, min(pos + 6, len(bands))):
+            if key and key in band_text[k]:
+                hit = k
+                break
+        if hit is None:
+            # 「图 1-1-2」这类题注的「图/表」常被拆成单独 chunk，去掉首字再找；
+            # 还不行就用尾部 6 字再找一次。都从当前位置往后找，保证阅读顺序单调。
+            loose = key[1:] if len(key) > 4 else ""
+            tail = key[-6:] if len(key) > 6 else ""
+            for probe in (loose, tail):
+                if not probe:
+                    continue
+                for k in list(range(pos, len(bands))) + list(range(0, pos)):
+                    if probe in band_text[k]:
+                        hit = k
+                        break
+                if hit is not None:
+                    break
+        if hit is None:
+            ys.append(bands[pos][0] if pos < len(bands) else None)
+        else:
+            ys.append(bands[hit][0])
+            pos = hit + 1
+    return ys
 
 
 def read_pages(reader):
@@ -81,7 +250,14 @@ def read_pages(reader):
                 imgs.append((im.name, im.data))
         except Exception:
             pass
-        pages.append(Page(i + 1, lines, imgs))
+        pg = Page(i + 1, lines, imgs)
+        try:
+            pg.text_at = text_positions(p)
+            pg.img_boxes = image_boxes(p)
+        except Exception:
+            pg.text_at, pg.img_boxes = [], []
+        pg.lines_y = _align_line_y(lines, pg.text_at)
+        pages.append(pg)
         if (i + 1) % 50 == 0:
             print(f"  read {i + 1}/{total}", flush=True)
     return pages
@@ -131,7 +307,7 @@ def classify(line):
 
 
 def build_blocks(pages, start, end):
-    """把 [start,end] 页拼成块序列，块带 page 与 type"""
+    """把 [start,end] 页拼成块序列，块带 page / type / y（y 为版面上的位置）"""
     blocks = []
     cur = None
 
@@ -143,7 +319,8 @@ def build_blocks(pages, start, end):
 
     for pno in range(start, end + 1):
         pg = pages[pno - 1]
-        for line in pg.lines:
+        for li, line in enumerate(pg.lines):
+            ly = pg.lines_y[li] if li < len(pg.lines_y) else None
             kind = classify(line)
             if kind == "skip":
                 flush()
@@ -154,10 +331,10 @@ def build_blocks(pages, start, end):
                     cur["page"] = pno
                 else:
                     flush()
-                    cur = {"type": "para", "text": line, "page": pno}
+                    cur = {"type": "para", "text": line, "page": pno, "y": ly}
                 continue
             flush()
-            blocks.append({"type": kind, "text": line, "page": pno})
+            blocks.append({"type": kind, "text": line, "page": pno, "y": ly})
     flush()
     return blocks
 
@@ -171,8 +348,11 @@ def block_html(b, fig_img=None):
     if b["type"] == "formula":
         return f'<p class="blk-formula">{esc(t)}</p>'
     if b["type"] in ("fig", "tab"):
-        img = f'<img loading="lazy" src="{fig_img}" alt="{esc(t)}">' if fig_img else ""
-        return (f'<figure class="blk-fig" id="{b["id"]}">{img}'
+        paths = b.get("imgs_paths")
+        if paths is None:
+            paths = [fig_img] if fig_img else []
+        imgs = "".join(f'<img loading="lazy" src="{p}" alt="{esc(t)}">' for p in paths if p)
+        return (f'<figure class="blk-fig" id="{b["id"]}">{imgs}'
                 f'<figcaption>{esc(t)}</figcaption></figure>')
     if b["type"] == "imgonly":
         return (f'<figure class="blk-img" id="{b["id"]}">'
@@ -280,50 +460,178 @@ def exam_block_html(b, fig_img=None):
     return exam_group_html([b])
 
 
-def assign_images(blocks, imgmap, start, end):
-    """按阅读顺序把插图配到图/表标题上；配不上的图作为独立块插回所在页末尾"""
-    used = set()
-    all_imgs = []
-    for pno in range(start, end + 1):
-        for k, path in enumerate(imgmap.get(pno, [])):
-            all_imgs.append((pno, k, path))
+CAP_GAP = 80.0      # 题注与图片边缘的最大竖直距离
+MULTI_GAP = 25.0    # 同一个题注可吞下的相邻图之间的最大竖直距离
+MAX_PER_CAP = 8     # 一个题注最多挂几张图（整张表常被切成多张）
 
-    def take(cap_page):
-        for i, (pno, k, path) in enumerate(all_imgs):
-            if i in used:
-                continue
-            if pno == cap_page:
-                used.add(i)
-                return path
+
+def _img_name_map(pg):
+    """XObject 名 -> page.images 下标"""
+    m = {}
+    for k, (nm, _data) in enumerate(pg.images):
+        m[Path(nm).stem] = k
+    return m
+
+
+def _page_boxes(pages, pno, imgmap):
+    """[(k, box)]，按阅读顺序（y 递减）排好，重复绘制的图只留第一次"""
+    if not (1 <= pno <= len(pages)):
+        return []
+    seen = set()
+    out = []
+    for bx in pages[pno - 1].img_boxes:
+        k = bx.get("k")
+        if k is None or k in seen:
+            continue
+        seen.add(k)
+        out.append((k, bx))
+    out.sort(key=lambda t: -t[1]["y0"])
+    return out
+
+
+def _path(imgmap, pno, k):
+    try:
+        return imgmap[pno][k]
+    except Exception:
         return None
 
-    caps = [b for b in blocks if b["type"] in ("fig", "tab")]
-    for cap in caps:
-        cap["img"] = take(cap["page"])
-        if cap["img"] is None:  # 同页没有多余图，借用最近的页
-            best, bestd = None, 99
-            for i, (pno, k, path) in enumerate(all_imgs):
-                if i in used:
-                    continue
-                d = abs(pno - cap["page"])
-                if d < bestd:
-                    best, bestd = i, d
-            if best is not None and bestd <= 2:
-                used.add(best)
-                cap["img"] = all_imgs[best][2]
 
-    loose = {}
-    for i, (pno, k, path) in enumerate(all_imgs):
-        if i not in used:
-            loose.setdefault(pno, []).append(path)
+def _x_overlap(cap, bx):
+    cx0, cx1 = cap.get("x0"), cap.get("x1")
+    if cx0 is None or cx1 is None:
+        return True
+    return not (cx1 < bx["x0"] - 10 or cx0 > bx["x1"] + 10)
+
+
+def assign_images(blocks, pages, imgmap, start, end):
+    """按版面几何把插图配到 图/表 题注上；配不上的图按阅读位置插回行间。"""
+    caps = [b for b in blocks if b["type"] in ("fig", "tab")]
+    for b in caps:
+        b["imgs"] = []
+
+    boxes_by_page = {pno: _page_boxes(pages, pno, imgmap)
+                     for pno in range(start, end + 1)}
+    used = set()
+
+    # 1) 同页配对：题注与其紧邻的图，按距离从小到大贪心
+    cand = []
+    for ci, cap in enumerate(caps):
+        cy = cap.get("y")
+        if cy is None:
+            continue
+        for pno in (cap["page"],):
+            for k, bx in boxes_by_page.get(pno, []):
+                if not _x_overlap(cap, bx):
+                    continue
+                dist = min(abs(cy - bx["y0"]), abs(cy - bx["y1"]))
+                if dist <= CAP_GAP:
+                    cand.append((round(dist, 1), ci, pno, k))
+    cand.sort(key=lambda t: (t[0], t[1], t[2], t[3]))
+    for dist, ci, pno, k in cand:
+        cap = caps[ci]
+        if (pno, k) in used or len(cap["imgs"]) >= MAX_PER_CAP:
+            continue
+        used.add((pno, k))
+        cap["imgs"].append({"page": pno, "k": k, "path": _path(imgmap, pno, k), "dist": dist})
+
+    # 2) 跨页只允许「上一页最后一张图 <-> 本页第一个题注」
+    for ci, cap in enumerate(caps):
+        if cap["imgs"] or cap.get("y") is None:
+            continue
+        pno = cap["page"]
+        prev = boxes_by_page.get(pno - 1, [])
+        if not prev:
+            continue
+        k, bx = prev[-1]
+        if (pno - 1, k) in used:
+            continue
+        dist = abs(cap["y"] - bx["y0"])
+        if dist <= CAP_GAP and _x_overlap(cap, bx):
+            used.add((pno - 1, k))
+            cap["imgs"].append({"page": pno - 1, "k": k,
+                                "path": _path(imgmap, pno - 1, k), "dist": round(dist, 1)})
+
+    # 3) 一个题注可以吞下紧邻的 (a)(b) 分图
+    for cap in caps:
+        if len(cap["imgs"]) != 1:
+            continue
+        cy = cap.get("y")
+        if cy is None:
+            continue
+        pno = cap["page"]
+        boxes = boxes_by_page.get(pno, [])
+        if not boxes:
+            continue
+        anchor = cap["imgs"][0]
+        idx = next((i for i, (k, bx) in enumerate(boxes) if k == anchor["k"]), None)
+        if idx is None:
+            continue
+        for step in (-1, 1):
+            j = idx + step
+            while 0 <= j < len(boxes) and len(cap["imgs"]) < MAX_PER_CAP:
+                k, bx = boxes[j]
+                if (pno, k) in used:
+                    break
+                prev_bx = boxes[j - step][1]
+                gap = abs(bx["y0"] - prev_bx["y1"]) if step < 0 else abs(prev_bx["y0"] - bx["y1"])
+                if gap > MULTI_GAP:
+                    break
+                w1 = prev_bx["x1"] - prev_bx["x0"]
+                ov = min(bx["x1"], prev_bx["x1"]) - max(bx["x0"], prev_bx["x0"])
+                if w1 <= 0 or ov / w1 < 0.5:
+                    break
+                used.add((pno, k))
+                cap["imgs"].append({"page": pno, "k": k,
+                                    "path": _path(imgmap, pno, k), "dist": 0})
+                j += step
+        y_of = {k: bx["y0"] for k, bx in boxes}
+        cap["imgs"].sort(key=lambda d: -y_of.get(d["k"], 0))
+
+    # 3b) 兜底：仍然没图的题注，取同页（再邻页）最近的未用图，放宽距离与横向约束
+    for cap in caps:
+        if cap["imgs"] or cap.get("y") is None:
+            continue
+        cy = cap["y"]
+        best = None
+        for pno in (cap["page"], cap["page"] - 1, cap["page"] + 1):
+            for k, bx in boxes_by_page.get(pno, []):
+                if (pno, k) in used:
+                    continue
+                d = min(abs(cy - bx["y0"]), abs(cy - bx["y1"]))
+                if abs(pno - cap["page"]) > 0:
+                    d += 40  # 邻页优先度更低
+                if best is None or d < best[0]:
+                    best = (d, pno, k, bx)
+        if best and best[0] <= 300:
+            d, pno, k, bx = best
+            used.add((pno, k))
+            cap["imgs"].append({"page": pno, "k": k,
+                                "path": _path(imgmap, pno, k), "dist": round(d, 1)})
+
+    for b in caps:
+        b["img"] = b["imgs"][0]["path"] if b["imgs"] else None
+        b["imgs_paths"] = [d["path"] for d in b["imgs"] if d["path"]]
+
+    # 4) 剩下的图按阅读位置插回块序列（y 递减 = 越往后）
     out = list(blocks)
-    for pno in sorted(loose):
-        paths = loose[pno]
-        idxs = [i for i, b in enumerate(out) if b["page"] == pno]
-        at = (idxs[-1] + 1) if idxs else len(out)
-        new = [{"type": "imgonly", "page": pno, "img": p, "text": "", "id": f"x{pno}_{j}"}
-               for j, p in enumerate(paths)]
-        out[at:at] = new
+    for pno in range(end, start - 1, -1):
+        loose = [(k, bx) for k, bx in boxes_by_page.get(pno, []) if (pno, k) not in used]
+        for k, bx in loose:
+            path = _path(imgmap, pno, k)
+            if not path:
+                continue
+            y = bx["y0"]
+            idxs = [i for i, b in enumerate(out) if b["page"] == pno]
+            at = None
+            for i in idxs:
+                by = out[i].get("y")
+                if by is not None and by < y:
+                    at = i
+                    break
+            if at is None:
+                at = (idxs[-1] + 1) if idxs else len(out)
+            out.insert(at, {"type": "imgonly", "page": pno, "img": path,
+                            "id": f"x{pno}_{k}", "text": "", "y": y})
     return out
 
 
@@ -358,7 +666,7 @@ def build_chapter(ch, title, page, secs, pages, imgmap):
         blocks = build_blocks(pages, spage, end)
         for i, b in enumerate(blocks):
             b["id"] = f"c{ch}s{si}b{i}"
-        blocks = assign_images(blocks, imgmap, spage, end)
+        blocks = assign_images(blocks, pages, imgmap, spage, end)
 
         sec = {"key": f"{ch}.{['1','2','3'][si]}", "kind": kind, "page": spage, "endPage": end}
         if kind == "notes":

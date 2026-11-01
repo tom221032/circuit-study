@@ -105,7 +105,6 @@ def main(argv: list[str]) -> int:
     pick = "--pick" in argv
     STRONG = ("结论", "注意", "小结", "总结", "要点", "记住", "易错", "切记", "推论", "归纳", "口诀")
     if pick:
-        from collections import Counter
         cap = Counter()
         kept_rows = []
         for r in sorted(rows, key=lambda r: (int(r["page"]), r["t"])):
@@ -122,11 +121,18 @@ def main(argv: list[str]) -> int:
     for r in rows:
         by_page[int(r["page"])].append(r)
 
+    fill = "--fill" in argv
     t0 = time.time()
     done = 0
     for page, items in sorted(by_page.items()):
         dst = OCR_DIR / f"p{page:02d}.json"
-        if dst.exists() and "--force" not in argv:
+        old = json.loads(dst.read_text(encoding="utf-8")) if dst.exists() else []
+        if fill:
+            have = {r.get("frame") for r in old}
+            items = [r for r in items if r["frame"] not in have]
+            if not items:
+                continue
+        elif dst.exists() and "--force" not in argv:
             continue
         out = []
         for r in items:
@@ -141,10 +147,11 @@ def main(argv: list[str]) -> int:
                         "score": round(sum(l["score"] for l in lines) / max(1, len(lines)), 3),
                         "hits": hits_of(text)})
             done += 1
-        old = json.loads(dst.read_text(encoding="utf-8")) if dst.exists() else []
+        merged = old + out if fill else out
+        merged.sort(key=lambda r: r.get("t", 0))
         dst.write_text(
-            json.dumps(out, ensure_ascii=False, indent=1), encoding="utf-8")
-        print(f"  P{page:02d} {len(out)} 帧 OCR 完成（累计 {done}/{len(rows)}，{time.time()-t0:.0f}s）",
+            json.dumps(merged, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"  P{page:02d} 新增 {len(out)} 帧（该页共 {len(merged)}，累计 {done} 张，{time.time()-t0:.0f}s）",
               flush=True)
 
     allrows = []
