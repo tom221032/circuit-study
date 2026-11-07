@@ -40,8 +40,8 @@
    "items": [
     {
      "no": "18-1",
-     "q": "<p class=\"blk-p\" id=\"c18s1b0\">一对架空传输线的原参数是 L0＝ 2.89×10－3H/km， C0＝ 3.85×10－9F/km， R0＝ 0.3Ω/km， G0＝ 0。试求当工作频率为50Hz 时的特性阻抗 Zc，传播常数 γ、相位速度 υφ和波长 λ。如果频率为 104Hz，重求上述各参数。</p>",
-     "a": "<p class=\"blk-formula\">解：（1）当 f ＝ 50Hz 时</p><p class=\"blk-p\" id=\"c18s1b2\">Z0＝ R0＋ jωL0＝ 0.3 ＋ j0.908 ＝ 0.9562 ∠ 71.715°Ω/km Y0＝ G0＋ jωC0＝ j100π×3.85×10－9＝ j1.2095×10－6S/km即 α ＝ 0.171×10－3Np/km， β ＝ 1.062×10－3rad/km。</p><figure class=\"blk-img\" id=\"x782_0\"><img loading=\"lazy\" src=\"data/img/p782_0.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x782_1\"><img loading=\"lazy\" src=\"data/img/p782_1.png\" alt=\"原书插图\"></figure><p class=\"blk-formula\">υφ＝ ω/β ＝ 100π/ （1.062×10－3）＝ 2.958×105km/s</p><p class=\"blk-formula\">λ ＝ υφ/f ＝ 2.958×105/50 ＝ 5.916×103km</p><p class=\"blk-formula\">（2）当 f ＝ 104Hz 时</p><figure class=\"blk-img\" id=\"x782_2\"><img loading=\"lazy\" src=\"data/img/p782_2.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x783_0\"><img loading=\"lazy\" src=\"data/img/p783_0.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x783_1\"><img loading=\"lazy\" src=\"data/img/p783_1.png\" alt=\"原书插图\"></figure><p class=\"blk-p\" id=\"c18s1b6\">Z0＝ R0＋ jωL0＝ 0.3 ＋ j181.584 ＝ 181.58 ∠ 81.91°Ω/km Y0＝ G0＋ jωC0＝ j2π×104×3.85×10－9＝ j2.419×10－4S/km即 α ＝ 1.731×10－4Np/km， β ＝ 20.958×10－2rad/km。</p><p class=\"blk-p\" id=\"c18s1b7\">υφ＝ ω/β ＝ 2π×104/ （20.958×10－2）＝ 2.998×105km/s</p><p class=\"blk-formula\">λ ＝ υφ/f ＝ 2.998×105/104＝ 29.98km</p>"
+     "q": "<p class=\"blk-p\" id=\"c18s1b0\">一对架空传输线的原参数是 L0＝ 2.89×10－3H/km， C0＝ 3.85×10－9F/km， R0＝ 0.3Ω/km， G0＝ 0。试求当工作频率为50Hz 时的特性阻抗 Zc，传播常数 γ、相位速度 υφ和波长 λ。如果频率为 10^{4}Hz，重求上述各参数。</p>",
+     "a": "<p class=\"blk-formula\">解：（1）当 f ＝ 50Hz 时</p><p class=\"blk-p\" id=\"c18s1b2\">Z0＝ R0＋ jωL0＝ 0.3 ＋ j0.908 ＝ 0.9562 ∠ 71.715°Ω/km Y0＝ G0＋ jωC0＝ j100π×3.85×10－9＝ j1.2095×10－6S/km即 α ＝ 0.171×10－3Np/km， β ＝ 1.062×10－3rad/km。</p><figure class=\"blk-img\" id=\"x782_0\"><img loading=\"lazy\" src=\"data/img/p782_0.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x782_1\"><img loading=\"lazy\" src=\"data/img/p782_1.png\" alt=\"原书插图\"></figure><p class=\"blk-formula\">υφ＝ ω/β ＝ 100π/ （1.062×10－3）＝ 2.958×105km/s</p><p class=\"blk-formula\">λ ＝ υφ/f ＝ 2.958×105/50 ＝ 5.916×103km</p><p class=\"blk-formula\">（2）当 f ＝ 10^{4}Hz 时</p><figure class=\"blk-img\" id=\"x782_2\"><img loading=\"lazy\" src=\"data/img/p782_2.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x783_0\"><img loading=\"lazy\" src=\"data/img/p783_0.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x783_1\"><img loading=\"lazy\" src=\"data/img/p783_1.png\" alt=\"原书插图\"></figure><p class=\"blk-p\" id=\"c18s1b6\">Z0＝ R0＋ jωL0＝ 0.3 ＋ j181.584 ＝ 181.58 ∠ 81.91°Ω/km Y0＝ G0＋ jωC0＝ j2π×104×3.85×10－9＝ j2.419×10－4S/km即 α ＝ 1.731×10－4Np/km， β ＝ 20.958×10－2rad/km。</p><p class=\"blk-p\" id=\"c18s1b7\">υφ＝ ω/β ＝ 2π×104/ （20.958×10－2）＝ 2.998×105km/s</p><p class=\"blk-formula\">λ ＝ υφ/f ＝ 2.998×105/104＝ 29.98km</p>"
     },
     {
      "no": "18-2",
@@ -68,7 +68,7 @@
    "groups": [
     {
      "title": "名校考研真题",
-     "html": "<p class=\"blk-p\" id=\"c18s2b0\">本章不是考试重点，所以基本上没有学校的考研试题涉及到本章内容，因此，读者可以简单了解，不必作为复习重点，本部分也就没有选用考研真题。</p><figure class=\"blk-img\" id=\"x789_0\"><img loading=\"lazy\" src=\"data/img/p789_0.png\" alt=\"原书插图\"></figure><figure class=\"blk-img\" id=\"x789_1\"><img loading=\"lazy\" src=\"data/img/p789_1.png\" alt=\"原书插图\"></figure>"
+     "html": "<p class=\"blk-p\" id=\"c18s2b0\">本章不是考试重点，所以基本上没有学校的考研试题涉及到本章内容，因此，读者可以简单了解，不必作为复习重点，本部分也就没有选用考研真题。</p>"
     }
    ]
   }

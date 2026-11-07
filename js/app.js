@@ -344,7 +344,11 @@ function setSidebar(open) {
 function openLightbox(url) {
   const lb = $('#lightbox');
   if (!lb) return;
-  $('img', lb).src = url;
+  const image = $('img', lb);
+  image.src = url;
+  image.alt = '放大的教材插图或视频截图';
+  image.title = '再次点击可还原';
+  lb.classList.remove('is-zoomed');
   lb.hidden = false;
   document.body.style.overflow = 'hidden';
 }
@@ -352,6 +356,7 @@ function closeLightbox() {
   const lb = $('#lightbox');
   if (!lb || lb.hidden) return;
   lb.hidden = true;
+  lb.classList.remove('is-zoomed');
   $('img', lb).removeAttribute('src');
   if (!$('#sidebar').classList.contains('open')) document.body.style.overflow = '';
 }
@@ -725,7 +730,7 @@ async function viewChapter(view, n, q) {
     </header>
 
     <div class="ch-layout">
-      <div>
+      <div class="ch-main">
         <div class="tabs">${tabs}</div>
         <div class="reader" id="reader"></div>
         <div class="card note-card" id="noteCard" style="margin-top:16px">
@@ -743,19 +748,146 @@ async function viewChapter(view, n, q) {
         </div>
       </div>
 
-      <aside class="side-panel">
-        <h3>本章视频 · ${vs.length} 集</h3>
+      <aside class="reading-rail" id="readingRail" aria-label="本节目录与视频补充" hidden></aside>
+      <details class="side-panel">
+        <summary>本章视频 · ${vs.length} 集</summary>
         <div class="vlist-videos">
           ${vs.map(v => `<a class="vitem ${S.store.watched[v.page] ? 'done' : ''}" href="#/video/${v.page}">
             <span class="idx">${pad2(v.page)}</span>
             <span class="t">${esc(v.title)}${hasSub(v) ? '' : ' <span class="nosub">无字幕</span>'}</span>
             <span class="dur">${fmtDur(v.duration)}</span></a>`).join('')}
         </div>
-      </aside>
+      </details>
     </div>`;
 
   const reader = $('#reader');
   initNoteEditor(n);
+
+  function prepareReadingLayout() {
+    // 原图和文本保持原样，只把连续截图卡收成一个默认折叠的轻量入口。
+    $$('.kp.kvis', reader).forEach(card => {
+      const shot = $('.kp-shot', card);
+      const src = $('.kp-src', card);
+      if (!shot || card.querySelector('.kp-shot-details')) return;
+      const details = document.createElement('details');
+      details.className = 'kp-shot-details';
+      const summary = document.createElement('summary');
+      summary.textContent = '展开视频截图';
+      const content = document.createElement('div');
+      content.className = 'kp-shot-content';
+      card.insertBefore(details, shot);
+      content.appendChild(shot);
+      details.append(summary, content);
+      if (src) content.appendChild(src);
+    });
+    $$('.kp.kvis', reader).forEach(card => {
+      const prev = card.previousElementSibling;
+      if (prev?.classList.contains('kp-visual-group')) {
+        prev.appendChild(card);
+        $('summary', prev).textContent = `视频截图（${$$('.kp.kvis', prev).length} 条）`;
+        return;
+      }
+      const group = document.createElement('details');
+      group.className = 'kp-visual-group';
+      const summary = document.createElement('summary');
+      summary.textContent = '视频截图（1 条）';
+      card.before(group);
+      group.append(summary, card);
+    });
+  }
+
+  function arrangeReadingRail(sec) {
+    const rail = $('#readingRail');
+    // 窄屏目录可能已被移到正文前，重绘标签页前先归还再清空。
+    const previousToc = $('.reading-toc', $('.ch-layout'));
+    if (previousToc) rail.appendChild(previousToc);
+    rail.innerHTML = '';
+    rail.hidden = true;
+    if (!sec || sec.kind !== 'notes') return;
+    $('.ch-layout').classList.remove('kp-only-layout');
+    const onlyButton = $('#kpOnly', reader);
+    if (onlyButton) onlyButton.textContent = '只看视频补充';
+
+    // 按原有二级标题组织侧注，不改动教材正文、公式或插图的位置。
+    const groups = [];
+    let current = { anchor: '', title: '本章导入', cards: [] };
+    [...reader.children].forEach(node => {
+      if (node.matches('.blk-h1, .blk-h2')) {
+        current = { anchor: node.id, title: node.textContent.trim(), cards: [] };
+        groups.push(current);
+      } else if (node.matches('.kp:not(.kvis), .kp-visual-group')) {
+        current.cards.push(node);
+      }
+    });
+    if (current.cards.length && !groups.includes(current)) groups.push(current);
+
+    const toc = document.createElement('nav');
+    toc.className = 'reading-toc';
+    toc.setAttribute('aria-label', '本节二级目录');
+    const tocTitle = document.createElement('div');
+    tocTitle.className = 'rail-title';
+    tocTitle.textContent = '本节目录';
+    toc.appendChild(tocTitle);
+    (sec.toc || []).forEach(item => {
+      const link = document.createElement('a');
+      link.href = `#${item.anchor}`;
+      link.dataset.anchor = item.anchor;
+      link.className = `rail-toc-link level-${item.level}`;
+      link.textContent = item.text;
+      toc.appendChild(link);
+    });
+    rail.appendChild(toc);
+
+    groups.filter(group => group.cards.length).forEach((group, index) => {
+      const supplement = document.createElement('details');
+      supplement.className = 'section-supplement';
+      supplement.dataset.anchor = group.anchor;
+      const summary = document.createElement('summary');
+      summary.textContent = `${group.title} · 视频补充（${group.cards.length} 组）`;
+      const body = document.createElement('div');
+      body.className = 'section-supplement-body';
+      const mobileSlot = document.createElement('div');
+      mobileSlot.className = 'section-supplement-mobile';
+      mobileSlot.dataset.anchor = group.anchor;
+      group.cards.forEach(card => body.appendChild(card));
+      supplement.append(summary, body, mobileSlot);
+      rail.appendChild(supplement);
+      if (index === 0 && group.anchor === reader.querySelector('.blk-h1, .blk-h2')?.id) supplement.open = true;
+    });
+    rail.hidden = false;
+    syncSupplementPlacement();
+  }
+
+  function syncSupplementPlacement() {
+    // 以窗口宽度为准，与下方桌面双栏 CSS 断点保持一致。
+    const inline = window.matchMedia('(max-width: 1280px)').matches;
+    const onlyKp = reader.classList.contains('only-kp');
+    const toc = $('.reading-toc', $('#readingRail'));
+    if (toc) {
+      if (inline && !onlyKp) {
+        // 窄屏目录必须位于正文前，不能跟随右侧栏落到整章末尾。
+        $('.tabs', $('.ch-main')).after(toc);
+        toc.classList.add('is-inline');
+      } else {
+        $('#readingRail').prepend(toc);
+        toc.classList.remove('is-inline');
+      }
+    }
+    $$('.section-supplement').forEach(supplement => {
+      const body = $('.section-supplement-body', supplement);
+      const slot = $('.section-supplement-mobile', supplement);
+      const anchor = document.getElementById(supplement.dataset.anchor);
+      if (inline && anchor && !onlyKp) {
+        anchor.after(supplement);
+        supplement.classList.add('is-inline');
+        slot.appendChild(body);
+      } else {
+        $('#readingRail').appendChild(supplement);
+        supplement.classList.remove('is-inline');
+        supplement.insertBefore(body, slot);
+      }
+    });
+  }
 
   function paint(kind) {
     const sec = data.sections.find(s => s.kind === kind);
@@ -767,20 +899,21 @@ async function viewChapter(view, n, q) {
         ${bookLink(sec.page, `打开原书 p.${sec.page}`)}</div>
         ${ch.kp?.count ? `<div class="kp-legend"><span>📺 本节含 ${ch.kp.count} 条视频知识点（源自石群讲稿，点时间可跳到视频）</span>
           <span style="flex:1"></span><button class="btn ghost" id="kpOnly">只看视频补充</button></div>` : ''}
-        ${sec.toc?.length ? `<details style="margin-bottom:14px"><summary style="cursor:pointer;font-size:13px;color:var(--muted)">本章目录（${sec.toc.length} 节）</summary>
-          <div style="margin-top:10px;display:flex;flex-wrap:wrap;gap:6px">${sec.toc.map(t =>
-            `<a class="chip" href="#${t.anchor}" data-anchor="${t.anchor}">${esc(t.text)}</a>`).join('')}</div></details>` : ''}
         ${sec.html}`;
       const onlyBtn = $('#kpOnly', reader);
       if (onlyBtn) onlyBtn.addEventListener('click', () => {
         const on = reader.classList.toggle('only-kp');
+        $('.ch-layout').classList.toggle('kp-only-layout', on);
         onlyBtn.textContent = on ? '显示全部笔记' : '只看视频补充';
+        syncSupplementPlacement();
       });
-      $$('.chip[data-anchor]', reader).forEach(a => a.addEventListener('click', e => {
+      $('.ch-main').addEventListener('click', e => {
+        const a = e.target.closest('.rail-toc-link');
+        if (!a) return;
         e.preventDefault();
         const el = document.getElementById(a.dataset.anchor);
         if (el) { el.scrollIntoView({ behavior: 'smooth', block: 'start' }); el.style.transition = 'background .6s'; el.style.background = '#fff6d8'; setTimeout(() => el.style.background = '', 1200); }
-      }));
+      });
     } else if (kind === 'ex') {
       reader.innerHTML = `<div class="notice">来自原书 p.${sec.page}–${sec.endPage}，共 ${sec.items.length} 题。点「显示解答」展开。</div>
         <div class="ex-list">${sec.items.map((it, i) => `
@@ -804,6 +937,8 @@ async function viewChapter(view, n, q) {
       reader.innerHTML = `<div class="notice">来自原书 p.${sec.page}–${sec.endPage}，按题型分组。</div>
         ${sec.groups.map(g => `<section style="margin-bottom:22px"><h2 class="blk-h1">${esc(g.title)}</h2>${g.html}</section>`).join('')}`;
     }
+    if (kind === 'notes') prepareReadingLayout();
+    arrangeReadingRail(sec);
     const nodes = stampEdits(reader, `c${n}:${kind}`);
     if (S.editMode) makeEditable(nodes);
     else renderMathIn(reader);
@@ -814,8 +949,17 @@ async function viewChapter(view, n, q) {
   const anchor = q.get('anchor');
   if (anchor) {
     const el = document.getElementById(anchor);
-    if (el) setTimeout(() => { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.style.background = '#fff6d8'; setTimeout(() => el.style.background = '', 1600); }, 60);
+    if (el) {
+      const supplement = el.closest('.section-supplement');
+      if (supplement) supplement.open = true;
+      const group = el.closest('.kp-visual-group');
+      if (group) group.open = true;
+      setTimeout(() => { el.scrollIntoView({ behavior: 'smooth', block: 'center' }); el.style.background = '#fff6d8'; setTimeout(() => el.style.background = '', 1600); }, 60);
+    }
   }
+  const layoutMedia = window.matchMedia('(max-width: 1404px)');
+  const relayout = () => { if (document.body.contains(reader)) syncSupplementPlacement(); else layoutMedia.removeEventListener('change', relayout); };
+  layoutMedia.addEventListener('change', relayout);
 }
 
 // ---------------- video ----------------
@@ -1102,12 +1246,18 @@ function wireChrome() {
 
   const lb = $('#lightbox');
   if (lb) {
-    lb.addEventListener('click', e => { if (e.target === lb || e.target.classList.contains('lb-close')) closeLightbox(); });
+    lb.addEventListener('click', e => {
+      if (e.target === lb || e.target.classList.contains('lb-close')) closeLightbox();
+      else if (e.target === $('img', lb)) lb.classList.toggle('is-zoomed');
+    });
   }
-  // 视频截图卡片：点图开灯箱
+  // 教材插图、公式图与视频截图均可放大；不拦截链接、编辑区图片。
   document.addEventListener('click', e => {
-    const shot = e.target.closest && e.target.closest('.kp-shot');
-    if (shot) { e.preventDefault(); openLightbox(shot.src); }
+    const shot = e.target.closest && e.target.closest('.reader figure img, .ex figure img, .kp-shot');
+    if (shot && !shot.closest('[contenteditable="true"]')) {
+      e.preventDefault();
+      openLightbox(shot.src);
+    }
   });
   document.addEventListener('keydown', e => {
     if (e.key !== 'Escape') return;

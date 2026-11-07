@@ -63,8 +63,6 @@ def display_title(raw: str) -> str:
                r"\s*[：:]\s*", "", t)
     t = re.sub(r"^[①②③④⑤⑥⑦⑧⑨⑩*＊·\-—、,，.。:：)）(\（\s]+", "", t)
     t = t.rstrip("的，,；;、")
-    if len(t) >= 17 and not t.endswith("…"):
-        t += "…"
     return t
 
 
@@ -219,10 +217,17 @@ def main(argv: list[str]) -> int:
                 continue
             c.setdefault("kp", {})["visualCount"] = st["count"]
             c["kp"]["visualByKind"] = st["byKind"]
-        course["kpVisualTotal"] = sum(r["count"] for r in rows)
+        report_path = KP / "report_visual.json"
+        previous = {}
+        if wanted and report_path.exists():
+            previous = json.loads(report_path.read_text(encoding="utf-8"))
+        by_chapter = {int(r["n"]): r for r in previous.get("chapters", [])}
+        by_chapter.update({int(r["n"]): r for r in rows})
+        all_rows = [by_chapter[n] for n in sorted(by_chapter)]
+        course["kpVisualTotal"] = sum(r["count"] for r in all_rows)
         course_path.write_text(json.dumps(course, ensure_ascii=False, indent=1), encoding="utf-8")
-        (KP / "report_visual.json").write_text(json.dumps(
-            {"total": total, "chapters": rows}, ensure_ascii=False, indent=1), encoding="utf-8")
+        report_path.write_text(json.dumps(
+            {"total": course["kpVisualTotal"], "chapters": all_rows}, ensure_ascii=False, indent=1), encoding="utf-8")
         print(f"合计 {total} 条截图知识点；course.kpVisualTotal 已更新")
     return 0
 
